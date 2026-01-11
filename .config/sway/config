@@ -1,0 +1,507 @@
+# ~/.config/sway/config
+
+# This config file began as a copy of the 
+# template config file in /etc/sway
+# Read `man 5 sway` for a complete reference.
+
+
+### --------------------
+### SYSTEM-WIDE INCLUDES
+### --------------------
+# System-wide includes are provided by distro (e.g., Debian) packages 
+# Distros use /etc/sway/config.d/ or /usr/share/sway/config.d/
+# Tip: use *.conf to include all files ending in .conf
+# e.g., include /etc/sway/config/*.conf
+
+# puts Sway wallpaper on output background (replaced below)
+include /etc/sway/config.d/40-sway-background.conf
+
+# imports variables into the user's system environment
+# based on instructions in the Sway wiki
+include /etc/sway/config.d/50-systemd-user.conf
+
+
+### ----------------------
+### USER-SPECIFIC INCLUDES
+### ----------------------
+# Recommended to place user-specific include files in a 
+# user-specific directory like ~/.config/sway/config.d/
+# Tip: use *.conf to include all files ending in .conf
+# e.g., include ~/.config/sway/config.d/*.conf
+
+
+### -------------------
+### CONFIGURE VARIABLES
+### -------------------
+
+### ---------------
+### Assign Mod keys
+# Assign Mod4 (logo/cmd key) to a string variable
+set $LogoKey Mod4
+
+# Assign Mod1 (alt/option key) to a string variable
+set $AltKey Mod1
+
+
+### --------------------------------------
+### Assign direction keys a la cult-of-vim
+set $left h
+set $down j
+set $up k
+set $right l
+
+
+### --------------------
+### Assign app shortcuts
+
+# Set terminal emulator
+set $term foot
+
+# Set file manager
+# set $filemngr thunar
+
+# Set application launchers
+set $menu wmenu-run
+set $menu-alt wofi --show drun
+
+# Set browser
+set $browser firefox-esr
+
+# Set password manager
+set $pwdmngr 1password
+
+# Set note manager
+set $notemngr obsidian
+set $notemngrPATH "~/AppImages/Obsidian.AppImage"
+
+# Set sync utility
+set $syncutil syncthing
+
+
+### -------------------------------------- 
+### set primary gruvbox colorscheme colors
+# see https://github.com/morhetz/gruvbox-contrib/blob/master/color.table
+
+set $bg #282828
+set $bg_2 #504945
+set $fg #ebdbb2
+set $fg_1 #FBF1C7
+set $fg_2 #D5C4A1
+set $red #cc241d
+set $green #98971a
+set $yellow #d79921
+set $blue #458588
+set $blue_faded #076678
+set $purple #b16286
+set $aqua #689d68
+set $gray #a89984
+set $darkgray #1d2021
+
+# my additions
+set $medgray #363636
+
+
+### ------------------
+### Set shades of blue
+# https://www.pinterest.com/pin/75-shades-of-blue-blue-hex-codes-color-names-included--75153887526405408/
+
+set $NightBlue #151b54
+set $CornflowerBlue #6495ed
+set $DenimBlue #79baec
+set $BlueGray #98afc7 
+#151b54 night blue
+#0000ff blue
+#1e90ff dodger blue
+#82caff day sky blue
+#0041c2 blueberry blue
+#4169e1 royal blue
+#6495ed cornflower blue
+#98afc7 blue gray
+#2b547e blue jay
+#4863a0 azure blue
+#728fce light purple blue
+#737ca1 slate blue gray
+#4682b4 steel blue
+#79baec denim blue
+#87afc7 columbia blue
+#95b9c7 baby blue
+#123456 deep sea blue
+#29465b dark blue gray
+#36454f charcoal blue
+#566d7e marble blue
+
+
+### --------------------
+### CONFIGURE BACKGROUND
+### --------------------
+# output * bg /usr/share/backgrounds/sway/Sway_Wallpaper_Blue_1920x1080.png fill
+#
+# The above output command is commented out in Debian, 
+# which drops the config file 40-sway-background.conf, which 
+# uses the Sway wallpaper files in the sway-backgrounds package
+
+
+### -----------------
+### CONFIGURE OUTPUTS
+### -----------------
+# run swaymsg -t get_outputs for output deets
+# consider using kanshi to handle different outputs
+
+### output config for screen on MacBookPro-10-1
+# output eDP-1 mode 2880x1800@59.990Hz 
+# output eDP-1 scale 2
+
+### output config for screen on iMac-9-1
+# output LVDS-1 mode 1920x1200@60.241Hz
+# output LVDS-1 scale 1
+
+### output config for monitors on Geekom or Trigkey 
+# with LG 24" monitor or Viewsonic 27" monitor
+# NOTE: Trigkey has two HDMI outputs
+output HDMI-A-1 mode 1920x1080@60.000HZ
+output HDMI-A-1 scale 1
+# output HDMI-A-2 mode 1920x1080@60.000HZ
+# output HDMI-A-2 scale 1
+
+# Set background
+# output * bg #79baec solid_color
+output * bg $DenimBlue solid_color
+
+
+### -----------------
+### CONFIGURE WINDOWS
+### -----------------
+# Add gaps in between all application windows:
+gaps inner 4
+gaps outer 4
+
+# Configure the default border:
+default_border pixel 3
+
+
+### -----------------------
+### CONFIGURE WINDOW COLORS
+### -----------------------
+
+# https://thomashunter.name/i3-configurator/
+
+# class                 border  bground text    indicator child_border
+
+client.focused          $yellow $yellow $fg     $yellow   $yellow
+# the window that has focus
+
+client.focused_inactive $bg_2   #5F676A $fg     #484E50   #5F676A
+# the most-recently focused window within container which is not focused
+
+client.unfocused        $bg_2   #282828 #888888 #292D2E   #222222
+# a window that does not have focus
+
+client.urgent           #2F343A #CC241D $fg_1   #CC241D   #CC241D
+# a window with an urgeny hit--only works for xwayland windows
+
+client.placeholder      #1D2021 #0C0C0C $fg     #000000   #0C0C0C
+# ignored (present for i3 compatibilty)
+
+
+### ----------------
+### CONFIGURE INPUTS
+### ----------------
+# Example configuration:
+#
+#   input "2:14:SynPS/2_Synaptics_TouchPad" {
+#       dwt enabled
+#       tap enabled
+#       natural_scroll enabled
+#       middle_emulation enabled
+#   }
+#
+# You can get the names of your inputs by running
+# "swaymsg -t get_inputs"
+# Read `man 5 sway-input` for more information about this section.
+
+
+### ---------------------
+### CONFIGURE IDLE & LOCK
+### ---------------------
+# Daemonize swaylock by running it with the -f or --daemonize flag, 
+# especially when using it with an idle management daemon 
+# like swayidle or a systemd sleep hook. 
+# Background: the --daemonize behavior is the default for i3lock, 
+# which swaylock is designed to emulate, making it the standard 
+# way these lock programs are expected to run in the background. 
+
+# swayidle OPTIONS:
+# -w
+#		wait for command to finish executing before continuing, 
+#		helpful for ensuring that a before-sleep command has finished 
+#		before the system goes to sleep. 
+
+# swaylock OPTIONS:
+# -f, --daemonize: 
+#		detach from controlling terminal after locking
+#		this is the default behavior of i3lock
+# -i, --image [[<output>]:]<path>
+#		display the given image, optionally only on the given output 
+# -c, --color <rrggbb[aa]>
+#		turn the screen into the given color (default: light gray/A3A3A3)
+# -F, --show-failed-attempts: show count of failed authentication attempts
+
+# Example:
+# exec swayidle -w: Starts swayidle with the -w flag, which tells swayidle to wait for swaylock to finish before proceeding
+# timeout 300 'swaylock -f -c 000000': After 300 seconds (5 mins) of inactivity, run swaylock. -f forces it to lock, and -c 000000 sets the background to black
+# timeout 600 'swaymsg "output * dpms off"': After another 300 seconds (total 10 mins), turn off all displays
+# resume 'swaymsg "output * dpms on"': When activity resumes (after locking), turn the displays back on
+# before-sleep 'swaylock -f -c 000000': Immediately lock the screen before the system suspends 
+
+exec swayidle -w \
+	timeout 300 'swaylock --daemonize --color "$BlueGray"' \
+	timeout 600 'swaymsg "output * dpms off"' \
+	resume 'swaymsg "output * dpms on"' \
+	before-sleep 'swaylock --daemonize --color "$NightBlue"' 
+
+
+### ------------------
+### CONFIGURE KEYBINDS
+### ------------------
+# This config scheme uses: 
+# the logo/cmd key for app and navigation shortcuts
+# the alt/option key for reloading configs, ...
+
+
+### ---------------------
+### Exit & Quit
+
+# EXIT sway (logs you out of your Wayland session)
+bindsym $LogoKey+q exit
+# bindsym $mod+m exec swaynag -t warning -m 'Exit sway? (This will end your Wayland session.) ' -B 'Yes, exit sway' 'swaymsg exit'
+
+# KILL focused window (exit app)
+bindsym $LogoKey+w kill
+
+
+### -------------------
+### Reload config files
+
+# RELOAD Sway configuration file
+bindsym $AltKey+c reload
+
+# RESTART Waybar
+bindsym $AltKey+Shift+c exec "pkill waybar && waybar"
+
+
+### -------------------------
+### Access clipboard history
+
+bindsym $LogoKey+v exec clipman pick --tool wofi
+
+### -------------------
+### Launch / start apps
+
+# Start  terminal
+bindsym $LogoKey+Return exec $term
+bindsym $LogoKey+t exec $term
+
+# Start file manager
+bindsym $LogoKey+f exec $filemngr
+
+# Start launcher
+bindsym $LogoKey+space exec $menu
+bindsym $LogoKey+Shift+space exec $menu-alt
+
+# Start browser
+bindsym $LogoKey+b exec $browser
+
+# Start password manager
+bindsym $LogoKey+p exec $pwdmngr
+
+# Launch Obsidian AppImage with variable that specifies image location (see above)
+bindsym $LogoKey+o exec $notemngrPATH
+
+# Launch Obsidian AppImage via script file in ~/.local/bin)
+bindsym $LogoKey+Shift+o exec obsidian.sh
+
+
+### ------------
+### Switch focus
+
+# Move window focus around with cult-of-vim shortcuts
+bindsym $LogoKey+$left focus left
+bindsym $LogoKey+$down focus down
+bindsym $LogoKey+$up focus up
+bindsym $LogoKey+$right focus right 
+
+# Or use $mod + arrow keys
+bindsym $LogoKey+Left focus left
+bindsym $LogoKey+Down focus down
+bindsym $LogoKey+Up focus up
+bindsym $LogoKey+Right focus right
+
+# move workspace focus
+bindsym $AltKey+$left workspace prev_on_output
+bindsym $AltKey+$right workspace next_on_output
+bindsym $AltKey+Left workspace prev_on_output
+bindsym $AltKey+Right workspace next_on_output
+bindsym $AltKey+$up workspace prev_on_output
+bindsym $AltKey+$down workspace next_on_output
+bindsym $AltKey+Up workspace prev_on_output
+bindsym $AltKey+Down workspace next_on_output
+
+# Switch to workspace
+bindsym $AltKey+1 workspace number 1
+bindsym $AltKey+2 workspace number 2
+bindsym $AltKey+3 workspace number 3
+bindsym $AltKey+4 workspace number 4
+bindsym $AltKey+5 workspace number 5
+bindsym $AltKey+6 workspace number 6
+bindsym $AltKey+7 workspace number 7
+bindsym $AltKey+8 workspace number 8
+bindsym $AltKey+9 workspace number 9
+bindsym $AltKey+0 workspace number 10
+
+
+### --------------------------------
+### Aassign containers to workspaces
+
+bindsym $AltKey+Shift+1 move container to workspace number 1
+bindsym $AltKey+Shift+2 move container to workspace number 2
+bindsym $AltKey+Shift+3 move container to workspace number 3
+bindsym $AltKey+Shift+4 move container to workspace number 4
+bindsym $AltKey+Shift+5 move container to workspace number 5
+bindsym $AltKey+Shift+6 move container to workspace number 6
+bindsym $AltKey+Shift+7 move container to workspace number 7
+bindsym $AltKey+Shift+8 move container to workspace number 8
+bindsym $AltKey+Shift+9 move container to workspace number 9
+bindsym $AltKey+Shift+0 move container to workspace number 10
+# Note: workspaces can have any name you want, not just numbers.
+# We just use 1-10 as the default.
+
+
+### -----------------
+### Layout and focus:
+
+# next new container BESIDE existing container (y-axis split)
+bindsym $AltKey+y split horizontal 
+
+# next new container BELOW existing container (x-axis split)
+bindsym $AltKey+x split vertical
+
+# toggle between horizontal and vertical split
+# also used to return to split layout mode
+bindsym $AltKey+slash layout toggle split
+
+# Switch the layout mode to stacking layout mode
+bindsym $AltKey+s layout stacking 
+
+# Switch the layout mode to tabbed layout mode
+bindsym $AltKey+t layout tabbed
+
+# Toggle the current focus between fullscreen and tiling mode
+bindsym $AltKey+Return fullscreen toggle
+
+# Toggle the current focus between floating and tiling mode
+bindsym $AltKey+space floating toggle
+
+# Moves focus between the floating and tiled areas
+bindsym $AltKey+Shift+space focus mode_toggle
+
+# Move focus to the parent container
+# All workspaces, splits, tabbed/stacked groups, and windows
+# are containers within a hierarchical tree structure.
+# The container directly above the current container in the tree
+# is the parent container 
+bindsym $AltKey+p focus parent
+
+
+### ----------
+### Scratchpad
+
+# Sway has a "scratchpad", which is a bag of holding for windows.
+# You can send windows there and get them back later.
+
+# Move the currently focused window to the scratchpad
+bindsym $AltKey+Shift+minus move scratchpad
+
+# Show next scratchpad window or hide the focused scratchpad window.
+# If there are multiple scratchpad windows, this command 
+# cycles through them.
+bindsym $AltKey+minus scratchpad show
+
+
+### -------------------------
+### Drag container with mouse
+
+# Drag floating windows by holding down $mod and left mouse button.
+# Resize them with right mouse button + $mod.
+# Despite the name, also works for non-floating windows.
+# Change normal to inverse to use left mouse button for resizing and right
+
+# mouse button for dragging.
+floating_modifier $LogoKey normal
+
+
+### -----------------
+### Resize containers
+
+bindsym $LogoKey+Shift+r mode "resize"
+mode "resize" {
+  # left will shrink the containers width
+  # right will grow the containers width
+  # up will shrink the containers height
+  # down will grow the containers height
+  bindsym $left resize shrink width 10px
+  bindsym $down resize grow height 10px
+  bindsym $up resize shrink height 10px
+  bindsym $right resize grow width 10px
+
+  # Ditto, with arrow keys
+  bindsym Left resize shrink width 10px
+  bindsym Down resize grow height 10px
+  bindsym Up resize shrink height 10px
+  bindsym Right resize grow width 10px
+
+  # Return to default mode
+  bindsym Return mode "default"
+  bindsym Escape mode "default"
+}
+
+### -----------------
+### Control utilities
+
+# Special keys to adjust volume via PulseAudio
+# NOTE: RootBear is using PipeWire PulseAudio
+bindsym --locked XF86AudioMute exec pactl set-sink-mute \@DEFAULT_SINK@ toggle
+bindsym --locked XF86AudioLowerVolume exec pactl set-sink-volume \@DEFAULT_SINK@ -5%
+bindsym --locked XF86AudioRaiseVolume exec pactl set-sink-volume \@DEFAULT_SINK@ +5%
+bindsym --locked XF86AudioMicMute exec pactl set-source-mute \@DEFAULT_SOURCE@ toggle
+
+# Special keys to adjust brightness via brightnessctl
+bindsym --locked XF86MonBrightnessDown exec brightnessctl set 5-%
+bindsym --locked XF86MonBrightnessUp exec brightnessctl set +5%
+
+bindsym --locked XF86KbdBrightnessDown exec brightnessctl --device 'smc::kbd_backlight' set 5-%
+bindsym --locked XF86KbdBrightnessUp exec brightnessctl --device 'smc::kbd_backlight' set +5%
+
+# Special key to take a screenshot with grim
+bindsym Print exec grim
+
+
+### --------------------
+### CONFIGURE STATUS BAR
+### -------------------
+# Now using waybar
+
+
+### ---------
+### AUTOSTART
+### ---------
+exec wl-paste -t text --watch clipman store
+exec /usr/libexec/polkit-mate-authentication-agent-1
+exec waybar
+exec mako
+
+# set disp;lay brightness
+exec brightnessctl set 30%
+
+# set keyboard backlight brightness
+exec brightnessctl --device 'smc::kbd_backlight' set 30%
+
