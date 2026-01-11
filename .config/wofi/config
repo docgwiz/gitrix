@@ -1,0 +1,5 @@
+mode=drun,run
+allow_images=true
+insensitive=true
+height=400
+width=300

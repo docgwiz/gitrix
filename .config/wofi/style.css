@@ -1,0 +1,31 @@
+#window {
+	border-radius: 15px;
+	background-color: transparent;
+}
+
+#outer-box {
+	border-radius: 15px;
+}
+
+#input {
+	background-color: #101010;
+	opacity: 0.975;
+	border: 2px solid #bcbcbc;
+	border-radius: 15px;
+	color: #eee;
+	padding: 5px 5px;
+}
+
+#scroll {
+	background-color: #303030;
+	opacity: 0.975;
+	border: 2px solid #bcbcbc;
+	border-radius: 15px;;
+	color: #777;
+	padding: 15px 15px;
+}
+
+#entry:selected {
+	background-color: #5f87af;
+	color: #fff;
+}

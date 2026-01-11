@@ -1,0 +1,215 @@
+" ~/.config/vim/vimrc
+
+" -----------------------
+" ADJUST THE RUNTIME PATH
+"
+" ~/.vim is not in the default runtime path, which prevents
+" anything in ~/.vim (example: vim-plug) from running
+" note: the ^= operator prepends the path specified below
+" to the runtimepath.
+" Note -- I don't have a ~/.vim directory at this time.
+"set runtimepath^=~/.vim
+
+
+" ----------------------------------------
+" ADJUST THE PACK PATH TO RUN VIMPACKAGES
+" Note -- I'm not using VimPackages at this time; I use vim-plug
+"set packpath+=~/.vim/pack
+"set packpath+=~/.vim/pack/plugins/start
+"set packpath+=~/.vim/pack/plugins/opt
+
+
+" ----------------------------------------
+" NOTE -- USE SUDOEDIT INSTEAD OF SUDO VIM
+"
+" When editing files with sudo vim, vim runs as root and will 
+" look for a root's ~/.vimrc (/root/.vimrc), not the  user's.  
+" If it doesn't find a root user config file, vim will use
+" DEFAULT SETTINGS.
+"
+" Instead of sudo vim, use sudoedit to launch the 
+" default editor (e.g., nano or vim) running under 
+" your unprivileged (regular) user ID, which allows 
+" you to use your personal editor configurations and plugins.
+
+" !!!!! NOTE !!!!!
+" A global configuration file is sourced below.
+" The configuration does not exist on RootBear, 
+" but may exist on other installations. 
+" if filereadable("/etc/vim/vimrc.local")
+"   source /etc/vim/vimrc.local
+" endif
+
+" $VIMRUNTIME refers to the versioned system directory
+" where Vim stores its system runtime files: 
+" /usr/share/vim/vim<version>.
+"
+" Vim will load $VIMRUNTIME/defaults.vim if the user 
+" does not have a vimrc.
+"
+" This happens after /etc/vim/vimrc(.local) are loaded, 
+" so it will override any settings in these files.
+"
+" If you don't want that to happen, uncomment the 
+" below line to prevent defaults.vim from being loaded.
+" let g:skip_defaults_vim = 1
+"
+" If you would rather use default.vim's settings, 
+" but have the system or user vimrc override its settings, 
+" then uncomment both lines below (to load the settings now 
+" but prevent it from being loaded by the user's vimrc).
+" source $VIMRUNTIME/defaults.vim
+" let g:skip_defaults_vim = 1
+"
+
+" -----------------------
+" NOTE -- DEBIAN SETTINGS
+"
+" Debian-specific settings are defined in $VIMRUNTIME/debian.vim 
+" and sourced by the call to :runtime (see below).
+" 
+" NOTE!!! Debian-specific settings no longer need to be set this way.
+"
+" If you wish to change any of those settings, do it in this file 
+" or /etc/vim/vimrc.local, since debian.vim will be overwritten 
+" everytime an upgrade of the vim packages is performed. 
+" It is recommended to make changes after sourcing debian.vim 
+" so your settings take precedence.
+"runtime! debian.vim
+
+
+" -------------------------
+" SET COMPATIBILITY WITH VI
+"
+" The command to enable Vi compatibility in Vim is :set compatible.
+" This mode makes Vim emulate the behavior of the original, 
+" more basic Vi editor. which disables many of Vim's enhanced 
+" features like multi-level undo, syntax highlighting, and 
+" modern plugin support
+"
+" NOTE!!! if enabled (above), debian.vim sets 'nocompatible'.  
+
+" NOTE!!! Setting 'compatible' changes numerous options, so other 
+" options should be set AFTER changing 'compatible'.
+
+set nocompatible
+
+
+" -----------------------------
+" SET LOCATION OF HISTORY FILE
+set viminfo+=n~/.config/vim/viminfo
+
+
+" --------------------------
+" SET LOCATION OF TEMP FILES
+"
+" To prevent issues when syncing, configure Vim to store its 
+" temporary swap, backup, and undo files in a non-synced directory:
+  
+" Store swap files in a hidden directory
+set directory=~/.local/tmp/vim/swap//
+
+" Store backup files in a hidden directory
+set backupdir=~/.local/tmp/vim/backup//
+
+" Enable persistent undo
+set undofile
+
+" Store undo files in a hidden directory
+set undodir=~/.local/tmp/vim/undo//
+
+
+" -----------
+" LET VIM FLY
+"
+" The following are commented to make vim compatible with vi.
+" They are highly recommended though.
+
+set showcmd			" Show (partial) command in status line.
+set showmatch		" Show matching brackets.
+set ignorecase	" Do case insensitive matching
+"set smartcase	" Do smart case matching
+"set incsearch	" Incremental search
+"set autowrite	" Automatically save before commands like :next and :make
+"set hidden			" Hide buffers when they are abandoned
+set mouse=a			" Enable mouse usage (all modes)
+
+
+" --------------
+" ENABLE PLUGINS
+"
+filetype plugin on
+
+" Uncomment the line below to have Vim load indentation 
+" rules and plugins according to the detected filetype.
+
+" filetype plugin indent on
+
+
+" ------------------
+" CONFIGURE VIMWIKIS
+let g:vimwiki_list = [
+	\ {'path': '~/syncthing/vimwikis/vimtest-md/', 'syntax': 'markdown', 'ext': '.md'},
+	\ {'path': '~/syncthing/vimwikis/vimtest-wk/', 'syntax': 'default', 'ext': '.wiki'}
+\ ]
+
+
+" ------------------------------
+" USE VIM-PLUG TO MANAGE PLUGINS
+call plug#begin('~/vim-plugged')
+"
+" Declare your plugins here, for example:
+Plug 'vimwiki/vimwiki'
+"
+" List ends here. Plugins become visible to Vim after this call.
+call plug#end()
+
+
+" -----------------
+" SET OTHER OPTIONS
+"
+" Enable syntax highlighting (also set below)
+" This command is requied by vimwiki?
+syntax on
+"
+" Use line numbers
+set number
+"
+" Set columns for line number
+set numberwidth=4
+"
+" Set tab width
+set tabstop=2
+"
+" Set soft tab width
+set softtabstop=2
+"
+" Set colorscheme
+:colorscheme sorbet
+" Scroll through available colorscheme options by typing
+" :colorscheme + Space + Tab
+"
+" Enable syntax highlighting
+:syntax enable
+"
+" If using a dark background within the editing area 
+" and syntax highlighting turn on this option as well
+set background=dark
+
+
+" -----------
+" OTHER STUFF
+" 
+" Uncomment the following to have Vim jump to the last 
+" position when reopening a file
+
+" au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
+
+
+
+"----------------------   Keymaps  --------------------------
+
+
+
+"----------------------            --------------------------
+
