@@ -1,0 +1,141 @@
+// ~/.config/waybar/config.jsonc
+
+// -*- mode: jsonc -*-
+{
+	// Waybar at top layer
+  // "layer": "top", 
+
+	// Waybar position (top|bottom|left|right)
+	// "position": "bottom", i
+
+	"height": 26, // Waybar height (to be removed for auto height)
+  // "width": 1280, // Waybar width
+ 
+	// Gaps between modules (4px)
+ 	"spacing": 4, 
+
+	// Choose the order of the modules
+  "modules-left": [
+		"sway/workspaces",
+		"sway/window",
+		"sway/mode"
+  ],
+  
+	"modules-center": [
+		"clock"
+  ],
+  
+	"modules-right": [
+		"backlight",
+		"pulseaudio",
+    "network",
+    "cpu",
+    "memory",
+    "temperature",
+		"sway/language",
+		"battery",
+		"tray",
+		"custom/power"
+  ],
+
+	// Modules configuration
+	"sway/workspaces": {
+		"disable-scroll": true,
+    "all-outputs": true,
+    "warp-on-scroll": false,
+    "format": "{name}"
+  },
+	
+//	"persistent-workspaces": {
+//		"1": "[]",
+//		"2": "[]",
+//		"3": "[]",
+//		"4": "[]",
+//		"5": "[]"
+//  },
+
+	"sway/mode": {
+    "format": "{}",
+		"max-length": 50
+  },
+    
+	"tray": {
+    "icon-size": 21,
+    "spacing": 10
+  },
+  
+	"clock": {
+    "format": "{:%a %d-%b-%y | %H:%M}",
+		"format-alt": "{:%A, %B %d, %Y at %I:%M %p}",
+		"tooltip": false 
+  },
+  
+	"cpu": {
+    "format": "CPU:{usage}%",
+		"format-alt": "CPU:{load}"
+  },
+  
+	"memory": {
+    "format": "RAM:{percentage}%",
+		"format-alt": "RAM:{used}GB",
+		"tooltip-format": "{used}GB + {avail}GB = {total}GB"
+  },
+  
+	"temperature": {
+    "format": "{temperatureC}°C",
+    "format-alt": "{temperatureF}°F",
+		"tooltip": false
+  },
+  
+	"backlight": {
+//    "device": "acpi_video1",
+    "format": "Brite:{percent}%",
+		"tooltip": false
+  },
+  
+	"battery": {
+    "states": {
+			"good": 95,
+			"warning": 30,
+      "critical": 15
+    },
+    "format": "{capacity}%",
+    "format-full": "{capacity}%",
+    "format-charging": "{capacity}%",
+    "format-plugged": "{capacity}%",
+    "format-alt": "{time}",
+    "format-good": "" // An empty format will hide the module
+  },
+  
+	"network": {
+    // "interface": "wlp2*", 
+		// (Optional) To force the use of this interface
+    "format-wifi": "{essid}:{signalStrength}%",
+    "format-ethernet": "ethernet",
+    "tooltip-format": "{ipaddr}/{cidr} via {gwaddr} (gateway)",
+    "format-linked": "{ifname} (No IP)",
+    "format-disconnected": "Disconnected",
+    "format-alt": "{ifname}"
+  },
+  
+	"pulseaudio": {
+    "format": "Vol:{volume}%",
+    "format-muted": "Vol:off",
+ //   "format-source": "{format_source}",
+		"on-click": "pauvcontrol"
+	},
+   
+	"custom/power": {
+    "format" : " + ",
+		"tooltip": false,
+		"menu": "on-click",
+		"menu-file": "$HOME/.config/waybar/power_menu.xml", 
+		"menu-actions": {
+			"exitSway": "swaymsg exit",			
+			"shutdown": "systemctl poweroff",
+			"reboot": "systemctl reboot"
+			// "suspend": "systemctl suspend",
+			// "hibernate": "systemctl hibernate"
+		}
+  }
+}
