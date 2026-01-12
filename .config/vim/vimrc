@@ -107,17 +107,16 @@ set viminfo+=n~/.config/vim/viminfo
 " temporary swap, backup, and undo files in a non-synced directory:
   
 " Store swap files in a hidden directory
-set directory=~/.local/tmp/vim/swap//
+set directory=~/.local/tmp/vim//
 
 " Store backup files in a hidden directory
-set backupdir=~/.local/tmp/vim/backup//
+set backupdir=~/.local/tmp/vim//
 
 " Enable persistent undo
 set undofile
 
 " Store undo files in a hidden directory
-set undodir=~/.local/tmp/vim/undo//
-
+set undodir=~/.local/tmp/vim//
 
 " -----------
 " LET VIM FLY
