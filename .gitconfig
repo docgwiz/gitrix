@@ -1,0 +1,5 @@
+[user]
+	name = docgwiz
+	email = admin@docgwiz.com
+[init]
+	defaultBranch = main
