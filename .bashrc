@@ -114,6 +114,14 @@ if ! shopt -oq posix; then
   fi
 fi
 
+function qqcd() {
+	new_dir="$*";
+	if [ $# -eq 0 ]; then
+	  new_dir=${HOME};
+	fi;
+	builtin cd "${new_dir}" && qqls
+}
+
 # Set location of Starship config file
 export STARSHIP_CONFIG=~/.config/starship/starship.toml
 
