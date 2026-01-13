@@ -23,13 +23,18 @@
 # The shell expands relative paths based on 
 # the CWD before rsync runs.
 
-# Set TIMESTAMP variable
+
+# Set variables
 TIMESTAMP=$(date +"%Y%m%d_%H%M%S")
+GITRIX_DIR="$HOME/gitrix"
+DOTFILES_DIR="$GITRIX_DIR"
+SYMLINK_DIR="$HOME"
 
 
+# Confirmation function
 confirm_go () {
 	read -p "Do you want to proceed? (Y/n) " doublecheck 
-	if [[ $doublecheck == "n" || $doublecheck == "N" ]]; then
+	if [[ "$doublecheck" == [nN] ]]; then
 		echo -e "\nSkipping ...\n"
 		return 1
 	else
@@ -54,24 +59,37 @@ trap 'handle_error' ERR
 # UPDATE PACKAGES
 
 echo -e "\n\nUpdating packages ..."
-sudo apt update
-
-
+if confirm_go; then
+	sudo apt update
+else
+	echo -e "Script file terminated.\n"
+	exit 0
+fi
 
 
 # -----------------
 # SETUP GITRIX REPO
-#
-# cd to $HOME
 
-# if $HOME/gitrix repo doesn't exist, then
-	#	prompt to clone gitrix repo from GitHub
-	#	clone gitrix repo
-# else
-	# prompt to pull gitrix repo from GitHub
-	# pull gitrix repo
-# fi
-
+echo -e "\n\nUpdating $GITRIX_DIR ..."
+if [ -d "$GITRIX_DIR" ]; then
+	echo -e "\n$GITRIX_DIR repo exists. Pulling from GitHub ...\n"
+	if confirm_go; then
+		cd $GITRIX_DIR
+		git pull origin main
+	else
+		echo -e "Script file terminated.\n"
+		exit 0
+	fi
+else 
+	echo -e "\nCloning the gitrix repo from GitHub ...\n" 
+	if confirm_go; then
+		cd $HOME
+		git clone https://github.com/docgwiz/gitrix
+	else
+		echo -e "Script file terminated.\n"
+		exit 0
+	fi
+fi
 
 
 # ---------------------------------
@@ -86,6 +104,41 @@ sudo apt update
 
 # See Obsidian note on Dotfile symlinks
 
+
+DOTFILES=(
+	.profile
+	.bashrc
+	.bash_aliases
+	.gitconfig
+)
+
+for file in "${DOTFILES[@]}"; do
+
+	# Create a file path by combining directory with dotfile name
+	DOTFILES_PATH="$DOTFILES_DIR/$file"
+  # SYMLINK_PATH="$SYMLINK_DIR/$file"
+  SYMLINK_PATH="$HOME/Backups/$file"
+	
+	# Handle existing files/symlinks in the target directory
+	# the -e option checks if file exists
+	# the -L option checks if file exists and is a symlink
+	# Using [[ ... ]] is preferred in Bash over [ ... ] as it is 
+	# more robust, although [ -L "$SYMLINK_PATH" ] is also valid 
+	# POSIX syntax  
+	if [[ -e "$SYMLINK_PATH" || -L "$SYMLINK_PATH" ]]; then
+		echo -e "\nFound existing file or symlink: $SYMLINK_PATH."
+	  echo -e "\nBacking up item and creating new symlink."
+		if confirm_go; then
+			mv "$SYMLINK_PATH" "${SYMLINK_PATH}.bak"
+			echo -e "\nBacked up existing item to ${SYMLINK_PATH}.bak\n"
+		fi
+	fi
+
+	#Create the symlink
+	# n -s "$DOTFILES_PATH" "$SYMLINK_PATH"
+	# echo -e "\nCreated symlink: $SYMLINK_PATH -> $DOTFILES_PATH\n"
+
+done
 
 
 # ----
