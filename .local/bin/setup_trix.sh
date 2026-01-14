@@ -26,15 +26,14 @@
 
 # Set variables
 TIMESTAMP=$(date +"%Y%m%d_%H%M%S")
-GITRIX_DIR="$HOME/gitrix"
-DOTFILES_DIR="$GITRIX_DIR"
-SYMLINK_DIR="$HOME"
 
 
-# Confirmation function
+# --------------------------
+# FUNCTION: GET CONFIRMATION
 confirm_go () {
-	read -p "Do you want to proceed? (Y/n) " doublecheck 
-	if [[ "$doublecheck" == [nN] ]]; then
+	local goodtogo			
+	read -p "Do you want to proceed? (Y/n) " goodtogo 
+	if [[ "$goodtogo" == [nN] ]]; then
 		echo -e "\nSkipping ...\n"
 		return 1
 	else
@@ -43,16 +42,75 @@ confirm_go () {
 	fi
 }
 
-# Set up error handling
+
+# ------------------------
+# FUNCTION: ERROR HANDLING
+
 handle_error() {
+	local returned=$?
 	echo -e "\nFAILED!"
 	echo -e "An error occurred on line ${BASH_LINENO[0]} while executing ${BASH_COMMAND}\n" 
-#	echo >&2
-	exit 1
+	exit "${returned}"
 }
 
 # Set a trap to call the handle_error function upon any error (ERR)
-trap 'handle_error' ERR
+trap 'handle_error $LINENO' ERR
+
+
+# ---------------------------
+# FUNCTION: INSTALL SYS FILES
+
+install_sysfiles() {
+
+# sysfiles will be installed in a git repo instead of their 
+# usual location. Symlinks to these files will be placed 
+# where the sysfiles are typically located.
+# These symlinks point to the sysfiles in the git repo.
+	
+	local SYS_FOLDER="$1" # this is the git repo folder
+	local SYM_FOLDER="$2" # this is the symlink folder
+
+	# Shift to read parameter n+1
+	shift 2
+	local filename_array=("$@")
+
+	echo -e "\n\nThese elements were passed to the install function:\n" 
+  for element in "${filename_array[@]}"; do
+    echo "-> $element"
+  done	
+
+	return 0
+
+
+	for file in "${passed_array[@]}"; do
+
+		# Create a file path by combining directory with dotfile name
+		SYSFILE_NAME_PATH="$TARGET_DIR/$file"
+		# SYMLINK_PATH="$SYMLINK_DIR/$file"
+		SYMLINK_PATH="$HOME/Backups/$file"
+	
+	# Handle existing files/symlinks in the target directory
+	# the -e option checks if file exists
+	# the -L option checks if file exists and is a symlink
+	# Using [[ ... ]] is preferred in Bash over [ ... ] as it is 
+	# more robust, although [ -L "$SYMLINK_PATH" ] is also valid 
+	# POSIX syntax  
+		if [[ -e "$SYMLINK_PATH" || -L "$SYMLINK_PATH" ]]; then
+			echo -e "\nFound existing file or symlink: $SYMLINK_PATH."
+			echo -e "Backing up item and creating new symlink."
+			mv "$SYMLINK_PATH" "${SYMLINK_PATH}.bak"
+			echo -e "Backed up existing item to ${SYMLINK_PATH}.bak"
+		fi
+
+		#Create the symlink
+		# ln -s "$SYSFILE_NAME_PATH" "$SYMLINK_PATH"
+		# echo -e "\nCreated symlink: $SYMLINK_PATH -> $SYSFILE_NAME_PATH\n"
+
+	done
+}
+
+
+# ==========================================================
 
 
 # ---------------
@@ -70,21 +128,26 @@ fi
 # -----------------
 # SETUP GITRIX REPO
 
-echo -e "\n\nUpdating $GITRIX_DIR ..."
-if [ -d "$GITRIX_DIR" ]; then
-	echo -e "\n$GITRIX_DIR repo exists. Pulling from GitHub ...\n"
+REPO_DIR="$HOME"
+REPO_NAME="gitrix"
+REPO_PATH="$REPO_DIR/$REPO_NAME"
+
+echo -e "\n\nSetting up the $REPO_NAME repo ..."
+if [ -d "$REPO_PATH" ]; then
+	echo -e "\n$REPO_NAME repo exists at $REPO_PATH."
+	echo -e "\nPulling from GitHub to update ...\n"
 	if confirm_go; then
-		cd $GITRIX_DIR
+		cd $REPO_PATH
 		git pull origin main
 	else
 		echo -e "Script file terminated.\n"
 		exit 0
 	fi
 else 
-	echo -e "\nCloning the gitrix repo from GitHub ...\n" 
+	echo -e "\nCloning the $REPO_NAME repo from GitHub ...\n" 
 	if confirm_go; then
-		cd $HOME
-		git clone https://github.com/docgwiz/gitrix
+		cd $REPO_DIR
+		git clone https://github.com/docgwiz/gitrix.git
 	else
 		echo -e "Script file terminated.\n"
 		exit 0
@@ -93,52 +156,28 @@ fi
 
 
 # ---------------------------------
-# CREATE SYMLINKS FOR SHELL SCRIPTS
+# INSTALL SHELL SCRIPTS
 
-# Adapt Obsidian note on Dotfile symlinks
-
-
-
-# ----------------------------
-# CREATE SYMLINKS FOR DOTFILES
-
-# See Obsidian note on Dotfile symlinks
+SCRIPTFILE_NAMES=()
+# fill this array by reading script folder for filenames
 
 
-DOTFILES=(
+
+
+# ----------------
+# INSTALL DOTFILES
+
+DOTFILE_NAMES=(
 	.profile
 	.bashrc
 	.bash_aliases
 	.gitconfig
 )
 
-for file in "${DOTFILES[@]}"; do
+SYSFILE_DIR="$REPO_PATH"
+SYMLINK_DIR="$HOME"
 
-	# Create a file path by combining directory with dotfile name
-	DOTFILES_PATH="$DOTFILES_DIR/$file"
-  # SYMLINK_PATH="$SYMLINK_DIR/$file"
-  SYMLINK_PATH="$HOME/Backups/$file"
-	
-	# Handle existing files/symlinks in the target directory
-	# the -e option checks if file exists
-	# the -L option checks if file exists and is a symlink
-	# Using [[ ... ]] is preferred in Bash over [ ... ] as it is 
-	# more robust, although [ -L "$SYMLINK_PATH" ] is also valid 
-	# POSIX syntax  
-	if [[ -e "$SYMLINK_PATH" || -L "$SYMLINK_PATH" ]]; then
-		echo -e "\nFound existing file or symlink: $SYMLINK_PATH."
-	  echo -e "\nBacking up item and creating new symlink."
-		if confirm_go; then
-			mv "$SYMLINK_PATH" "${SYMLINK_PATH}.bak"
-			echo -e "\nBacked up existing item to ${SYMLINK_PATH}.bak\n"
-		fi
-	fi
-
-	#Create the symlink
-	# n -s "$DOTFILES_PATH" "$SYMLINK_PATH"
-	# echo -e "\nCreated symlink: $SYMLINK_PATH -> $DOTFILES_PATH\n"
-
-done
+install_sysfiles "$SYFILE_DIR" "$SYMLINK_DIR" "${SYSFILE_NAMES[@]}"
 
 
 # ----
@@ -181,7 +220,7 @@ rsync_opts_bku=(--archive --verbose --progress --human-readable --mkpath)
 ### CREATE ARRAYS FOR RSYNC FOLDER/FILE NAMES
 ###
 #rsync_folders=("sway" "waybar" "foot" "mako" "vim" "starship")
-#rsync_dotfiles=(".profile" ".bashrc" ".bash_aliases" ".gitconfig")
+#rsync_SYSFILE_NAME=(".profile" ".bashrc" ".bash_aliases" ".gitconfig")
 
 local_path="/home/docgwiz/"
 repo_path="/home/docgwiz/gitrix/"
