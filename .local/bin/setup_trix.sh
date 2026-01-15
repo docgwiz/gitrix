@@ -125,16 +125,16 @@ else
 fi
 
 
-# -----------------
-# SETUP GITRIX REPO
+# -------------------
+# REFRESH GITRIX REPO
 
 REPO_DIR="$HOME"
-REPO_NAME="gitrix"
-REPO_PATH="$REPO_DIR/$REPO_NAME"
+REPO_FNAME="gitrix"
+REPO_PATH="$REPO_DIR/$REPO_FNAME"
 
-echo -e "\n\nSetting up the $REPO_NAME repo ..."
+echo -e "\n\nSetting up the $REPO_FNAME repo ..."
 if [ -d "$REPO_PATH" ]; then
-	echo -e "\n$REPO_NAME repo exists at $REPO_PATH."
+	echo -e "\n$REPO_FNAME repo exists at $REPO_PATH."
 	echo -e "\nPulling from GitHub to update ...\n"
 	if confirm_go; then
 		cd $REPO_PATH
@@ -144,7 +144,7 @@ if [ -d "$REPO_PATH" ]; then
 		exit 0
 	fi
 else 
-	echo -e "\nCloning the $REPO_NAME repo from GitHub ...\n" 
+	echo -e "\nCloning the $REPO_FNAME repo from GitHub ...\n" 
 	if confirm_go; then
 		cd $REPO_DIR
 		git clone https://github.com/docgwiz/gitrix.git
@@ -158,26 +158,65 @@ fi
 # ---------------------------------
 # INSTALL SHELL SCRIPTS
 
-SCRIPTFILE_NAMES=()
 # fill this array by reading script folder for filenames
 
+# Use nullglob to ensure the array is empty if no files match, 
+# preventing the literal '*' from being stored as an element
+# if the directory is empty.
+shopt -s nullglob 
 
+# Read filenames into the 'filenames' array
+SCRIPT_DIR="$REPO_PATH/.local/bin"
+SYM_DIR="$HOME/.local/bin"
+
+# The glob pattern handles spaces in filenames correctly
+SCRIPT_PATHS=("$SCRIPT_DIR"/*)
+cd "$SCRIPT_DIR"
+SCRIPT_FNAMES=(*) 
+
+# Revert nullglob if necessary for subsequent scripts
+shopt -u nullglob
+
+install_sysfiles "$SCRIPT_DIR" "$SYM_DIR" "${SCRIPT_FNAMES[@]}"
 
 
 # ----------------
 # INSTALL DOTFILES
 
-DOTFILE_NAMES=(
-	.profile
-	.bashrc
-	.bash_aliases
-	.gitconfig
-)
+# fill this array by reading script folder for filenames
 
-SYSFILE_DIR="$REPO_PATH"
-SYMLINK_DIR="$HOME"
+# Turn on (-s) nullglob to ensure the array is empty 
+# if no files match, preventing the literal '*' from being stored 
+# as an element if the directory is empty.
+shopt -s nullglob
 
-install_sysfiles "$SYFILE_DIR" "$SYMLINK_DIR" "${SYSFILE_NAMES[@]}"
+# Read filenames into the 'filenames' array
+DOT_DIR="$REPO_PATH"
+SYM_DIR="$HOME"
+
+# The glob pattern handles spaces in filenames correctly
+DOT_PATHS=("$DOT_DIR"/*)
+cd "$DOT_DIR"
+DOT_FNAMES=(.*) 
+
+# Turn off (-u) nullglob
+shopt -u nullglob
+
+
+# Use find to get only files and store them in the array
+# -type f: only matches files
+# -maxdepth 1: limits search to the specified directory
+# -printf "%f\\n": prints only the filename without the path, followed by a newline
+# readarray -t: reads lines from input into an array
+readarray -t filenames < <(find "$DOT_DIR" -maxdepth 1 -type f -printf "%f\\n")
+
+# To verify the array contents, loop through and print each element
+echo "Found files:"
+for file in "${filenames[@]}"; do
+    echo "$file"
+done
+
+# install_sysfiles "$DOT_DIR" "$SYM_DIR" "${DOT_FNAMES[@]}"
 
 
 # ----
