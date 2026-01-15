@@ -61,22 +61,34 @@ trap 'handle_error $LINENO' ERR
 # FUNCTION: INSTALL SYS FILES
 
 install_sysfiles() {
-
-# sysfiles will be installed in a git repo instead of their 
-# usual location. Symlinks to these files will be placed 
-# where the sysfiles are typically located.
-# These symlinks point to the sysfiles in the git repo.
 	
-	local SYS_FOLDER="$1" # this is the git repo folder
-	local SYM_FOLDER="$2" # this is the symlink folder
+# find: get files and store them in the array
+# -type f: only matches files (excludes directories)
+# -maxdepth 1: limits search to the specified directory
+# -printf "%f\\n": prints only the filename without the path, 
+#                  followed by a newline
+#  printf supports the \0 escape sequence to represent a null characte
+# -print0: print the full file name followed by a null character
 
-	# Shift to read parameter n+1
-	shift 2
-	local filename_array=("$@")
+# readarray: reads lines from input into an array
+# -t: removes trailing delimiter (newline by default) from 
+#     each line read into the array element
+# -d: specifies a delimiter between array elements (e.g. '' aka null) 
+
+	local SYSFILE_DIR="$1" 
+	# this is the git repo folder where sys files are located
+	local SYMFILE_DIR="$2" 
+	# this is the symlink folder where pointers are located
+
+	readarray -t FNAMES_ARRAY < <(find "$SYSFILE_DIR" -maxdepth 1 -type f -printf "%f\\n")
+
+	# readarray -d '' FNAMES2_ARRAY < <(find "$SYSFILE_DIR" -maxdepth 1 -type f -printf "%f\\0")
 
 	echo -e "\n\nThese elements were passed to the install function:\n" 
-  for element in "${filename_array[@]}"; do
-    echo "-> $element"
+  for fname in "${FNAMES_ARRAY[@]}"; do
+		SYSFILE_PATH="$SYSFILE_DIR/$fname"
+		SYMFILE_PATH="$SYMFILE_DIR/$fname"
+    echo -e "$fname:\n$SYMFILE_PATH points to $SYSFILE_PATH\n"
   done	
 
 	return 0
@@ -84,10 +96,6 @@ install_sysfiles() {
 
 	for file in "${passed_array[@]}"; do
 
-		# Create a file path by combining directory with dotfile name
-		SYSFILE_NAME_PATH="$TARGET_DIR/$file"
-		# SYMLINK_PATH="$SYMLINK_DIR/$file"
-		SYMLINK_PATH="$HOME/Backups/$file"
 	
 	# Handle existing files/symlinks in the target directory
 	# the -e option checks if file exists
@@ -158,65 +166,19 @@ fi
 # ---------------------------------
 # INSTALL SHELL SCRIPTS
 
-# fill this array by reading script folder for filenames
+SCRIPTSYS_DIR="$REPO_PATH/.local/bin"
+SCRIPTSYM_DIR="$HOME/.local/bin"
 
-# Use nullglob to ensure the array is empty if no files match, 
-# preventing the literal '*' from being stored as an element
-# if the directory is empty.
-shopt -s nullglob 
-
-# Read filenames into the 'filenames' array
-SCRIPT_DIR="$REPO_PATH/.local/bin"
-SYM_DIR="$HOME/.local/bin"
-
-# The glob pattern handles spaces in filenames correctly
-SCRIPT_PATHS=("$SCRIPT_DIR"/*)
-cd "$SCRIPT_DIR"
-SCRIPT_FNAMES=(*) 
-
-# Revert nullglob if necessary for subsequent scripts
-shopt -u nullglob
-
-install_sysfiles "$SCRIPT_DIR" "$SYM_DIR" "${SCRIPT_FNAMES[@]}"
+install_sysfiles "$SCRIPTSYS_DIR" "$SCRIPTSYM_DIR"
 
 
 # ----------------
 # INSTALL DOTFILES
 
-# fill this array by reading script folder for filenames
+DOTSYS_DIR="$REPO_PATH"
+DOTSYM_DIR="$HOME"
 
-# Turn on (-s) nullglob to ensure the array is empty 
-# if no files match, preventing the literal '*' from being stored 
-# as an element if the directory is empty.
-shopt -s nullglob
-
-# Read filenames into the 'filenames' array
-DOT_DIR="$REPO_PATH"
-SYM_DIR="$HOME"
-
-# The glob pattern handles spaces in filenames correctly
-DOT_PATHS=("$DOT_DIR"/*)
-cd "$DOT_DIR"
-DOT_FNAMES=(.*) 
-
-# Turn off (-u) nullglob
-shopt -u nullglob
-
-
-# Use find to get only files and store them in the array
-# -type f: only matches files
-# -maxdepth 1: limits search to the specified directory
-# -printf "%f\\n": prints only the filename without the path, followed by a newline
-# readarray -t: reads lines from input into an array
-readarray -t filenames < <(find "$DOT_DIR" -maxdepth 1 -type f -printf "%f\\n")
-
-# To verify the array contents, loop through and print each element
-echo "Found files:"
-for file in "${filenames[@]}"; do
-    echo "$file"
-done
-
-# install_sysfiles "$DOT_DIR" "$SYM_DIR" "${DOT_FNAMES[@]}"
+install_sysfiles "$DOTSYS_DIR" "$DOTSYM_DIR"
 
 
 # ----
