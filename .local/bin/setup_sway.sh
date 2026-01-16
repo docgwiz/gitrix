@@ -2,59 +2,6 @@
 
 # location: ~/.local/bin/<filename>
 
-# See manual:
-# https://manpages.debian.org/trixie/rsync/rsync.1.en.html
-
-# Source path WITH a trailing slash (/): 
-# This tells rsync to copy the contents of the source directory. 
-# The files and subdirectories within the source are copied directly
-# into the destination directory.
-
-# Source path WITHOUT a trailing slash: 
-# This tells rsync to copy the source directory itself 
-# into the destination. 
-# An extra directory level with the source directory's name 
-# is created inside the destination.
-
-# Always use absolute paths (paths starting with /) in scripts
-# to ensure the command behaves consistently 
-# regardless of the current working directory (CWD)
-# where the script is executed. 
-# The shell expands relative paths based on 
-# the CWD before rsync runs.
-
-# Set TIMESTAMP variable
-TIMESTAMP=$(date +"%Y%m%d_%H%M%S")
-
-
-confirm_go () {
-	read -p "Do you want to proceed? (Y/n) " doublecheck 
-	if [[ $doublecheck == "n" || $doublecheck == "N" ]]; then
-		echo -e "\nSkipping ...\n"
-		return 1
-	else
-		echo -e "\n"
-		return 0
-	fi
-}
-
-# Set up error handling
-handle_error() {
-	echo -e "\nFAILED!"
-	echo -e "An error occurred on line ${BASH_LINENO[0]} while executing ${BASH_COMMAND}\n" 
-#	echo >&2
-	exit 1
-}
-
-# Set a trap to call the handle_error function upon any error (ERR)
-trap 'handle_error' ERR
-
-
-# ---------------
-# UPDATE PACKAGES
-
-echo -e "\n\nUpdating packages ..."
-sudo apt update
 
 
 # -----------
@@ -71,12 +18,12 @@ fi
 
 VIM_NOSYNC="$HOME/.local/tmp/vim/"
 
-echo -e "\n\nCreating $VIM_NOSYNC\nUsed for Vim's swap, backup, and undo files ...\n"
+echo -e "\n\nCreating $VIM_NOSYNC for Vim's swap, backup, and undo files ...\n"
 if confirm_go; then 
 	# -e FILE	Returns true if the file/path exists.
 	# -f FILE	Returns true if the file exists and is a regular file.
 	# -d FILE	Returns true if the file exists and is a directory.
-	if [ -d "$VIM_NOSYNC" ]; then	
+	if [[ -d "$VIM_NOSYNC" ]]; then	
 		echo -e "\n$VIM_NOSYNC exists.\n"
 	else	
 		mkdir -p $VIM_NOSYNC
@@ -153,7 +100,10 @@ if confirm_go; then
 
 	sudo apt install xdg-utils 
 
-	sudo apt install lm-sensors sgml-base-doc liblcms2-utils libwacom-bin
+	sudo apt install lm-sensors sgml-base-doc 
+	
+	sudo apt install liblcms2-utils libwacom-bin
+
 fi
 
 
@@ -176,7 +126,7 @@ if confirm_go; then
 	# -e FILE	Returns true if the file/path exists.
 	# -f FILE	Returns true if the file exists and is a regular file.
 	# -d FILE	Returns true if the file exists and is a directory.
-	if [ -e "$ENV_FILE" ]; then
+	if [[ -e "$ENV_FILE" ]]; then
 		echo -e "\n$ENV_FILE exists. Skipping ..."
 	else
 		echo -e "\nCreating $ENV_FILE ...\n"
@@ -202,9 +152,73 @@ fi
 
 # --------------
 # INSTALL WAYBAR
+
 echo -e "\n\nInstalling Waybar ..."
 if confirm_go; then 
 	sudo apt install waybar
+fi
+
+
+# -----------------
+# INSTALL UTILITIES
+
+echo -e "\n\nAdding $USER to video and input groups ..."
+if confirm_go; then 
+	sudo usermod -a -G video "$USER"
+	sudo usermod -a -G input "$USER"	
+fi
+
+echo -e "\n\nInstalling brightnessctl ..."
+if confirm_go; then 
+	sudo apt install brightnessctl
+fi
+
+echo -e "\n\nInstalling pulseaudio ..."
+if confirm_go; then 
+	sudo apt install pulseaudio
+fi
+
+echo -e "\n\nInstalling wl-clipboard ..."
+if confirm_go; then 
+	sudo apt install wl-clipboard
+fi
+
+echo -e "\n\nInstalling MATE policy authentication package ..."
+if confirm_go; then
+	sudo apt install mate-polkit
+fi
+
+echo -e "\n\nInstalling clipman ..."
+if confirm_go; then
+	sudo apt install clipman
+fi
+
+
+echo -e "\n\nInstalling more utilities ..."
+if confirm_go; then
+
+	sudo apt install grim slurp
+	# tools for screenshots
+
+	sudo apt install hstr
+	# see and search bash history
+	
+	sudo apt install fd-find
+	# find files and directories in a filesystem
+	
+	sudo apt install gawk 
+	# filtering, formatting, and transforming data
+
+	sudo apt install htop
+ 	# text-based system monitor
+
+	sudo apt install imagemagick gimp
+	# creating, editing, converting, and displaying images
+	# gimp supports imagemagick
+	
+	sudo apt install font-manager
+	# preview and manage installed and available fonts
+	
 fi
 
 
@@ -221,169 +235,27 @@ fi
 
 
 
-
-# ----
-# EXIT
-exit 0
-
-
-
-# ------------
-# INSTALL FOOT
-
-
-
 # -------------
 # INSTALL MAKO
 
 # Mako needs the libnotify package:
-echo -e "\nMako need libnotify installed\n"
-sudo apt install libnotify-bin
-
-# Install Mako
-sudo apt install mako-notifier
-
-# Send a test Notification
-notify-send "Hello world!" 
-
+echo -e "\n\nInstalling Mako ..."
+if confirm_go; then 
+	sudo apt install libnotify-bin
+	sudo apt install mako-notifier
+	notify-send "Hello world!" 
+fi
 
 
 # ------------
 # INSTALL WOFI
 
-
-# INSTALL 
-
-
-
-
-# ----------------------------
-# CREATE SYMLINKS FOR DOTFILES
+echo -e "\n\nInstalling Wofi ..."
+if confirm_go; then 
+	sudo apt install wofi
+fi
 
 
-# --------------------------------
-# CREATE SYMLINKS FOR CONFIG FILES
-
-
-
-
-# ---------------------
-# RSYNC FLAGS (OPTIONS)
-# --mkpath: create all missing destination directories
-# --archive -a: archive mode (preserves permissions, timestamps, recursion, etc.)
-# --verbose -v: verbose (optional, shows transferred files)
-# --update -u: update (skip files that are newer in the destination)
-# --existing: only update files that already exist in the destination (optional)
-# --delete: delete files in destination not present in source 
-# --progress: show progress during transfer
-# --human-readable -h: display file sizes easy format for humans
-# --dry-run -n: (optional) run a simulation without making any changes
-
-
-###
-### CREATE ARRAYS FOR RSYNC OPTIONS
-###
-# To pass rsync options using a variable in a Bash script, 
-# the recommended method is to use an array. 
-# Storing options in a string variable and expanding it in the 
-# command can lead to issues with word splitting and quoting, 
-# especially with options that contain spaces or special characters 
-# (like --exclude '...').
-
-# Array for rsync options
-rsync_opts=(--archive --update --delete --verbose --progress --human-readable)
-
-# Array for rsync options + mkpath (used for rsyncing to ~/Backups)
-rsync_opts_bku=(--archive --verbose --progress --human-readable --mkpath)
-
-###
-### CREATE ARRAYS FOR RSYNC FOLDER/FILE NAMES
-###
-#rsync_folders=("sway" "waybar" "foot" "mako" "vim" "starship")
-#rsync_dotfiles=(".profile" ".bashrc" ".bash_aliases" ".gitconfig")
-
-local_path="/home/docgwiz/"
-repo_path="/home/docgwiz/gitrix/"
-backup_path="/home/docgwiz/Backups/gitrix/$TIMESTAMP/"
-
-rsync_list[0]=".config/sway/"
-rsync_list[1]=".config/waybar/"
-rsync_list[2]=".config/foot/"
-rsync_list[3]=".config/mako/"
-rsync_list[4]=".config/vim/"
-rsync_list[5]=".config/wofi/"
-rsync_list[6]=".config/starship/"
-rsync_list[7]=".profile"
-rsync_list[8]=".bashrc"
-rsync_list[9]=".bash_aliases"
-rsync_list[10]=".gitconfig"
-rsync_list[11]=".local/bin/"
-
-
-rsync_go () {
-	echo -e "\nrsync_go ()\n"
-}
-
-push_go () {
-	echo -e "\npush_go ()\n"
-}
-
-pull_go () {
-	echo -e "\npull_go ()\n"
-}
-
-echo -e "\nWhat would you like to do?\n"
-echo -e "Rsync (B)ackup of local setup"
-echo -e "Rsync (L)ocal setup to repo"
-echo -e "Rysnc (R)epo to local set up"
-echo -e "(1) PUSH repo to GitHub"
-echo -e "(2) PULL GitHub to repo"
-
-read rsync_choice
-
-case $rsync_choice in 
-	"B" | "b")
-	# Rsync local Trixie setup to Backup folder
-		src_path=$local_path
-		dst_path=$backup_path
-		opts=("${rsync_opts_bku[@]}")
-		;;
-	"L" | "l")
-	# Rsync local Trixie setup to git repo
-		src_path=$local_path
-		dst_path=$repo_path
-		opts=("${rsync_opts[@]}")
-		;;
-	"R" | "r")
-		# Rsync git repo to local Trixie setup
-		src_path=$repo_path
-		dst_path=$local_path
-		opts=("${rsync_opts[@]}")
-		echo -e "\nWARNING! You are about to overwrite your local Trixie setup.\n"
-		confirm_go
-		;;
-	"1")
-		push_go
-		exit 0
-		;;
-	"2")
-		pull_go
-		exit 0
-		;;
-	*)
-		echo -e "\nInvalid option. Aborting ..."
-		exit 1
-		;;
-esac
-
-echo -e "\nRsyncing $src_path to $dst_path ...\n"
-echo -e "Rsync OPTIONS: ${opts[@]}\n"
-
-confirm_go
-
-for rsync_item in "${rsync_list[@]}"; do
-	echo -e "Rsyncing $src_path$rsync_item to $dst_path$rsync_item\n"
-	rsync "${opts[@]}" "$src_path$rsync_item" "$dst_path$rsync_item"
-done
-
-echo -e "\nRsync complete."
+# ----
+# EXIT
+exit 0
