@@ -88,31 +88,23 @@ install_sysfiles() {
   for fname in "${FNAMES_ARRAY[@]}"; do
 		SYSFILE_PATH="$SYSFILE_DIR/$fname"
 		SYMFILE_PATH="$SYMFILE_DIR/$fname"
-    echo -e "$fname:\n$SYMFILE_PATH points to $SYSFILE_PATH\n"
-  done	
+    echo -e "$fname:\n$SYMFILE_PATH points to $SYSFILE_PATH\n"	
 
-	return 0
-
-
-	for file in "${passed_array[@]}"; do
-
-	
-	# Handle existing files/symlinks in the target directory
+	# Handle existing symlinks in the SYMFILE directory
 	# the -e option checks if file exists
 	# the -L option checks if file exists and is a symlink
-	# Using [[ ... ]] is preferred in Bash over [ ... ] as it is 
-	# more robust, although [ -L "$SYMLINK_PATH" ] is also valid 
-	# POSIX syntax  
-		if [[ -e "$SYMLINK_PATH" || -L "$SYMLINK_PATH" ]]; then
-			echo -e "\nFound existing file or symlink: $SYMLINK_PATH."
+	# Using [[ ... ]] is preferred in Bash over [ ... ] 
+	# as it is more robust
+		if [[ -e "$SYMFILE_PATH" || -L "$SYMFILE_PATH" ]]; then
+			echo -e "\nFound existing file or symlink: $SYMFILE_PATH."
 			echo -e "Backing up item and creating new symlink."
-			mv "$SYMLINK_PATH" "${SYMLINK_PATH}.bak"
-			echo -e "Backed up existing item to ${SYMLINK_PATH}.bak"
+			#	mv "$SYMLINK_PATH" "${SYMLINK_PATH}.bak"
+			echo -e "Backed up existing item to ${SYMFILE_PATH}.bak"
 		fi
 
 		#Create the symlink
 		# ln -s "$SYSFILE_NAME_PATH" "$SYMLINK_PATH"
-		# echo -e "\nCreated symlink: $SYMLINK_PATH -> $SYSFILE_NAME_PATH\n"
+		echo -e "\nCreated symlink: $SYMFILE_PATH -> $SYSFILE_PATH\n"
 
 	done
 }
@@ -136,16 +128,16 @@ fi
 # -------------------
 # REFRESH GITRIX REPO
 
-REPO_DIR="$HOME"
+REPO_LOC="$HOME"
 REPO_FNAME="gitrix"
-REPO_PATH="$REPO_DIR/$REPO_FNAME"
+REPO_DIR="$REPO_LOC/$REPO_FNAME"
 
 echo -e "\n\nSetting up the $REPO_FNAME repo ..."
-if [ -d "$REPO_PATH" ]; then
-	echo -e "\n$REPO_FNAME repo exists at $REPO_PATH."
+if [ -d "$REPO_DIR" ]; then
+	echo -e "\n$REPO_FNAME repo exists at $REPO_DIR."
 	echo -e "\nPulling from GitHub to update ...\n"
 	if confirm_go; then
-		cd $REPO_PATH
+		cd $REPO_DIR
 		git pull origin main
 	else
 		echo -e "Script file terminated.\n"
@@ -154,7 +146,7 @@ if [ -d "$REPO_PATH" ]; then
 else 
 	echo -e "\nCloning the $REPO_FNAME repo from GitHub ...\n" 
 	if confirm_go; then
-		cd $REPO_DIR
+		cd $REPO_LOC
 		git clone https://github.com/docgwiz/gitrix.git
 	else
 		echo -e "Script file terminated.\n"
@@ -166,7 +158,7 @@ fi
 # ---------------------------------
 # INSTALL SHELL SCRIPTS
 
-SCRIPTSYS_DIR="$REPO_PATH/.local/bin"
+SCRIPTSYS_DIR="$REPO_DIR/.local/bin"
 SCRIPTSYM_DIR="$HOME/.local/bin"
 
 install_sysfiles "$SCRIPTSYS_DIR" "$SCRIPTSYM_DIR"
@@ -175,10 +167,25 @@ install_sysfiles "$SCRIPTSYS_DIR" "$SCRIPTSYM_DIR"
 # ----------------
 # INSTALL DOTFILES
 
-DOTSYS_DIR="$REPO_PATH"
+DOTSYS_DIR="$REPO_DIR"
 DOTSYM_DIR="$HOME"
 
 install_sysfiles "$DOTSYS_DIR" "$DOTSYM_DIR"
+
+
+# -------------------------
+# INSTALL SWAY CONFIG FILES
+
+CONFIG_DIR=".config"
+PACK_DIR="sway"
+CONFIGSYS_DIR="$REPO_DIR/$CONFIG_DIR/$PACK_DIR"
+CONFIGSYM_DIR="$HOME/$CONFIG_DIR/$PACK_DIR"
+install_sysfiles "$CONFIGSYS_DIR" "$CONFIGSYM_DIR"
+
+PACK_DIR="waybar"
+CONFIGSYS_DIR="$REPO_DIR/$CONFIG_DIR/$PACK_DIR"
+CONFIGSYM_DIR="$HOME/$CONFIG_DIR/$PACK_DIR"
+install_sysfiles "$CONFIGSYS_DIR" "$CONFIGSYM_DIR"
 
 
 # ----
