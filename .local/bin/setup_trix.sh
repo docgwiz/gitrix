@@ -24,9 +24,9 @@
 # the CWD before rsync runs.
 
 
-# Set variables
-TIMESTAMP=$(date +"%Y%m%d_%H%M%S")
-
+# ================
+# DEFINE FUNCTIONS
+# ================
 
 
 # --------------------------
@@ -111,7 +111,9 @@ install_sysfiles() {
 }
 
 
-# ==========================================================
+# ======
+# SCRIPT
+# ======
 
 # ---------------
 # UPDATE PACKAGES
@@ -133,7 +135,7 @@ REPO_FNAME="gitrix"
 REPO_DIR="$REPO_LOC/$REPO_FNAME"
 
 echo -e "\n\nSetting up the $REPO_FNAME repo ..."
-if [ -d "$REPO_DIR" ]; then
+if [[ -d "$REPO_DIR" ]]; then
 	echo -e "\n$REPO_FNAME repo exists at $REPO_DIR."
 	echo -e "\nPulling from GitHub to update ...\n"
 	if confirm_go; then
@@ -349,21 +351,20 @@ if confirm_go; then
 	sudo apt install pulseaudio
 fi
 
-echo -e "\n\nInstalling wl-clipboard ..."
-if confirm_go; then 
-	sudo apt install wl-clipboard
-fi
-
 echo -e "\n\nInstalling MATE policy authentication package ..."
 if confirm_go; then
 	sudo apt install mate-polkit
+fi
+
+echo -e "\n\nInstalling wl-clipboard ..."
+if confirm_go; then 
+	sudo apt install wl-clipboard
 fi
 
 echo -e "\n\nInstalling clipman ..."
 if confirm_go; then
 	sudo apt install clipman
 fi
-
 
 echo -e "\n\nInstalling more utilities ..."
 if confirm_go; then
@@ -401,9 +402,6 @@ if confirm_go; then
 	sudo apt install starship
 fi
 
-# location of Starship config file is set in 
-# the bash resource config file (.bashrc)
-
 
 # -------------
 # INSTALL MAKO
@@ -413,7 +411,8 @@ echo -e "\n\nInstalling Mako ..."
 if confirm_go; then 
 	sudo apt install libnotify-bin
 	sudo apt install mako-notifier
-	notify-send "Hello world!" 
+	notify-send "Mako is running!"
+  notify-send "(Mako is configured later in this script.)"	
 fi
 
 
@@ -431,7 +430,7 @@ fi
 
 SWAY_PACKS=("sway" "starship" "foot" "waybar" "vim" "wofi" "mako")
 
-echo -e "\n\nInstalling config files ..."
+echo -e "\n\nInstalling config files for Sway packages ..."
 if confirm_go; then 
 	CONFIG_DIR=".config"
 	for PACK_DIR in "${SWAY_PACKS[@]}"; do
