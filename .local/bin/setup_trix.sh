@@ -28,6 +28,7 @@
 TIMESTAMP=$(date +"%Y%m%d_%H%M%S")
 
 
+
 # --------------------------
 # FUNCTION: GET CONFIRMATION
 confirm_go () {
@@ -112,7 +113,6 @@ install_sysfiles() {
 
 # ==========================================================
 
-
 # ---------------
 # UPDATE PACKAGES
 
@@ -160,7 +160,6 @@ fi
 
 SCRIPTSYS_DIR="$REPO_DIR/.local/bin"
 SCRIPTSYM_DIR="$HOME/.local/bin"
-
 install_sysfiles "$SCRIPTSYS_DIR" "$SCRIPTSYM_DIR"
 
 
@@ -169,149 +168,280 @@ install_sysfiles "$SCRIPTSYS_DIR" "$SCRIPTSYM_DIR"
 
 DOTSYS_DIR="$REPO_DIR"
 DOTSYM_DIR="$HOME"
-
 install_sysfiles "$DOTSYS_DIR" "$DOTSYM_DIR"
 
 
-# -------------------------
-# INSTALL SWAY CONFIG FILES
+# -----------
+# INSTALL VIM
 
-CONFIG_DIR=".config"
-PACK_DIR="sway"
-CONFIGSYS_DIR="$REPO_DIR/$CONFIG_DIR/$PACK_DIR"
-CONFIGSYM_DIR="$HOME/$CONFIG_DIR/$PACK_DIR"
-install_sysfiles "$CONFIGSYS_DIR" "$CONFIGSYM_DIR"
+echo -e "\n\nInstalling Vim ..."
+if confirm_go; then 
+	sudo apt install vim
+fi
 
-PACK_DIR="waybar"
-CONFIGSYS_DIR="$REPO_DIR/$CONFIG_DIR/$PACK_DIR"
-CONFIGSYM_DIR="$HOME/$CONFIG_DIR/$PACK_DIR"
-install_sysfiles "$CONFIGSYS_DIR" "$CONFIGSYM_DIR"
+
+# Create un-synced directory for Vim's 
+# swap, backup, and undo files
+
+VIM_NOSYNC="$HOME/.local/tmp/vim/"
+
+echo -e "\n\nCreating $VIM_NOSYNC for Vim's swap, backup, and undo files ...\n"
+if confirm_go; then 
+	# -e FILE	Returns true if the file/path exists.
+	# -f FILE	Returns true if the file exists and is a regular file.
+	# -d FILE	Returns true if the file exists and is a directory.
+	if [[ -d "$VIM_NOSYNC" ]]; then	
+		echo -e "\n$VIM_NOSYNC exists.\n"
+	else	
+		mkdir -p $VIM_NOSYNC
+		echo -e "\n$VIM_NOSYNC created.\n"
+	fi
+fi
+
+
+# Make Vim the default editor
+echo -e "\n\nMaking Vim the default editor ..."
+if confirm_go; then 
+	sudo update-alternatives --config editor
+fi
+
+
+# ---------------------
+# INSTALL FONT PACKAGES
+
+echo -e "\n\nInstalling fonts ..."
+if confirm_go; then 
+	# Install recommended fonts
+	sudo apt install fonts-recommended
+	# Install awesome font
+	sudo apt install fonts-font-awesome
+	# Install jetbrains font
+	sudo apt install fonts-jetbrains-mono
+	# Install a Nerd Font
+	sudo apt install fonts-firacode
+fi
+
+# Rebuild the font cache:
+echo -e "\n\nRebuilding the font cache ..."
+if confirm_go; then 
+	fc-cache -f
+	# -f: Forces regeneration, even if cache seems up-to-date
+	# -v: Shows verbose output (status information)		
+	# -s: Scans only system-wide directories, skips user-specific dirs
+	echo -e "Rebuild complete.\n"
+fi
+
+
+# ------------
+# INSTALL SWAY
+
+echo -e "\n\nInstalling Sway Window Manager ..."
+if confirm_go; then 
+	sudo apt install sway
+	# This will automatically install dependencies, including
+	# - swagbg (aka swaybackgrounds)
+	# - wmenu
+	# - foot 
+	# - sgml-base (likely installed earlier by polkitd)
+	# - xml-core (likely installed earlier by polkitd)
+fi
+
+
+# -------------------------------------
+# INSTALL RECOMMENDED PACKAGES FOR SWAY
+
+echo -e "\n\nInstalling recommended packages for Sway WM ..."
+if confirm_go; then 
+	# Install recommended packages:
+	sudo apt install swaylock swayidle sway-backgrounds
+
+	sudo apt install foot-themes
+
+	sudo apt install debhelper 
+	# debian helper installs build-essential, make, et al
+
+	sudo apt install xdg-desktop-portal 
+	# xdg-desktop-portal installs fuse3, x11-common, et al) 
+	# AND RECOMMENDS gvfs 
+
+	sudo apt install xdg-desktop-portal-wlr 
+# xdg...wlr installs pipewire, pipewire-pulse, wireplumber, slurp et al
+
+	sudo apt install xdg-desktop-portal-gtk
+
+	sudo apt install xdg-utils 
+
+	sudo apt install lm-sensors sgml-base-doc 
+	
+	sudo apt install liblcms2-utils libwacom-bin
+
+fi
+
+
+# ----------------
+# INSTALL XWAYLAND
+echo -e "\n\nInstalling Xwayland for packages that need X11 ..."
+if confirm_go; then 
+	sudo apt install xwayland
+fi
+
+
+# --------------------------
+# CREATE AN ENVIRONMENT FILE
+# create /etc/environment with root privileges
+
+echo -e "\n\nCreating an environment file ..."
+if confirm_go; then 
+	ENV_FILE="/etc/environment"
+
+	# -e FILE	Returns true if the file/path exists.
+	# -f FILE	Returns true if the file exists and is a regular file.
+	# -d FILE	Returns true if the file exists and is a directory.
+	if [[ -e "$ENV_FILE" ]]; then
+		echo -e "\n$ENV_FILE exists. Skipping ..."
+	else
+		echo -e "\nCreating $ENV_FILE ...\n"
+
+		# The printf command is more reliable than echo for interpreting
+		# escape sequences consistently across various systems. 
+		# It does not automatically add a trailing newline, 
+		# so you must include \n at the end if desired. 
+		printf -v ENV_CONTENT "XDG_CURRENT_DESKTOP=sway\nMOZ_ENABLE_WAYLAND=1\nQT_QPA_PLATFORM=wayland\nCLUTTER_BACKEND=wayland\nSDL_VIDEODRIVER=wayland"
+	
+		# The tee command is a common and effective way to 
+		# redirect output to a root-owned file because tee itself 
+		# is executed with sudo privileges. 
+		# The > /dev/null part prevents tee from outputting the content 
+		# to standard output, keeping your script's output clean. 
+		echo "$ENV_CONTENT" | sudo tee -a "$ENV_FILE" > /dev/null
+
+		echo -e "File complete.\n\n$ENV_FILE = \n"
+		cat $ENV_FILE
+	fi
+fi
+
+
+# --------------
+# INSTALL WAYBAR
+
+echo -e "\n\nInstalling Waybar ..."
+if confirm_go; then 
+	sudo apt install waybar
+fi
+
+
+# -----------------
+# INSTALL UTILITIES
+
+echo -e "\n\nInstalling brightnessctl ..."
+if confirm_go; then 
+	sudo apt install brightnessctl
+fi
+
+echo -e "\n\nTweaking brightnessctl!\nAdding $USER to video and input groups ..."
+if confirm_go; then 
+	sudo usermod -a -G video "$USER"
+	sudo usermod -a -G input "$USER"	
+fi
+
+echo -e "\n\nInstalling pulseaudio ..."
+if confirm_go; then 
+	sudo apt install pulseaudio
+fi
+
+echo -e "\n\nInstalling wl-clipboard ..."
+if confirm_go; then 
+	sudo apt install wl-clipboard
+fi
+
+echo -e "\n\nInstalling MATE policy authentication package ..."
+if confirm_go; then
+	sudo apt install mate-polkit
+fi
+
+echo -e "\n\nInstalling clipman ..."
+if confirm_go; then
+	sudo apt install clipman
+fi
+
+
+echo -e "\n\nInstalling more utilities ..."
+if confirm_go; then
+
+	sudo apt install grim slurp
+	# tools for screenshots
+
+	sudo apt install hstr
+	# see and search bash history
+	
+	sudo apt install fd-find
+	# find files and directories in a filesystem
+	
+	sudo apt install gawk 
+	# filtering, formatting, and transforming data
+
+	sudo apt install htop
+ 	# text-based system monitor
+
+	sudo apt install imagemagick gimp
+	# creating, editing, converting, and displaying images
+	# gimp supports imagemagick
+	
+	sudo apt install font-manager
+	# preview and manage installed and available fonts
+	
+fi
+
+
+# ----------------
+# INSTALL STARSHIP
+
+echo -e "\n\nInstalling Starship ..."
+if confirm_go; then 
+	sudo apt install starship
+fi
+
+# location of Starship config file is set in 
+# the bash resource config file (.bashrc)
+
+
+# -------------
+# INSTALL MAKO
+
+# Mako needs the libnotify package:
+echo -e "\n\nInstalling Mako ..."
+if confirm_go; then 
+	sudo apt install libnotify-bin
+	sudo apt install mako-notifier
+	notify-send "Hello world!" 
+fi
+
+
+# ------------
+# INSTALL WOFI
+
+echo -e "\n\nInstalling Wofi ..."
+if confirm_go; then 
+	sudo apt install wofi
+fi
+
+
+# --------------------
+# INSTALL CONFIG FILES
+
+SWAY_PACKS=("sway" "starship" "foot" "waybar" "vim" "wofi" "mako")
+
+echo -e "\n\nInstalling config files ..."
+if confirm_go; then 
+	CONFIG_DIR=".config"
+	for PACK_DIR in "${SWAY_PACKS[@]}"; do
+		CONFIGSYS_DIR="$REPO_DIR/$CONFIG_DIR/$PACK_DIR"
+		CONFIGSYM_DIR="$HOME/$CONFIG_DIR/$PACK_DIR"
+		install_sysfiles "$CONFIGSYS_DIR" "$CONFIGSYM_DIR"
+	done
+fi
 
 
 # ----
 # EXIT
 exit 0
-
-
-
-
-# ---------------------
-# RSYNC FLAGS (OPTIONS)
-# --mkpath: create all missing destination directories
-# --archive -a: archive mode (preserves permissions, timestamps, recursion, etc.)
-# --verbose -v: verbose (optional, shows transferred files)
-# --update -u: update (skip files that are newer in the destination)
-# --existing: only update files that already exist in the destination (optional)
-# --delete: delete files in destination not present in source 
-# --progress: show progress during transfer
-# --human-readable -h: display file sizes easy format for humans
-# --dry-run -n: (optional) run a simulation without making any changes
-
-
-###
-### CREATE ARRAYS FOR RSYNC OPTIONS
-###
-# To pass rsync options using a variable in a Bash script, 
-# the recommended method is to use an array. 
-# Storing options in a string variable and expanding it in the 
-# command can lead to issues with word splitting and quoting, 
-# especially with options that contain spaces or special characters 
-# (like --exclude '...').
-
-# Array for rsync options
-rsync_opts=(--archive --update --delete --verbose --progress --human-readable)
-
-# Array for rsync options + mkpath (used for rsyncing to ~/Backups)
-rsync_opts_bku=(--archive --verbose --progress --human-readable --mkpath)
-
-###
-### CREATE ARRAYS FOR RSYNC FOLDER/FILE NAMES
-###
-#rsync_folders=("sway" "waybar" "foot" "mako" "vim" "starship")
-#rsync_SYSFILE_NAME=(".profile" ".bashrc" ".bash_aliases" ".gitconfig")
-
-local_path="/home/docgwiz/"
-repo_path="/home/docgwiz/gitrix/"
-backup_path="/home/docgwiz/Backups/gitrix/$TIMESTAMP/"
-
-rsync_list[0]=".config/sway/"
-rsync_list[1]=".config/waybar/"
-rsync_list[2]=".config/foot/"
-rsync_list[3]=".config/mako/"
-rsync_list[4]=".config/vim/"
-rsync_list[5]=".config/wofi/"
-rsync_list[6]=".config/starship/"
-rsync_list[7]=".profile"
-rsync_list[8]=".bashrc"
-rsync_list[9]=".bash_aliases"
-rsync_list[10]=".gitconfig"
-rsync_list[11]=".local/bin/"
-
-
-rsync_go () {
-	echo -e "\nrsync_go ()\n"
-}
-
-push_go () {
-	echo -e "\npush_go ()\n"
-}
-
-pull_go () {
-	echo -e "\npull_go ()\n"
-}
-
-echo -e "\nWhat would you like to do?\n"
-echo -e "Rsync (B)ackup of local setup"
-echo -e "Rsync (L)ocal setup to repo"
-echo -e "Rysnc (R)epo to local set up"
-echo -e "(1) PUSH repo to GitHub"
-echo -e "(2) PULL GitHub to repo"
-
-read rsync_choice
-
-case $rsync_choice in 
-	"B" | "b")
-	# Rsync local Trixie setup to Backup folder
-		src_path=$local_path
-		dst_path=$backup_path
-		opts=("${rsync_opts_bku[@]}")
-		;;
-	"L" | "l")
-	# Rsync local Trixie setup to git repo
-		src_path=$local_path
-		dst_path=$repo_path
-		opts=("${rsync_opts[@]}")
-		;;
-	"R" | "r")
-		# Rsync git repo to local Trixie setup
-		src_path=$repo_path
-		dst_path=$local_path
-		opts=("${rsync_opts[@]}")
-		echo -e "\nWARNING! You are about to overwrite your local Trixie setup.\n"
-		confirm_go
-		;;
-	"1")
-		push_go
-		exit 0
-		;;
-	"2")
-		pull_go
-		exit 0
-		;;
-	*)
-		echo -e "\nInvalid option. Aborting ..."
-		exit 1
-		;;
-esac
-
-echo -e "\nRsyncing $src_path to $dst_path ...\n"
-echo -e "Rsync OPTIONS: ${opts[@]}\n"
-
-confirm_go
-
-for rsync_item in "${rsync_list[@]}"; do
-	echo -e "Rsyncing $src_path$rsync_item to $dst_path$rsync_item\n"
-	rsync "${opts[@]}" "$src_path$rsync_item" "$dst_path$rsync_item"
-done
-
-echo -e "\nRsync complete."
