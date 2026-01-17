@@ -2,6 +2,155 @@
 
 # location: ~/.local/bin/<filename>
 
+# See manual:
+# https://manpages.debian.org/trixie/rsync/rsync.1.en.html
+
+# Source path WITH a trailing slash (/): 
+# This tells rsync to copy the contents of the source directory. 
+# The files and subdirectories within the source are copied directly
+# into the destination directory.
+
+# Source path WITHOUT a trailing slash: 
+# This tells rsync to copy the source directory itself 
+# into the destination. 
+# An extra directory level with the source directory's name 
+# is created inside the destination.
+
+# Always use absolute paths (paths starting with /) in scripts
+# to ensure the command behaves consistently 
+# regardless of the current working directory (CWD)
+# where the script is executed. 
+# The shell expands relative paths based on 
+# the CWD before rsync runs.
+
+
+# ================
+# DEFINE FUNCTIONS
+# ================
+
+
+# --------------------------
+# FUNCTION: GET CONFIRMATION
+confirm_go () {
+	local goodtogo			
+	read -p "Do you want to proceed? (Y/n) " goodtogo 
+	if [[ "$goodtogo" == [nN] ]]; then
+		echo -e "\nSkipping ...\n"
+		return 1
+	else
+		echo -e "\n"
+		return 0
+	fi
+}
+
+
+# ------------------------
+# FUNCTION: ERROR HANDLING
+
+handle_error() {
+	local returned=$?
+	echo -e "\nFAILED!"
+	echo -e "An error occurred on line ${BASH_LINENO[0]} while executing ${BASH_COMMAND}\n" 
+	exit "${returned}"
+}
+
+# Set a trap to call the handle_error function upon any error (ERR)
+trap 'handle_error $LINENO' ERR
+
+
+# ---------------------------
+# FUNCTION: INSTALL SYS FILES
+
+install_sysfiles() {
+	
+# find: get files and store them in the array
+# -type f: only matches files (excludes directories)
+# -maxdepth 1: limits search to the specified directory
+# -printf "%f\\n": prints only the filename without the path, 
+#                  followed by a newline
+#  printf supports the \0 escape sequence to represent a null characte
+# -print0: print the full file name followed by a null character
+
+# readarray: reads lines from input into an array
+# -t: removes trailing delimiter (newline by default) from 
+#     each line read into the array element
+# -d: specifies a delimiter between array elements (e.g. '' aka null) 
+
+	local SYSFILE_DIR="$1" 
+	# this is the git repo folder where sys files are located
+	local SYMFILE_DIR="$2" 
+	# this is the symlink folder where pointers are located
+
+	readarray -t FNAMES_ARRAY < <(find "$SYSFILE_DIR" -maxdepth 1 -type f -printf "%f\\n")
+
+	# readarray -d '' FNAMES2_ARRAY < <(find "$SYSFILE_DIR" -maxdepth 1 -type f -printf "%f\\0")
+
+	echo -e "\n\nThese elements were passed to the install function:\n" 
+  for fname in "${FNAMES_ARRAY[@]}"; do
+		SYSFILE_PATH="$SYSFILE_DIR/$fname"
+		SYMFILE_PATH="$SYMFILE_DIR/$fname"
+    echo -e "$fname:\n$SYMFILE_PATH points to $SYSFILE_PATH\n"	
+
+	# Handle existing symlinks in the SYMFILE directory
+	# the -e option checks if file exists
+	# the -L option checks if file exists and is a symlink
+	# Using [[ ... ]] is preferred in Bash over [ ... ] 
+	# as it is more robust
+		if [[ -e "$SYMFILE_PATH" || -L "$SYMFILE_PATH" ]]; then
+			echo -e "\nFound existing file or symlink: $SYMFILE_PATH."
+			echo -e "Backing up item and creating new symlink."
+			#	mv "$SYMLINK_PATH" "${SYMLINK_PATH}.bak"
+			echo -e "Backed up existing item to ${SYMFILE_PATH}.bak"
+		fi
+
+		#Create the symlink
+		# ln -s "$SYSFILE_NAME_PATH" "$SYMLINK_PATH"
+		echo -e "\nCreated symlink: $SYMFILE_PATH -> $SYSFILE_PATH\n"
+
+	done
+}
+
+
+# ======
+# SCRIPT
+# ======
+
+# ---------------
+# UPDATE PACKAGES
+
+echo -e "\n\nUpdating packages ..."
+if confirm_go; then
+	sudo apt update
+else
+	echo -e "Script file terminated.\n"
+	exit 0
+fi
+
+# -----------------
+# INSTALL FASTFETCH
+
+echo -e "\n\nInstalling Vim ..."
+if confirm_go; then 
+	sudo apt install fastfetch
+fi
+
+
+# -------------------
+# INSTALL FIREFOX-ESR
+
+echo -e "\n\nInstalling Vim ..."
+if confirm_go; then 
+	sudo apt install firefox-esr
+fi
+
+
+# -----------------------------
+# INSTALL FILE MANAGEMENT UTILS
+
+echo -e "\n\nInstalling Vim ..."
+if confirm_go; then 
+	sudo apt install curl wget rsync
+fi
 
 
 # -----------
@@ -79,9 +228,13 @@ if confirm_go; then
 	# - xml-core (likely installed earlier by polkitd)
 fi
 
-echo -e "\n\nInstalling suggested packages for Sway WM ..."
+
+# -------------------------------------
+# INSTALL RECOMMENDED PACKAGES FOR SWAY
+
+echo -e "\n\nInstalling recommended packages for Sway WM ..."
 if confirm_go; then 
-	# Install sway-suggested packages:
+	# Install recommended packages:
 	sudo apt install swaylock swayidle sway-backgrounds
 
 	sudo apt install foot-themes
@@ -159,18 +312,18 @@ if confirm_go; then
 fi
 
 
-# -----------------
-# INSTALL UTILITIES
-
-echo -e "\n\nAdding $USER to video and input groups ..."
-if confirm_go; then 
-	sudo usermod -a -G video "$USER"
-	sudo usermod -a -G input "$USER"	
-fi
+# ------------------------------
+# INSTALL SWAY SUPPORT UTILITIES
 
 echo -e "\n\nInstalling brightnessctl ..."
 if confirm_go; then 
 	sudo apt install brightnessctl
+fi
+
+echo -e "\n\nTweaking brightnessctl!\nAdding $USER to video and input groups ..."
+if confirm_go; then 
+	sudo usermod -a -G video "$USER"
+	sudo usermod -a -G input "$USER"	
 fi
 
 echo -e "\n\nInstalling pulseaudio ..."
@@ -178,21 +331,20 @@ if confirm_go; then
 	sudo apt install pulseaudio
 fi
 
-echo -e "\n\nInstalling wl-clipboard ..."
-if confirm_go; then 
-	sudo apt install wl-clipboard
-fi
-
 echo -e "\n\nInstalling MATE policy authentication package ..."
 if confirm_go; then
 	sudo apt install mate-polkit
+fi
+
+echo -e "\n\nInstalling wl-clipboard ..."
+if confirm_go; then 
+	sudo apt install wl-clipboard
 fi
 
 echo -e "\n\nInstalling clipman ..."
 if confirm_go; then
 	sudo apt install clipman
 fi
-
 
 echo -e "\n\nInstalling more utilities ..."
 if confirm_go; then
@@ -222,19 +374,6 @@ if confirm_go; then
 fi
 
 
-# ----------------
-# INSTALL STARSHIP
-
-echo -e "\n\nInstalling Starship ..."
-if confirm_go; then 
-	sudo apt install starship
-fi
-
-# location of Starship config file is set in 
-# the bash resource config file (.bashrc)
-
-
-
 # -------------
 # INSTALL MAKO
 
@@ -243,7 +382,8 @@ echo -e "\n\nInstalling Mako ..."
 if confirm_go; then 
 	sudo apt install libnotify-bin
 	sudo apt install mako-notifier
-	notify-send "Hello world!" 
+	notify-send "Mako is running!"
+  notify-send "(Mako is configured later in this script.)"	
 fi
 
 
@@ -253,6 +393,55 @@ fi
 echo -e "\n\nInstalling Wofi ..."
 if confirm_go; then 
 	sudo apt install wofi
+fi
+
+
+# ----------------
+# INSTALL STARSHIP
+
+echo -e "\n\nInstalling Starship ..."
+if confirm_go; then 
+	sudo apt install starship
+fi
+
+
+# -------------------------
+# SET GITRIX REPO VARIABLES
+
+REPO_LOC="$HOME"
+REPO_FNAME="gitrix"
+REPO_DIR="$REPO_LOC/$REPO_FNAME"
+
+
+# ---------------------------------
+# INSTALL SHELL SCRIPTS
+
+SCRIPTSYS_DIR="$REPO_DIR/.local/bin"
+SCRIPTSYM_DIR="$HOME/.local/bin"
+install_sysfiles "$SCRIPTSYS_DIR" "$SCRIPTSYM_DIR"
+
+
+# ----------------
+# INSTALL DOTFILES
+
+DOTSYS_DIR="$REPO_DIR"
+DOTSYM_DIR="$HOME"
+install_sysfiles "$DOTSYS_DIR" "$DOTSYM_DIR"
+
+
+# --------------------
+# INSTALL CONFIG FILES
+
+SWAY_PACKS=("sway" "starship" "foot" "waybar" "vim" "wofi" "mako")
+
+echo -e "\n\nInstalling config files for Sway packages ..."
+if confirm_go; then 
+	CONFIG_DIR=".config"
+	for PACK_DIR in "${SWAY_PACKS[@]}"; do
+		CONFIGSYS_DIR="$REPO_DIR/$CONFIG_DIR/$PACK_DIR"
+		CONFIGSYM_DIR="$HOME/$CONFIG_DIR/$PACK_DIR"
+		install_sysfiles "$CONFIGSYS_DIR" "$CONFIGSYM_DIR"
+	done
 fi
 
 
