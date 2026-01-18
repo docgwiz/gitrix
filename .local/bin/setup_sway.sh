@@ -330,7 +330,7 @@ fi
 echo -e "\n\nInstalling pulseaudio and suggested packages ..."
 if confirm_go; then 
 	sudo apt install pulseaudio
-	sudo apt install pavumeter pavucontrol paprefs
+	sudo apt install pavucontrol
 fi
 
 

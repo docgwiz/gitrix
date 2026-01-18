@@ -1,13 +1,11 @@
 # ~/.config/mako/config
 
 
-# Position notifications in the top center of the screen
-# The format is 'gravity-anchor' (e.g., top-center) and 'offset' (e.g., 0,20 for x,y)
-# Adjust the '20' in the geometry line below to change the distance from the top of the screen
+# Position notifications
 anchor=top-right
 
 # Set notification format string to format. 
-format=%a\n<b>%s</b> %b 
+format=%a\n\n<b>%s</b> %b 
 
 # Set the background color to light gray with 80% opacity (semitransparent)
 # The format is #RRGGBBAA
@@ -43,7 +41,7 @@ default-timeout=4000
 # markup=1
 
 # Set font
-font=monospace 12
+font=monospace 11
 
 # Set text alignment for notifications
 #text-alignment=center
