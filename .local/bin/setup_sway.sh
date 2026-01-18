@@ -89,7 +89,7 @@ install_sysfiles() {
   for fname in "${FNAMES_ARRAY[@]}"; do
 		SYSFILE_PATH="$SYSFILE_DIR/$fname"
 		SYMFILE_PATH="$SYMFILE_DIR/$fname"
-    echo -e "$fname:\n$SYMFILE_PATH points to $SYSFILE_PATH\n"	
+    # echo -e "$fname:\n$SYMFILE_PATH points to $SYSFILE_PATH\n"	
 
 	# Handle existing symlinks in the SYMFILE directory
 	# the -e option checks if file exists
@@ -99,12 +99,12 @@ install_sysfiles() {
 		if [[ -e "$SYMFILE_PATH" || -L "$SYMFILE_PATH" ]]; then
 			echo -e "\nFound existing file or symlink: $SYMFILE_PATH."
 			echo -e "Backing up item and creating new symlink."
-			#	mv "$SYMLINK_PATH" "${SYMLINK_PATH}.bak"
+			mv "$SYMLINK_PATH" "${SYMLINK_PATH}.bak"
 			echo -e "Backed up existing item to ${SYMFILE_PATH}.bak"
 		fi
 
 		#Create the symlink
-		# ln -s "$SYSFILE_NAME_PATH" "$SYMLINK_PATH"
+		ln -s "$SYSFILE_NAME_PATH" "$SYMLINK_PATH"
 		echo -e "\nCreated symlink: $SYMFILE_PATH -> $SYSFILE_PATH\n"
 
 	done
@@ -129,7 +129,7 @@ fi
 # -----------------
 # INSTALL FASTFETCH
 
-echo -e "\n\nInstalling Vim ..."
+echo -e "\n\nInstalling FastFetch ..."
 if confirm_go; then 
 	sudo apt install fastfetch
 fi
@@ -138,7 +138,7 @@ fi
 # -------------------
 # INSTALL FIREFOX-ESR
 
-echo -e "\n\nInstalling Vim ..."
+echo -e "\n\nInstalling Firefox-ESR ..."
 if confirm_go; then 
 	sudo apt install firefox-esr
 fi
@@ -147,7 +147,7 @@ fi
 # -----------------------------
 # INSTALL FILE MANAGEMENT UTILS
 
-echo -e "\n\nInstalling Vim ..."
+echo -e "\n\nInstalling file management utilities ..."
 if confirm_go; then 
 	sudo apt install curl wget rsync
 fi
@@ -167,7 +167,7 @@ fi
 
 VIM_NOSYNC="$HOME/.local/tmp/vim/"
 
-echo -e "\n\nCreating $VIM_NOSYNC for Vim's swap, backup, and undo files ...\n"
+echo -e "\nCreating $VIM_NOSYNC for Vim's swap, backup, and undo files ...\n"
 if confirm_go; then 
 	# -e FILE	Returns true if the file/path exists.
 	# -f FILE	Returns true if the file exists and is a regular file.
@@ -182,7 +182,7 @@ fi
 
 
 # Make Vim the default editor
-echo -e "\n\nMaking Vim the default editor ..."
+echo -e "\nMaking Vim the default editor ..."
 if confirm_go; then 
 	sudo update-alternatives --config editor
 fi
@@ -191,7 +191,7 @@ fi
 # ---------------------
 # INSTALL FONT PACKAGES
 
-echo -e "\n\nInstalling fonts ..."
+echo -e "\n\nInstalling font packages ..."
 if confirm_go; then 
 	# Install recommended fonts
 	sudo apt install fonts-recommended
@@ -323,16 +323,20 @@ fi
 echo -e "\n\nTweaking brightnessctl!\nAdding $USER to video and input groups ..."
 if confirm_go; then 
 	sudo usermod -a -G video "$USER"
-	sudo usermod -a -G input "$USER"	
+	sudo usermod -a -G input "$USER"
+	groups "$USER"	
 fi
 
-echo -e "\n\nInstalling pulseaudio ..."
+echo -e "\n\nInstalling pulseaudio and suggested packages ..."
 if confirm_go; then 
 	sudo apt install pulseaudio
+	sudo apt install pavumeter pavucontrol paprefs
 fi
 
-echo -e "\n\nInstalling MATE policy authentication package ..."
+
+echo -e "\n\nInstalling polkit and MATE policy authentication package ..."
 if confirm_go; then
+	sudo apt install polkitd			
 	sudo apt install mate-polkit
 fi
 
@@ -364,7 +368,8 @@ if confirm_go; then
 	sudo apt install htop
  	# text-based system monitor
 
-	sudo apt install imagemagick gimp
+	sudo apt install gimp
+	sudo apt install imagemagick
 	# creating, editing, converting, and displaying images
 	# gimp supports imagemagick
 	
@@ -383,7 +388,6 @@ if confirm_go; then
 	sudo apt install libnotify-bin
 	sudo apt install mako-notifier
 	notify-send "Mako is running!"
-  notify-send "(Mako is configured later in this script.)"	
 fi
 
 

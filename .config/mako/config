@@ -1,15 +1,43 @@
 # ~/.config/mako/config
 
-# Mako configuration file
 
-# Set maximum number of expired notifications to keep in history
+# Position notifications in the top center of the screen
+# The format is 'gravity-anchor' (e.g., top-center) and 'offset' (e.g., 0,20 for x,y)
+# Adjust the '20' in the geometry line below to change the distance from the top of the screen
+anchor=top-right
+
+# Set notification format string to format. 
+format=%a\n<b>%s</b> %b 
+
+# Set the background color to light gray with 80% opacity (semitransparent)
+# The format is #RRGGBBAA
+background-color=#333333CC
+
+# Set the text color to white
+text-color=#FFFFFF
+
+# Remove the border by setting its color to fully transparent
+border-color=#00000000
+
+# Set the border size to 0 to ensure no border is visible
+border-size=0
+
+# Define the  radius for rounded corners (e.g., 10 pixels)
+border-radius=10
+
+# Optional: adjust width, height, and padding as needed
+width=400
+height=250
+padding=10
+
+# Max number of expired notifications to keep in history
 max-history=20
 
 # Sort notifications by time in descending order
 sort=-time
 
 # Set default timeout for notifications (in milliseconds)
-default-timeout=5000
+default-timeout=4000
 
 # Enable Pango markup for text formatting
 # markup=1
@@ -17,36 +45,6 @@ default-timeout=5000
 # Set font
 font=monospace 12
 
-# Set text color for notifications
-text-color=#333333
-
-# Set border color for notifications
-border-color=#cccccc
-
-# Set background color for notifications
-background-color=#cccccc
-
-# Set width and height of notification popups
-# width=400
-# height=200
-
-# Set margins for notifications
-margin=10
-
-# Show icons in notifications
-icons=1
-
-# Set maximum icon size
-max-icon-size=32
-
-# Position of the icon relative to the text
-icon-location=left
-
-# Enable actions for notifications
-# actions=1
-
 # Set text alignment for notifications
-text-alignment=center
+#text-alignment=center
 
-# Example of a sound to play on notification
-# on-notify=exec mpv /usr/share/sounds/freedesktop/stereo/message.oga
