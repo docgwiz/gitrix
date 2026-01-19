@@ -83,29 +83,33 @@ install_sysfiles() {
 
 	readarray -t FNAMES_ARRAY < <(find "$SYSFILE_DIR" -maxdepth 1 -type f -printf "%f\\n")
 
-	# readarray -d '' FNAMES2_ARRAY < <(find "$SYSFILE_DIR" -maxdepth 1 -type f -printf "%f\\0")
+	# readarray -d '' FNAMES_ARRAY < <(find "$SYSFILE_DIR" -maxdepth 1 -type f -printf "%f\\0")
 
-	echo -e "\n\nThese elements were passed to the install function:\n" 
   for fname in "${FNAMES_ARRAY[@]}"; do
+
+		#create symfile directory if it doesn't exist			
+		if [[ ! -d "$SYMFILE_DIR" ]]; then
+			mkdir -p "$SYMFILE_DIR"
+			echo -e "\nCreated $SYMFILE_DIR\n"
+		fi
+
 		SYSFILE_PATH="$SYSFILE_DIR/$fname"
 		SYMFILE_PATH="$SYMFILE_DIR/$fname"
-    # echo -e "$fname:\n$SYMFILE_PATH points to $SYSFILE_PATH\n"	
 
-	# Handle existing symlinks in the SYMFILE directory
-	# the -e option checks if file exists
-	# the -L option checks if file exists and is a symlink
-	# Using [[ ... ]] is preferred in Bash over [ ... ] 
-	# as it is more robust
+		# Handle existing symlinks in the SYMFILE directory
+		# the -e option checks if file exists
+		# the -L option checks if file exists and is a symlink
+		# Using [[ ... ]] is preferred in Bash over [ ... ] 
+		# as it is more robust
 		if [[ -e "$SYMFILE_PATH" || -L "$SYMFILE_PATH" ]]; then
 			echo -e "\nFound existing file or symlink: $SYMFILE_PATH."
 			echo -e "Backing up item and creating new symlink."
-			mv "$SYMLINK_PATH" "${SYMLINK_PATH}.bak"
+			mv "$SYMFILE_PATH" "${SYMFILE_PATH}.bak"
 			echo -e "Backed up existing item to ${SYMFILE_PATH}.bak"
 		fi
 
 		#Create the symlink
-		ln -s "$SYSFILE_NAME_PATH" "$SYMLINK_PATH"
-		echo -e "\nCreated symlink: $SYMFILE_PATH -> $SYSFILE_PATH\n"
+		ln -s "$SYSFILE_PATH" "$SYMFILE_PATH"
 
 	done
 }
@@ -417,21 +421,26 @@ REPO_FNAME="gitrix"
 REPO_DIR="$REPO_LOC/$REPO_FNAME"
 
 
-# ---------------------------------
+# ---------------------
 # INSTALL SHELL SCRIPTS
 
-SCRIPTSYS_DIR="$REPO_DIR/.local/bin"
-SCRIPTSYM_DIR="$HOME/.local/bin"
-install_sysfiles "$SCRIPTSYS_DIR" "$SCRIPTSYM_DIR"
+echo -e "\n\nInstalling scripts ..."
+if confirm_go; then 
+	SCRIPTSYS_DIR="$REPO_DIR/.local/bin"
+	SCRIPTSYM_DIR="$HOME/.local/bin"
+	install_sysfiles "$SCRIPTSYS_DIR" "$SCRIPTSYM_DIR"
+fi
 
 
 # ----------------
 # INSTALL DOTFILES
 
-DOTSYS_DIR="$REPO_DIR"
-DOTSYM_DIR="$HOME"
-install_sysfiles "$DOTSYS_DIR" "$DOTSYM_DIR"
-
+echo -e "\n\nInstalling dot files ..."
+if confirm_go; then 
+	DOTSYS_DIR="$REPO_DIR"
+	DOTSYM_DIR="$HOME"
+	install_sysfiles "$DOTSYS_DIR" "$DOTSYM_DIR"
+fi
 
 # --------------------
 # INSTALL CONFIG FILES
