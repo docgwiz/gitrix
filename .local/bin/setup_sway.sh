@@ -102,14 +102,13 @@ install_sysfiles() {
 		# Using [[ ... ]] is preferred in Bash over [ ... ] 
 		# as it is more robust
 		if [[ -e "$SYMFILE_PATH" || -L "$SYMFILE_PATH" ]]; then
-			echo -e "\nFound existing file or symlink: $SYMFILE_PATH."
-			echo -e "Backing up item and creating new symlink."
 			mv "$SYMFILE_PATH" "${SYMFILE_PATH}.bak"
-			echo -e "Backed up existing item to ${SYMFILE_PATH}.bak"
+			echo -e "\nBacked up existing item to ${SYMFILE_PATH}.bak"
 		fi
 
 		#Create the symlink
 		ln -s "$SYSFILE_PATH" "$SYMFILE_PATH"
+		echo -e "\nCreated new symlink: $SYMFILE_PATH"
 
 	done
 }

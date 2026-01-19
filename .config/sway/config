@@ -147,6 +147,10 @@ set $BlueGray #98afc7
 # run swaymsg -t get_outputs for output deets
 # consider using kanshi to handle different outputs
 
+### output config for screen on MacBookPro-13-2
+# output eDP-1 mode 2560x1600@60Hz 
+# output eDP-1 scale 2
+
 ### output config for screen on MacBookPro-10-1
 # output eDP-1 mode 2880x1800@59.990Hz 
 # output eDP-1 scale 2
@@ -158,8 +162,8 @@ set $BlueGray #98afc7
 ### output config for monitors on Geekom or Trigkey 
 # with LG 24" monitor or Viewsonic 27" monitor
 # NOTE: Trigkey has two HDMI outputs
-output HDMI-A-1 mode 1920x1080@60.000HZ
-output HDMI-A-1 scale 1
+# output HDMI-A-1 mode 1920x1080@60.000HZ
+# output HDMI-A-1 scale 1
 # output HDMI-A-2 mode 1920x1080@60.000HZ
 # output HDMI-A-2 scale 1
 
@@ -499,7 +503,7 @@ exec /usr/libexec/polkit-mate-authentication-agent-1
 exec waybar
 exec mako
 
-# set disp;lay brightness
+# set display brightness
 exec brightnessctl set 30%
 
 # set keyboard backlight brightness
