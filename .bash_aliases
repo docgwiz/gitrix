@@ -30,4 +30,4 @@ alias qqff='fastfetch'
 
 # ---------------
 # CLIPBOARD MAGIC
-alias qqgat='wl-copy < $HOME/gat.txt'
+alias qqgat='wl-copy < $HOME/.gat'

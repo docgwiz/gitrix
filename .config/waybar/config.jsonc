@@ -1,4 +1,4 @@
-// ~/.config/waybar/config.jsonc
+// ~/.config/waybar/<filename>
 
 // -*- mode: jsonc -*-
 {
@@ -71,25 +71,25 @@
   },
   
 	"cpu": {
-    "format": "CPU:{usage}%",
-		"format-alt": "CPU:{load}"
+    "format": "\uf4bc {usage}%",
+		"format-alt": "\uf4bc {load}"
   },
   
 	"memory": {
-    "format": "RAM:{percentage}%",
-		"format-alt": "RAM:{used}GB",
+    "format": "\uefc5{percentage}%",
+		"format-alt": "\uefc5{used}GB",
 		"tooltip-format": "{used}GB + {avail}GB = {total}GB"
   },
   
 	"temperature": {
-    "format": "{temperatureC}°C",
-    "format-alt": "{temperatureF}°F",
+    "format": "{temperatureC}\udb81\udd04",
+    "format-alt": "{temperatureF}\udb81\udd05",
 		"tooltip": false
   },
   
 	"backlight": {
 //    "device": "acpi_video1",
-    "format": "Brite:{percent}%",
+    "format": "\udb80\udf79 {percent}%",
 		"tooltip": false
   },
   
@@ -110,8 +110,8 @@
 	"network": {
     // "interface": "wlp2*", 
 		// (Optional) To force the use of this interface
-    "format-wifi": "{essid}:{signalStrength}%",
-    "format-ethernet": "ethernet",
+    "format-wifi": "\udb81\udda9 {essid}:{signalStrength}%",
+    "format-ethernet": "\udb80\ude00 ethernet",
     "tooltip-format": "{ipaddr}/{cidr} via {gwaddr} (gateway)",
     "format-linked": "{ifname} (No IP)",
     "format-disconnected": "Disconnected",
@@ -119,8 +119,8 @@
   },
   
 	"pulseaudio": {
-    "format": "Vol:{volume}%",
-    "format-muted": "Vol:off",
+    "format": "\udb81\udf1f {volume}%",
+    "format-muted": "\udb81\udf1f off",
  //   "format-source": "{format_source}",
 		"on-click": "pauvcontrol"
 	},
