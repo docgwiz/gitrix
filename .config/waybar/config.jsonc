@@ -32,7 +32,7 @@
     "cpu",
     "memory",
     "temperature",
-		"sway/language",
+//	"sway/language",
 		"battery",
 		"tray",
 		"custom/power"
@@ -76,8 +76,8 @@
   },
   
 	"memory": {
-    "format": "\uefc5{percentage}%",
-		"format-alt": "\uefc5{used}GB",
+    "format": "\uefc5 {percentage}%",
+		"format-alt": "\uefc5 {used}GB",
 		"tooltip-format": "{used}GB + {avail}GB = {total}GB"
   },
   
@@ -99,10 +99,10 @@
 			"warning": 30,
       "critical": 15
     },
-    "format": "{capacity}%",
-    "format-full": "{capacity}%",
-    "format-charging": "{capacity}%",
-    "format-plugged": "{capacity}%",
+    "format": "\udb80\udc91{capacity}%",
+    "format-full": "\udb80\udc79{capacity}%",
+    "format-charging": "\udb80\udc85{capacity}%",
+    "format-plugged": "\udb80\udc84{capacity}%",
     "format-alt": "{time}",
     "format-good": "" // An empty format will hide the module
   },
