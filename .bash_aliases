@@ -31,3 +31,4 @@ alias qqff='fastfetch'
 # ---------------
 # CLIPBOARD MAGIC
 alias qqgat='wl-copy < $HOME/syncthing/.gat'
+alias qqgatx='wl-copy < $HOME/.gat'
