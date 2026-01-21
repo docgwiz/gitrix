@@ -23,11 +23,21 @@
 # The shell expands relative paths based on 
 # the CWD before rsync runs.
 
+# ================
+# DEFINE VARIABLES
+# ===============
+
+# -------------------------
+# SET GITRIX REPO VARIABLES
+
+REPO_PARENT="$HOME"
+REPO_FNAME="gitrix"
+REPO_DIR="$REPO_PARENT/$REPO_FNAME"
+
 
 # ================
 # DEFINE FUNCTIONS
 # ================
-
 
 # --------------------------
 # FUNCTION: GET CONFIRMATION
@@ -153,6 +163,7 @@ fi
 echo -e "\n\nInstalling file management utilities ..."
 if confirm_go; then 
 	sudo apt install curl wget rsync
+	sudo apt install zip unzip
 fi
 
 
@@ -200,20 +211,50 @@ if confirm_go; then
 	sudo apt install fonts-recommended
 	# Install awesome font
 	sudo apt install fonts-font-awesome
-	# Install jetbrains font
-	sudo apt install fonts-jetbrains-mono
-	# Install a Nerd Font
-	sudo apt install fonts-firacode
-fi
+	
+	# Install mono nerd fonts
+	FONT_DIRLOCAL="$HOME/.local/share/fonts"
+	FONT_DIRREPO="$REPO_DIR/.local/share/fonts"
 
-# Rebuild the font cache:
-echo -e "\n\nRebuilding the font cache ..."
-if confirm_go; then 
+  if [[ ! -d "$FONT_DIRLOCAL" ]]; then
+		mkdir -p "$FONT_DIRLOCAL"
+	fi	
+
+	# Use rsync to cp files from gitrix font directory 
+	# to local font dir
+	#rsync
+
+	# DejaVuSansM Nerd Font
+	# Original Font Name: DejaVu Sans Mono
+	# Dotted zero, based on the Bitstream Vera Fonts with a wider range of character
+	# https://github.com/ryanoasis/nerd-fonts/releases/download/v3.4.0/DejaVuSansMono.zip
+
+	# MesloLG Nerd Font
+	# Slashed zeros, customized version of Apple's Menlo
+	# https://github.com/ryanoasis/nerd-fonts/releases/download/v3.4.0/Meslo.zip
+	
+	# InconsolataGo Nerd Font
+	# Slashed zero, takes inspiration from many different fonts and glyphs, subtle curves in lowercase, straight quotes
+	# https://github.com/ryanoasis/nerd-fonts/releases/download/v3.4.0/InconsolataGo.zip
+	
+	# FiraMono Nerd Font
+	# Original Font Name: Fira
+	# Mozilla typeface, dotted zero
+	# https://github.com/ryanoasis/nerd-fonts/releases/download/v3.4.0/FiraMono.zip
+	
+	# JetBrainsMono Nerd Font
+	# JetBrains officially created font for developers 
+	# https://github.com/ryanoasis/nerd-fonts/releases/download/v3.4.0/JetBrainsMono.zip
+	
+
+	# Rebuild the font cache:
+	echo -e "\n\nRebuilding the font cache ..."
 	fc-cache -f
 	# -f: Forces regeneration, even if cache seems up-to-date
 	# -v: Shows verbose output (status information)		
 	# -s: Scans only system-wide directories, skips user-specific dirs
 	echo -e "Rebuild complete.\n"
+
 fi
 
 
@@ -412,14 +453,6 @@ if confirm_go; then
 fi
 
 
-# -------------------------
-# SET GITRIX REPO VARIABLES
-
-REPO_LOC="$HOME"
-REPO_FNAME="gitrix"
-REPO_DIR="$REPO_LOC/$REPO_FNAME"
-
-
 # ---------------------
 # INSTALL SHELL SCRIPTS
 
@@ -457,6 +490,19 @@ if confirm_go; then
 fi
 
 
+# -----------------
+# INSTALL SYNCTHING
+
+if confirm_go; then
+	sudo apt install syncthing
+	systemctl --user enable syncthing.service
+	echo -e "\n\nReboot may be required to bring syncthing online\n"
+fi
+
+
+
 # ----
 # EXIT
+
+echo -e "\n\nSWAY SETUP UP SCRIPT COMPLETED\n\n"
 exit 0
