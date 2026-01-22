@@ -205,56 +205,59 @@ fi
 # ---------------------
 # INSTALL FONT PACKAGES
 
-echo -e "\n\nInstalling font packages ..."
+# Install apt repo packages
+echo -e "\n\nInstalling apt repository font packages ..."
 if confirm_go; then 
+
 	# Install recommended fonts
 	sudo apt install fonts-recommended
+
 	# Install awesome font
 	sudo apt install fonts-font-awesome
-	
-	# Install mono nerd fonts
-	FONT_DIRLOCAL="$HOME/.local/share/fonts"
-	FONT_DIRSYNC="$HOME/syncthing/nerdfonts"
 
-  if [[ ! -d "$FONT_DIRLOCAL" ]]; then
-		mkdir -p "$FONT_DIRLOCAL"
+fi
+
+# Install nerdfont packages
+echo -e "\n\nInstalling nerd font packages ..."
+if confirm_go; then 
+
+	FONTS_DIRLOCAL="$HOME/.local/share/fonts"
+	FONTS_DIRSYNC="$HOME/Downloads"
+
+	# echo -e "\nFONTS_DIRLOCAL = $FONTS_DIRLOCAL"
+	# echo -e "\nFONTS_DIRSYNC = $FONTS_DIRSYNC"
+
+  if [[ ! -d "$FONTS_DIRLOCAL" ]]; then
+		echo -e "\nCreating folder: $FONTS_DIRLOCAL ..."
+		mkdir -p "$FONTS_DIRLOCAL"
 	fi	
 
-	for font_zipfile in "$FONT_DIRSYNC/*.zip"; do
-		unzip "$font_zipfile" -d "$FONT_DIRLOCAL/"
+	cd "$FONTS_DIRSYNC"
+
+	for nerdfont in *.zip; do
+
+		folder_name="${nerdfont%.zip}"
+		NERD_DIRLOCAL="$FONTS_DIRLOCAL/$folder_name"
+
+		if [[ ! -d "$NERD_DIRLOCAL" ]]; then
+			echo -e "\nCreating folder: $NERD_DIRLOCAL ..."	
+			mkdir "$NERD_DIRLOCAL"
+		fi
+
+		echo -e "\nUnzipping $nerdfont to $NERD_DIRLOCAL ..."
+		unzip "$nerdfont" -d "$NERD_DIRLOCAL"
+
 	done
+fi
 
-	# DejaVuSansM Nerd Font
-	# Original Font Name: DejaVu Sans Mono
-	# Dotted zero, based on the Bitstream Vera Fonts with a wider range of character
-	# https://github.com/ryanoasis/nerd-fonts/releases/download/v3.4.0/DejaVuSansMono.zip
-
-	# MesloLG Nerd Font
-	# Slashed zeros, customized version of Apple's Menlo
-	# https://github.com/ryanoasis/nerd-fonts/releases/download/v3.4.0/Meslo.zip
-	
-	# InconsolataGo Nerd Font
-	# Slashed zero, takes inspiration from many different fonts and glyphs, subtle curves in lowercase, straight quotes
-	# https://github.com/ryanoasis/nerd-fonts/releases/download/v3.4.0/InconsolataGo.zip
-	
-	# FiraMono Nerd Font
-	# Original Font Name: Fira
-	# Mozilla typeface, dotted zero
-	# https://github.com/ryanoasis/nerd-fonts/releases/download/v3.4.0/FiraMono.zip
-	
-	# JetBrainsMono Nerd Font
-	# JetBrains officially created font for developers 
-	# https://github.com/ryanoasis/nerd-fonts/releases/download/v3.4.0/JetBrainsMono.zip
-	
-
-	# Rebuild the font cache:
-	echo -e "\n\nRebuilding the font cache ..."
+# Rebuild the font cache:
+echo -e "\n\nRebuilding the font cache ..."
+if confirm_go; then
 	fc-cache -f
 	# -f: Forces regeneration, even if cache seems up-to-date
 	# -v: Shows verbose output (status information)		
 	# -s: Scans only system-wide directories, skips user-specific dirs
 	echo -e "Rebuild complete.\n"
-
 fi
 
 
@@ -488,17 +491,6 @@ if confirm_go; then
 		install_sysfiles "$CONFIGSYS_DIR" "$CONFIGSYM_DIR"
 	done
 fi
-
-
-# -----------------
-# INSTALL SYNCTHING
-
-if confirm_go; then
-	sudo apt install syncthing
-	systemctl --user enable syncthing.service
-	echo -e "\n\nReboot may be required to bring syncthing online\n"
-fi
-
 
 
 # ----
