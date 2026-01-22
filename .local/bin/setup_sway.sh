@@ -214,15 +214,15 @@ if confirm_go; then
 	
 	# Install mono nerd fonts
 	FONT_DIRLOCAL="$HOME/.local/share/fonts"
-	FONT_DIRREPO="$REPO_DIR/.local/share/fonts"
+	FONT_DIRSYNC="$HOME/syncthing/nerdfonts"
 
   if [[ ! -d "$FONT_DIRLOCAL" ]]; then
 		mkdir -p "$FONT_DIRLOCAL"
 	fi	
 
-	# Use rsync to cp files from gitrix font directory 
-	# to local font dir
-	#rsync
+	for font_zipfile in "$FONT_DIRSYNC/*.zip"; do
+		unzip "$font_zipfile" -d "$FONT_DIRLOCAL/"
+	done
 
 	# DejaVuSansM Nerd Font
 	# Original Font Name: DejaVu Sans Mono
