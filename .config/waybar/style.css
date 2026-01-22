@@ -2,8 +2,8 @@
 /*  otf-font-awesome is required to be installed for icons */
 /*  font-family: FontAwesome, Roboto, Helvetica, Arial, sans-serif; */		
 /*	font-family: DejaVu Sans Mono; */
-		font-family: "MesloLG Nerd Font", "InconsolataGo Nerd Font", "DejaVuSansM Nerd Font", "FiraMono Nerd Font", "JetBrainsMono Nerd Font", FontAwesome;	
-    font-size: 14px;
+		font-family: "DejaVuSansM Nerd Font", "MesloLG Nerd Font", "InconsolataGo Nerd Font", "FiraMono Nerd Font", "JetBrainsMono Nerd Font", FontAwesome;	
+    font-size: 15px;
 }
 
 window#waybar {
