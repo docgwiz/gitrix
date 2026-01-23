@@ -96,12 +96,12 @@
 	"battery": {
     "states": {
 			"good": 95,
-			"warning": 30,
-      "critical": 15
+			"warning": 20,
+      "critical": 10
     },
     "format": "\udb80\udc91{capacity}%",
     "format-full": "\udb80\udc79{capacity}%",
-    "format-charging": "\udb80\udc85{capacity}%",
+    "format-charging": "\udb80\udc85 {capacity}%",
     "format-plugged": "\udb80\udc84{capacity}%",
     "format-alt": "{time}",
     "format-good": "" // An empty format will hide the module

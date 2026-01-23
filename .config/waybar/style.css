@@ -103,6 +103,29 @@ button:hover {
   color: #ffffff;
 }
 
+#backlight {
+	color: yellow;
+}
+
+#pulseaudio {
+	color: magenta;
+}
+
+#network {
+	color: lawngreen;
+}
+
+#cpu {
+	color: mediumorchid;
+}
+
+#memory {
+	color: cyan;
+}
+
+#temperature {
+	color: orange;
+}
 
 #window,
 #workspaces {
