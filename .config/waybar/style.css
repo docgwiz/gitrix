@@ -2,16 +2,22 @@
 /*  otf-font-awesome is required to be installed for icons */
 /*  font-family: FontAwesome, Roboto, Helvetica, Arial, sans-serif; */		
 /*	font-family: DejaVu Sans Mono; */
-		font-family: "DejaVuSansM Nerd Font", "MesloLG Nerd Font", "InconsolataGo Nerd Font", "FiraMono Nerd Font", "JetBrainsMono Nerd Font", FontAwesome;	
+		font-family: "AtkynsonMono Nerd Font", "0xProto Nerd Font", "InconsolataGo Nerd Font", "DejaVuSansM Nerd Font", "FiraMono Nerd Font", "JetBrainsMono Nerd Font", FontAwesome;	
     font-size: 15px;
 }
 
 window#waybar {
-	background-color: #4d516d; /* independance blue */
-  border-bottom: 3px solid #1c2951; /*space blue */
+	background-color: darkslategray; 
+  border-bottom: 1px solid cyan; 
   color: #ffffff;
+	font-weight: bold;
   transition-property: background-color;
   transition-duration: .5s;
+}
+
+window#waybar>box {
+	margin-top: 5px;
+	margin-bottom: 5px;
 }
 
 window#waybar.hidden {
@@ -51,24 +57,22 @@ button:hover {
 }
 */
 
-/* you can set a style on hover for any module like this */
-#pulseaudio:hover {
-  background-color: #123456; /* deep sea blue */
-}
-
 #workspaces button {
   padding: 0 5px;
   background-color: transparent;
   color: #ffffff;
+	border-radius: 15px;
 }
 
 #workspaces button:hover {
-  background: rgba(0, 0, 0, 0.2);
+  /* background: rgba(0, 0, 0, 0.2); */
+	background: lightseagreen;
 }
 
 #workspaces button.focused {
-  background-color: #64727D;
-  box-shadow: inset 0 -3px #ffffff;
+  background-color: steelblue;
+  /* box-shadow: inset 0 -3px yellow; */
+	border-radius: 15px;
 }
 
 #workspaces button.urgent {
@@ -76,8 +80,9 @@ button:hover {
 }
 
 #mode {
-  background-color: #64727D;
-  box-shadow: inset 0 -3px #ffffff;
+	color: white;
+  background-color: deeppink;
+  box-shadow: inset 0 -3px yellow;
 }
 
 #clock, 
@@ -98,38 +103,46 @@ button:hover {
 #scratchpad,
 #power-profiles-daemon,
 #mpd {
-	padding: 0 2px 0 2px; /* top right bottom left */
-	margin: 3px 0 3px 0; /* top right bottom left */
-  color: #ffffff;
+	padding: 0 3px 0 3px; /* top right bottom left */
+	margin: 0 0 0 0; /* top right bottom left */
+  color: white;
+	background-color: transparent;
 }
 
-#backlight {
-	color: yellow;
-}
-
+#backlight,
 #pulseaudio {
-	color: magenta;
+	color: lightgreen;
 }
 
 #network {
-	color: lawngreen;
+	color: violet;
 }
 
-#cpu {
-	color: mediumorchid;
-}
-
+#cpu,
 #memory {
-	color: cyan;
+	color: aqua;
 }
 
 #temperature {
-	color: orange;
+	color: blanchedalmond;
 }
+
+#backlight:hover,
+#pulseaudio:hover,
+#network:hover,
+#cpu:hover,
+#memory:hover,
+#temperature:hover {
+	color: white;
+	background-color: dimgrey;
+	border-radius: 5px;
+}
+
 
 #window,
 #workspaces {
   margin: 0 4px;
+	color: yellow;
 }
 
 /* If workspaces is the leftmost module, omit left margin */
@@ -142,17 +155,6 @@ button:hover {
   margin-right: 0;
 }
 
-#clock {
-  background-color: transparent;
-}
-
-#battery {
-  background-color: transparent;
-}
-
-#battery.charging, #battery.plugged {
-  background-color: transparent;
-}
 
 @keyframes blink {
   to {
@@ -195,40 +197,16 @@ label:focus {
   background-color: #000000;
 }
 
-#cpu {
-  background-color: transparent;
-}
-
-#memory {
-  background-color: transparent;
-}
-
 #disk {
   background-color: #964B00;
-}
-
-#backlight {
-  background-color: transparent;
-}
-
-#network {
-  background-color: transparent;
 }
 
 #network.disconnected {
   background-color: #f53c3c;
 }
 
-#pulseaudio {
-  background-color: transparent;
-}
-
 #pulseaudio.muted {
   background-color: #ff0000;
-}
-
-#wireplumber {
-  background-color: transparent;
 }
 
 #wireplumber.muted {
@@ -249,12 +227,9 @@ label:focus {
   background-color: #ffa000;
 }
 
-#temperature {
-  background-color: transparent;
-}
-
 #temperature.critical {
   background-color: #ff0000;
+	color: white;
 }
 
 #tray {
@@ -342,3 +317,4 @@ label:focus {
 #privacy-item.audio-out {
   background-color: #0069d4;
 }
+
