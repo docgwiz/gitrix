@@ -42,7 +42,7 @@ REPO_DIR="$REPO_PARENT/$REPO_FNAME"
 # --------------------------
 # FUNCTION: GET CONFIRMATION
 confirm_go () {
-	local goodtogo			
+	local goodtogo
 	read -p "Do you want to proceed? (Y/n) " goodtogo 
 	if [[ "$goodtogo" == [nN] ]]; then
 		echo -e "\nSkipping ...\n"
@@ -327,7 +327,8 @@ if confirm_go; then
 	# -f FILE	Returns true if the file exists and is a regular file.
 	# -d FILE	Returns true if the file exists and is a directory.
 	if [[ -e "$ENV_FILE" ]]; then
-		echo -e "\n$ENV_FILE exists. Skipping ..."
+		echo -e "\n$ENV_FILE exists. Backing up ..."
+		sudo mv "$ENV_FILE" "$ENV_FILE.bak"
 	else
 		echo -e "\nCreating $ENV_FILE ...\n"
 
@@ -414,13 +415,15 @@ if confirm_go; then
 
 	sudo apt install htop
  	# text-based system monitor
-
+	
+	echo -e "\n\n"
 	sudo apt install gimp
+	echo -e "\n\n"
 	sudo apt install imagemagick
 	# creating, editing, converting, and displaying images
 	# gimp supports imagemagick
 	
-	sudo apt install font-manager
+	# sudo apt install font-manager
 	# preview and manage installed and available fonts
 	
 fi
@@ -434,7 +437,6 @@ echo -e "\n\nInstalling Mako ..."
 if confirm_go; then 
 	sudo apt install libnotify-bin
 	sudo apt install mako-notifier
-	notify-send "Mako is running!"
 fi
 
 
