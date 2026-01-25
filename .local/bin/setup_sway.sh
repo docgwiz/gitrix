@@ -218,7 +218,7 @@ if confirm_go; then
 fi
 
 # Install nerdfont packages
-echo -e "\n\nInstalling nerd font packages ..."
+echo -e "\n\nInstalling nerd font packages in $HOME/Downloads ..."
 if confirm_go; then 
 
 	FONTS_DIRLOCAL="$HOME/.local/share/fonts"
@@ -480,7 +480,7 @@ fi
 # --------------------
 # INSTALL CONFIG FILES
 
-SWAY_PACKS=("sway" "starship" "foot" "waybar" "vim" "wofi" "mako")
+SWAY_PACKS=("sway" "starship" "foot" "waybar" "vim" "wofi" "mako" "fastfetch")
 
 echo -e "\n\nInstalling config files for Sway packages ..."
 if confirm_go; then 
