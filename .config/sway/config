@@ -65,7 +65,8 @@ set $menu wmenu-run
 set $menu-alt wofi --show drun
 
 # Set browser
-set $browser firefox-esr
+set $browser brave-browser
+# set $browser firefox-esr
 
 # Set password manager
 set $pwdmngr 1password
