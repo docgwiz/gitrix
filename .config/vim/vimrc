@@ -159,7 +159,7 @@ call plug#begin('~/vim-plugged')
 "
 " Declare your plugins here, for example:
 Plug 'vimwiki/vimwiki'
-"
+Plug 'ekalinin/Dockerfile.vim'
 " List ends here. Plugins become visible to Vim after this call.
 call plug#end()
 
