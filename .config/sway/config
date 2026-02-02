@@ -62,11 +62,11 @@ set $term foot
 
 # Set application launchers
 set $menu wmenu-run
-set $menu-alt wofi --show drun
+set $alt-menu wofi --show drun
 
 # Set browser
 set $browser brave-browser
-# set $browser firefox-esr
+set $alt-browser firefox-esr
 
 # Set password manager
 set $pwdmngr 1password
@@ -311,10 +311,11 @@ bindsym $LogoKey+f exec $filemngr
 
 # Start launcher
 bindsym $LogoKey+space exec $menu
-bindsym $LogoKey+Shift+space exec $menu-alt
+bindsym $LogoKey+Shift+space exec $alt-menu
 
 # Start browser
 bindsym $LogoKey+b exec $browser
+bindsym $LogoKey+Shift+b exec $alt-browser
 
 # Start password manager
 bindsym $LogoKey+p exec $pwdmngr
