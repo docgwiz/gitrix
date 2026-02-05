@@ -109,6 +109,10 @@ button:hover {
 	background-color: transparent;
 }
 
+#clock {
+	color: ivory;
+}
+
 #backlight,
 #pulseaudio {
 	color: lightgreen;
@@ -124,7 +128,7 @@ button:hover {
 }
 
 #temperature {
-	color: blanchedalmond;
+	color: yellow;
 }
 
 #backlight:hover,
