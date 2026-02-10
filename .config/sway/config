@@ -110,6 +110,7 @@ set $NightBlue #151b54
 set $CornflowerBlue #6495ed
 set $DenimBlue #79baec
 set $BlueGray #98afc7 
+set $CharcoalBlue #36454f
 #151b54 night blue
 #0000ff blue
 #1e90ff dodger blue
@@ -260,10 +261,13 @@ client.placeholder      #1D2021 #0C0C0C $fg     #000000   #0C0C0C
 
 exec swayidle -w \
 	timeout 300 'swaylock --daemonize --color "$BlueGray"' \
-	timeout 600 'swaymsg "output * dpms off"' \
-	resume 'swaymsg "output * dpms on"' \
-	before-sleep 'swaylock --daemonize --color "$NightBlue"' 
+	before-sleep 'swaylock --daemonize --color "$CharcoalBlue"' 
 
+# exec swayidle -w \
+#	timeout 300 'swaylock --daemonize --color "$BlueGray"' \
+#	timeout 600 'swaymsg "output * dpms off"' \
+#	resume 'swaymsg "output * dpms on"' \
+#	before-sleep 'swaylock --daemonize --color "$NightBlue"' 
 
 ### ------------------
 ### CONFIGURE KEYBINDS
