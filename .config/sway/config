@@ -260,7 +260,7 @@ client.placeholder      #1D2021 #0C0C0C $fg     #000000   #0C0C0C
 # before-sleep 'swaylock -f -c 000000': Immediately lock the screen before the system suspends 
 
 exec swayidle -w \
-	timeout 300 'swaylock --daemonize --color "$BlueGray"' \
+	timeout 300 'swaylock --daemonize --color "$darkgray"' \
 	before-sleep 'swaylock --daemonize --color "$CharcoalBlue"' 
 
 # exec swayidle -w \
