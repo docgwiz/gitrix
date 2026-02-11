@@ -1,0 +1,58 @@
+coolors cool waters
+https://coolors.co/palette/22577a-38a3a5-57cc99-80ed99-c7f9cc
+--0 baltic-blue: #22577aff;
+--1 tropical-teal: #38a3a5ff;
+--2 emerald: #57cc99ff;
+--3 light-green: #80ed99ff;
+--4 tea-green: #c7f9ccff;
+["#22577a","#38a3a5","#57cc99","#80ed99","#c7f9cc"]
+
+coolors tranquil waters
+https://coolors.co/palette/1f363d-40798c-70a9a1-9ec1a3-cfe0c3
+--0 jet-black: #1f363dff;
+--1 cerulean: #40798cff;
+--2 tropical-teal: #70a9a1ff;
+--3 muted-teal: #9ec1a3ff;
+--4 tea-green: #cfe0c3ff;
+["#1f363d","#40798c","#70a9a1","#9ec1a3","#cfe0c3"]
+
+coolors ocean breeze
+https://coolors.co/palette/03045e-0077b6-00b4d8-90e0ef-caf0f8
+--deep-twilight: #03045eff;
+--bright-teal-blue: #0077b6ff;
+--turquoise-surf: #00b4d8ff;
+--frosted-blue: #90e0efff;
+--light-cyan: #caf0f8ff;
+--palette0: #03045eff; /* deep-twilight */
+--palette1: #0077b6ff; /* bright-teal-blue */
+--palette2: #00b4d8ff; /* turqoise-surf */
+--palette3: #90e0efff; /* frosted-blue */
+--palette4: #caf0f8ff; /* light-cyan */
+["#03045e","#0077b6","#00b4d8","#90e0ef","#caf0f8"]
+
+coolors sunset bliss
+https://coolors.co/palette/ffbc42-d81159-8f2d56-218380-73d2de
+--sunflower-gold: #ffbc42ff;
+--raspberry-red: #d81159ff;
+--vintage-berry: #8f2d56ff;
+--teal: #218380ff;
+--frosted-blue: #73d2deff;
+["#ffbc42","#d81159","#8f2d56","#218380","#73d2de"]
+
+coolors coastal vibes
+https://coolors.co/palette/3d5a80-98c1d9-e0fbfc-ee6c4d-293241
+--0 dusk-blue: #3d5a80ff;
+--1 powder-blue: #98c1d9ff;
+--2 light-cyan: #e0fbfcff;
+--3 burnt-peach: #ee6c4dff;
+--4 jet-black: #293241ff;
+["#3d5a80","#98c1d9","#e0fbfc","#ee6c4d","#293241"]
+
+coolors ocean sunset
+https://coolors.co/palette/355070-6d597a-b56576-e56b6f-eaac8b
+--0 dusk-blue: #355070ff;
+--1 dusty-lavender: #6d597aff;
+--2 rosewood: #b56576ff;
+--3 light-coral: #e56b6fff;
+--4 light-bronze: #eaac8bff;
+["#355070","#6d597a","#b56576","#e56b6f","#eaac8b"]

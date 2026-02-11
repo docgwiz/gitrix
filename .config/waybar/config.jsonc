@@ -8,7 +8,7 @@
 	// Waybar position (top|bottom|left|right)
 	// "position": "bottom", i
 
-	"height": 26, // Waybar height (to be removed for auto height)
+	"height": 34, // Waybar height (to be removed for auto height)
   // "width": 1280, // Waybar width
  
 	// Gaps between modules (4px)

@@ -1,12 +1,3 @@
-/* $HOME/.config/waybar/style.css */
-
-/* coolors.co ocean breeze palette */
-@define-color palette0 #03045e; /* deep-twilight */
-@define-color palette1 #0077b6; /* bright-teal-blue */
-@define-color	palette2 #00b4d8; /* turqoise-surf */
-@define-color	palette3 #90e0ef; /* frosted-blue */
-@define-color	palette4 #caf0f8; /* light-cyan */
-
 * {
 /*  otf-font-awesome is required to be installed for icons */
 /*  font-family: FontAwesome, Roboto, Helvetica, Arial, sans-serif; */		
@@ -16,8 +7,8 @@
 }
 
 window#waybar {
-	background-color: @palette0; 
-  border-bottom: 1px solid @palette3; 
+	background-color: darkslategray; 
+  border-bottom: 1px solid cyan; 
   color: #ffffff;
 	font-weight: bold;
   transition-property: background-color;
@@ -69,23 +60,23 @@ button:hover {
 #workspaces button {
   padding: 0 5px;
   background-color: transparent;
-  color: @palette4;
+  color: #ffffff;
 	border-radius: 15px;
 }
 
 #workspaces button:hover {
   /* background: rgba(0, 0, 0, 0.2); */
-	background: @palette2;
+	background: lightseagreen;
 }
 
 #workspaces button.focused {
-  background-color: @palette1;
+  background-color: steelblue;
   /* box-shadow: inset 0 -3px yellow; */
 	border-radius: 15px;
 }
 
 #workspaces button.urgent {
-  background-color: red;
+  background-color: #eb4d4b;
 }
 
 #mode {
@@ -114,30 +105,30 @@ button:hover {
 #mpd {
 	padding: 0 3px 0 3px; /* top right bottom left */
 	margin: 0 0 0 0; /* top right bottom left */
-  color: @palette4;
+  color: white;
 	background-color: transparent;
 }
 
 #clock {
-	color: @palette3;
+	color: ivory;
 }
 
 #backlight,
 #pulseaudio {
-	color: @palette4;
+	color: lightgreen;
 }
 
 #network {
-	color: @palette4;
+	color: violet;
 }
 
 #cpu,
 #memory {
-	color: @palette4;
+	color: aqua;
 }
 
 #temperature {
-	color: @palette4;
+	color: yellow;
 }
 
 #backlight:hover,
