@@ -1,25 +1,85 @@
 /* $HOME/.config/waybar/style.css */
 
 
-/* https://coolors.co/palette/0fa3b1-b5e2fa-f9f7f3-eddea4-f7a072 */
+/* https://coolors.co */
+
+/* ------------------------ */
+/* bright background colors */
 
 /* --tangerine-dream: */ 
 @define-color brightbg #f7a072;
 
+/* --pumpkin-spice: */ 
+@define-color brightbg #fe7f2d;
+
+/* --apricot-cream: */
+@define-color brightbg #f9c784;
+
+/* --pumpkin-spice: */
+@define-color brightbg #fc7a1e;
+
+/* --molten-orange: */
+@define-color brightbg #f24c00;
+
+/* --bubblegum-pink */
+@define-color brightbg #ef476f;
+
+
+/* --------------------- */
+/* med background colors */
+
 /* --pacific-blue: */
 @define-color medbg #0fa3b1;
 
-/* -- bright-teal-blue */
+/* --seagrass: */
+@define-color medbg #619b8a;
+
+/* --stormy-teal */
+@define-color medbg #086375;
+
+
+/* ---------------------- */
+/* dark background colors */
+
+/* --dusk-blue: */
+@define-color darkbg #485696;
+
+/* --bright-teal-blue */
 @define-color darkbg #0077b6;
+
+/* --charcoal-blue: */
+@define-color darkbg #233d4d;
+
+/* --dark-teal */
+@define-color darkbg #073b4c;
+
+
+/* ------------------ */
+/* bright text colors */
 
 /* --porcelain: */
 @define-color brightxt #f9f7f3;
 
+
+/* --------------- */
+/* med text colors */
+
 /* --icy-blue: */ 
 @define-color medtxt #b5e2fa;
 
+/* --alabaster-grey: */ 
+@define-color medtxt  #e7e7e7; 
+
+
+/* ---------------- */
+/* dark text colors */
+
 /* --vanilla-custard: */ 
 @define-color darktxt #eddea4;
+
+/* --golden-pollen: */
+@define-color darktxt #fcca46;
+
 
 * {
 /*  otf-font-awesome is required to be installed for icons */
@@ -31,7 +91,7 @@
 
 window#waybar {
 	background-color: @medbg; 
-  border-bottom: 1px solid @medtext; 
+  border-bottom: 1px solid @medtxt; 
   color: @brighttxt;
 	font-weight: bold;
   transition-property: background-color;
@@ -73,27 +133,24 @@ button {
   border-radius: 0;
 }
 
-/* https://github.com/Alexays/Waybar/wiki/FAQ#the-workspace-buttons-have-a-strange-hover-effect 
-button:hover {
-  background: inherit;
-  box-shadow: inset 0 -3px #ffffff;
-}
-*/
-
 #workspaces button {
 	color: @medtxt;
+	background: inherit;
   background-color: transparent;
+	margin-left: 3px;
+	margin-right: 3px;
+	margin-bottom: 2px;
 	padding: 0 5px;
 }
 
 #workspaces button:hover {
-	color: @brightxt;
+	color: @medtxt;
 	background: @brightbg;
 	border-radius: 15px;
 }
 
 #workspaces button.focused {
-	color: @darktxt;
+	color: @medtxt;
   background-color: @darkbg;
 	border-radius: 15px;
 }
@@ -128,18 +185,8 @@ button:hover {
 #mpd {
 	padding: 0 3px 0 3px; /* top right bottom left */
 	margin: 0 0 0 0; /* top right bottom left */
-  color: @darktxt;
+  color: @medtxt;
 	background-color: transparent;
-}
-
-#clock,
-#backlight,
-#pulseaudio,
-#network,
-#cpu,
-#memory,
-#temperature {
-	color: @medtxt;
 }
 
 #clock:hover,
@@ -149,11 +196,10 @@ button:hover {
 #cpu:hover,
 #memory:hover,
 #temperature:hover {
-	color: @brighttxt;
+	color: @medtxt;
 	background-color: @brightbg;
-	border-radius: 5px;
+	border-radius: 2px; 
 }
-
 
 #window,
 #workspaces {
@@ -317,7 +363,7 @@ label:focus {
 
 #privacy-item {
   /*   padding: 0 5px; */
-  color: white;
+  color: @brighttxt;
 	padding: 0 2px 0 2px; /* top right bottom left */
 	margin: 3px 0 3px 0; /* top right bottom left */
 }
