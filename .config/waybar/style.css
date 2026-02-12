@@ -1,11 +1,25 @@
 /* $HOME/.config/waybar/style.css */
 
-/* coolors.co ocean breeze palette */
-@define-color palette0 #03045e; /* deep-twilight */
-@define-color palette1 #0077b6; /* bright-teal-blue */
-@define-color	palette2 #00b4d8; /* turqoise-surf */
-@define-color	palette3 #90e0ef; /* frosted-blue */
-@define-color	palette4 #caf0f8; /* light-cyan */
+
+/* https://coolors.co/palette/0fa3b1-b5e2fa-f9f7f3-eddea4-f7a072 */
+
+/* --tangerine-dream: */ 
+@define-color brightbg #f7a072;
+
+/* --pacific-blue: */
+@define-color medbg #0fa3b1;
+
+/* -- bright-teal-blue */
+@define-color darkbg #0077b6;
+
+/* --porcelain: */
+@define-color brightxt #f9f7f3;
+
+/* --icy-blue: */ 
+@define-color medtxt #b5e2fa;
+
+/* --vanilla-custard: */ 
+@define-color darktxt #eddea4;
 
 * {
 /*  otf-font-awesome is required to be installed for icons */
@@ -16,9 +30,9 @@
 }
 
 window#waybar {
-	background-color: @palette0; 
-  border-bottom: 1px solid @palette3; 
-  color: #ffffff;
+	background-color: @medbg; 
+  border-bottom: 1px solid @medtext; 
+  color: @brighttxt;
 	font-weight: bold;
   transition-property: background-color;
   transition-duration: .5s;
@@ -47,7 +61,7 @@ window#waybar.termite {
 }
 
 window#waybar.chromium {
-  background-color: #000000;
+  background-color: black;
   border: none;
 }
 
@@ -67,20 +81,20 @@ button:hover {
 */
 
 #workspaces button {
-  padding: 0 5px;
+	color: @medtxt;
   background-color: transparent;
-  color: @palette4;
-	border-radius: 15px;
+	padding: 0 5px;
 }
 
 #workspaces button:hover {
-  /* background: rgba(0, 0, 0, 0.2); */
-	background: @palette2;
+	color: @brightxt;
+	background: @brightbg;
+	border-radius: 15px;
 }
 
 #workspaces button.focused {
-  background-color: @palette1;
-  /* box-shadow: inset 0 -3px yellow; */
+	color: @darktxt;
+  background-color: @darkbg;
 	border-radius: 15px;
 }
 
@@ -114,40 +128,29 @@ button:hover {
 #mpd {
 	padding: 0 3px 0 3px; /* top right bottom left */
 	margin: 0 0 0 0; /* top right bottom left */
-  color: @palette4;
+  color: @darktxt;
 	background-color: transparent;
 }
 
-#clock {
-	color: @palette3;
-}
-
+#clock,
 #backlight,
-#pulseaudio {
-	color: @palette4;
-}
-
-#network {
-	color: @palette4;
-}
-
+#pulseaudio,
+#network,
 #cpu,
-#memory {
-	color: @palette4;
-}
-
+#memory,
 #temperature {
-	color: @palette4;
+	color: @medtxt;
 }
 
+#clock:hover,
 #backlight:hover,
 #pulseaudio:hover,
 #network:hover,
 #cpu:hover,
 #memory:hover,
 #temperature:hover {
-	color: white;
-	background-color: dimgrey;
+	color: @brighttxt;
+	background-color: @brightbg;
 	border-radius: 5px;
 }
 
@@ -155,7 +158,7 @@ button:hover {
 #window,
 #workspaces {
   margin: 0 4px;
-	color: yellow;
+	color: @darktxt;
 }
 
 /* If workspaces is the leftmost module, omit left margin */

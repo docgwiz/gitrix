@@ -253,21 +253,15 @@ client.placeholder      #1D2021 #0C0C0C $fg     #000000   #0C0C0C
 # -F, --show-failed-attempts: show count of failed authentication attempts
 
 # Example:
-# exec swayidle -w: Starts swayidle with the -w flag, which tells swayidle to wait for swaylock to finish before proceeding
-# timeout 300 'swaylock -f -c 000000': After 300 seconds (5 mins) of inactivity, run swaylock. -f forces it to lock, and -c 000000 sets the background to black
-# timeout 600 'swaymsg "output * dpms off"': After another 300 seconds (total 10 mins), turn off all displays
-# resume 'swaymsg "output * dpms on"': When activity resumes (after locking), turn the displays back on
-# before-sleep 'swaylock -f -c 000000': Immediately lock the screen before the system suspends 
+# exec swayidle -w: Starts swayidle with the -w flag,
+#  which tells swayidle to wait for swaylock to finish before proceeding
 
 exec swayidle -w \
 	timeout 300 'swaylock --daemonize --color "$darkgray"' \
-	before-sleep 'swaylock --daemonize --color "$CharcoalBlue"' 
+	timeout 600 'swaymsg "output * dpms off"' \
+	resume 'swaymsg "output * dpms on"' \
+  before-sleep 'swaylock --daemonize --color "$CharcoalBlue"' 
 
-# exec swayidle -w \
-#	timeout 300 'swaylock --daemonize --color "$BlueGray"' \
-#	timeout 600 'swaymsg "output * dpms off"' \
-#	resume 'swaymsg "output * dpms on"' \
-#	before-sleep 'swaylock --daemonize --color "$NightBlue"' 
 
 ### ------------------
 ### CONFIGURE KEYBINDS
