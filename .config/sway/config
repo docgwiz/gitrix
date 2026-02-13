@@ -189,24 +189,37 @@ default_border pixel 3
 ### CONFIGURE WINDOW COLORS
 ### -----------------------
 
+# border: color of main border around focused window.
+# background: background color of window's title bar. 
+# text: color of the title text.
+# indicator: color of the split indicator. 
+# child_border: border color for child windows (dialogs, popups).
+set $f_brdr #fcca46
+		# golden pollen
+set $f_bg #086375 
+		# stormy-teal
+set $f_txt #e7e7e7
+		# alabaster grey
+set $f_ind #e7e7e7
+		# alabaster grey
+set $f_cbrdr #fcca46
+		# golden pollen
+
+client.focused $f_brdr $f_bg $f_txt $f_ind $f_cbrdr
+
 # https://thomashunter.name/i3-configurator/
 
 # class                 border  bground text    indicator child_border
 
-client.focused          $yellow $yellow $fg     $yellow   $yellow
-# the window that has focus
+# window that has focus
+# client.focused          $yellow $yellow $fg     $yellow   $yellow
 
-client.focused_inactive $bg_2   #5F676A $fg     #484E50   #5F676A
-# the most-recently focused window within container which is not focused
+# most-recently focused window within container which is not focused
+client.focused_inactive #073b4c   #5F676A $fg     #073b4c   #073b4c
 
-client.unfocused        $bg_2   #282828 #888888 #292D2E   #222222
-# a window that does not have focus
+# window that does not have focus
+client.unfocused        #073b4c   #282828 #888888 #073b4c   #073b4c
 
-client.urgent           #2F343A #CC241D $fg_1   #CC241D   #CC241D
-# a window with an urgeny hit--only works for xwayland windows
-
-client.placeholder      #1D2021 #0C0C0C $fg     #000000   #0C0C0C
-# ignored (present for i3 compatibilty)
 
 
 ### ----------------
