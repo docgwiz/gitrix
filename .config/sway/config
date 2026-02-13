@@ -79,29 +79,6 @@ set $notemngrPATH "~/AppImages/Obsidian.AppImage"
 set $syncutil syncthing
 
 
-### -------------------------------------- 
-### set primary gruvbox colorscheme colors
-# see https://github.com/morhetz/gruvbox-contrib/blob/master/color.table
-
-set $bg #282828
-set $bg_2 #504945
-set $fg #ebdbb2
-set $fg_1 #FBF1C7
-set $fg_2 #D5C4A1
-set $red #cc241d
-set $green #98971a
-set $yellow #d79921
-set $blue #458588
-set $blue_faded #076678
-set $purple #b16286
-set $aqua #689d68
-set $gray #a89984
-set $darkgray #1d2021
-
-# my additions
-set $medgray #363636
-
-
 ### ------------------
 ### Set shades of blue
 # https://www.pinterest.com/pin/75-shades-of-blue-blue-hex-codes-color-names-included--75153887526405408/
@@ -205,21 +182,68 @@ set $f_ind #e7e7e7
 set $f_cbrdr #fcca46
 		# golden pollen
 
-client.focused $f_brdr $f_bg $f_txt $f_ind $f_cbrdr
+# client.focused $f_brdr $f_bg $f_txt $f_ind $f_cbrdr
 
-# https://thomashunter.name/i3-configurator/
 
-# class                 border  bground text    indicator child_border
+### -------------------------------------- 
+### set primary gruvbox colorscheme colors
+# see https://github.com/morhetz/gruvbox-contrib/blob/master/color.table
+# see https://thomashunter.name/i3-configurator/
+
+set $bg #282828
+set $bg_2 #504945
+set $fg #ebdbb2
+set $fg_1 #FBF1C7
+set $fg_2 #D5C4A1
+set $red #cc241d
+set $green #98971a
+set $yellow #d79921
+set $blue #458588
+set $blue_faded #076678
+set $purple #b16286
+set $aqua #689d68
+set $gray #a89984
+set $darkgray #1d2021
+# my additions
+set $medgray #363636
+
+
+# bubblegum pink
+set $xpink #ef476f
+
+# molten orange
+set $xorange #fc7a1e
+
+# stormy teal
+set $xgreen #086375
+
+# dark teal
+set $xblue #073b4c
+
+# golden pollen
+set $xyellow #fcca46
+
+# alabaster greg
+set $xfg #e7e7e7
+
+
+# class                 border		bground		text    indicator	child_border
 
 # window that has focus
-# client.focused          $yellow $yellow $fg     $yellow   $yellow
-
-# most-recently focused window within container which is not focused
-client.focused_inactive #073b4c   #5F676A $fg     #073b4c   #073b4c
+client.focused          $xyellow	$xyellow	$xfg    $xyellow  $xyellow
 
 # window that does not have focus
-client.unfocused        #073b4c   #282828 #888888 #073b4c   #073b4c
+client.unfocused				$xgreen		$xgreen		$xfg    $xgreen		$xgreen
 
+# most-recently focused window within container which is not focused
+client.focused_inactive $xorange	$xorange	$xfg    $xorange	$xorange
+
+# window with an urgency hit--only works for xwayland windows
+client.urgent           #2F343A #CC241D $fg_1   #CC241D   #CC241D
+
+
+# client.unfocused        $bg_2   #282828 #888888 #292D2E   #222222
+# client.focused_inactive $bg_2   #5F676A $fg     #484E50   #5F676A
 
 
 ### ----------------
