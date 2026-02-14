@@ -216,6 +216,15 @@ if confirm_go; then
 fi
 
 
+# -----------------
+# INSTALL VIFM
+
+echo -e "\n\nInstalling Vifm TUI file manager ..."
+if confirm_go; then 
+	sudo apt install vifm
+fi
+
+
 # ---------------------
 # INSTALL FONT PACKAGES
 
@@ -496,7 +505,7 @@ fi
 # --------------------
 # INSTALL CONFIG FILES
 
-SWAY_PACKS=("sway" "starship" "foot" "waybar" "vim" "wofi" "mako" "fastfetch")
+SWAY_PACKS=("sway" "starship" "foot" "waybar" "vim" "vifm" "wofi" "mako" "fastfetch")
 
 echo -e "\n\nInstalling config files for Sway packages ..."
 if confirm_go; then 
