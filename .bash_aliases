@@ -18,7 +18,8 @@ alias qqlst='LC_COLLATE=C ls -laht --time-style=long-iso'
 # -t: time sort
 # -R: recursive (list contents of sub directories)
 alias qqrm='gwiz_rm.sh'
-
+alias qqcurlu='echo "curl -u user:password -T {source file} {url}" && curl -u docgwiz:!ShingleBay2 -T '
+# alias qqcurld='curl -u docgwiz:'!ShingleBay2' -o '
 
 # -------------
 # APPS/PACKAGES

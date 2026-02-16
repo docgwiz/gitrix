@@ -361,6 +361,8 @@ bindsym $LogoKey+o exec $notemngrPATH
 # Launch Obsidian AppImage via script file in ~/.local/bin)
 bindsym $LogoKey+Shift+o exec obsidian.sh
 
+# Show shortcuts
+bindsym $LogoKey+n exec notify-send -t 0 "LAYOUT & FOCUS SHORTCUTS \n\nALT+Y\t\t split horizontal \nALT+X\t\t split vertical \nALT+Slash\t layout toggle split \nALT+S\t\t layout stacking \nALT+T\t\t layout tabbed \nALT+Return\t fullscreen toggle \nALT+Space\t floating toggle \nALT+Shift+Space\t focus mode toggle"
 
 ### ------------
 ### Switch focus
