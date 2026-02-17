@@ -59,9 +59,15 @@ confirm_go () {
 
 handle_error() {
 	local returned=$?
-	echo -e "\nFAILED!"
-	echo -e "An error occurred on line ${BASH_LINENO[0]} while executing ${BASH_COMMAND}\n" 
-	exit "${returned}"
+	echo -e "\nERROR!!! An error occurred on line ${BASH_LINENO[0]} while executing ${BASH_COMMAND}\n" 
+	read -p "Continue with Sway setup? (Y/n)" choice
+	case $choice in
+		[Nn])
+			echo -e "\nExiting Sway setup.\n\n"
+			exit "${returned}";;
+		*)
+			echo -e "\nContinuing ...";;
+	esac
 }
 
 # Set a trap to call the handle_error function upon any error (ERR)
@@ -241,37 +247,33 @@ if confirm_go; then
 fi
 
 # Install nerdfont packages
-echo -e "\n\nInstalling nerd font packages in $HOME/Downloads ..."
+FONTS_DIRSRC="https://dufs.docgwiz.com/fonts/nerdfonts/"
+FONTS_DIRDEST="$HOME/.local/share/fonts/"
+
+echo -e "\n\nInstalling nerd font files ..."
 if confirm_go; then 
+	
+	echo -e "\nNerdFonts will be copied from $FONTS_DIRSRC to $FONTS_DIRDEST"
 
-	FONTS_DIRLOCAL="$HOME/.local/share/fonts"
-	FONTS_DIRSYNC="$HOME/Downloads"
-
-	# echo -e "\nFONTS_DIRLOCAL = $FONTS_DIRLOCAL"
-	# echo -e "\nFONTS_DIRSYNC = $FONTS_DIRSYNC"
-
-  if [[ ! -d "$FONTS_DIRLOCAL" ]]; then
-		echo -e "\nCreating folder: $FONTS_DIRLOCAL ..."
-		mkdir -p "$FONTS_DIRLOCAL"
-	fi	
-
-	cd "$FONTS_DIRSYNC"
-
-	for nerdfont in *.zip; do
-
-		folder_name="${nerdfont%.zip}"
-		NERD_DIRLOCAL="$FONTS_DIRLOCAL/$folder_name"
-
-		if [[ ! -d "$NERD_DIRLOCAL" ]]; then
-			echo -e "\nCreating folder: $NERD_DIRLOCAL ..."	
-			mkdir "$NERD_DIRLOCAL"
-		fi
-
-		echo -e "\nUnzipping $nerdfont to $NERD_DIRLOCAL ..."
-		unzip "$nerdfont" -d "$NERD_DIRLOCAL"
-
-	done
+	echo -e "\nAccessing nerd fonts on https://dufs.docgwiz.com"
+	
+	wget --no-verbose --recursive \
+				--no-parent --no-host-directories --cut-dirs=2 \
+				--accept="*.ttf,*.otf" \
+				--directory-prefix=$FONTS_DIRDEST \
+				--user=docgwiz --ask-password \
+				$FONTS_DIRSRC  
+ 
+	if [ $? -eq 0 ]; then
+    echo -e "\nWget succeeded"
+		echo -e "\nContents of $FONTS_DIRDEST\n"
+		ls -la $FONTS_DIRDEST
+	else
+    echo -e "\nWget failed"
+	fi
+ 
 fi
+
 
 # Rebuild the font cache:
 echo -e "\n\nRebuilding the font cache ..."
