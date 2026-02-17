@@ -74,10 +74,10 @@ handle_error() {
 trap 'handle_error $LINENO' ERR
 
 
-# ---------------------------
-# FUNCTION: INSTALL SYS FILES
+# --------------------------
+# FUNCTION: CREATE SYM LINKS
 
-install_sysfiles() {
+create_symlinks() {
 	
 # find: get files and store them in the array
 # -type f: only matches files (excludes directories)
@@ -92,39 +92,39 @@ install_sysfiles() {
 #     each line read into the array element
 # -d: specifies a delimiter between array elements (e.g. '' aka null) 
 
-	local SYSFILE_DIR="$1" 
-	# this is the git repo folder where sys files are located
-	local SYMFILE_DIR="$2" 
-	# this is the symlink folder where pointers are located
+	local CONFIGREPO_DIR="$1" 
+	# this is the git repo folder where Sway config files are located
+	local SYMLINK_DIR="$2" 
+	# this is a Sway config folder where sym links/pointers are located
 
-	readarray -t FNAMES_ARRAY < <(find "$SYSFILE_DIR" -maxdepth 1 -type f -printf "%f\\n")
+	readarray -t FNAMES_ARRAY < <(find "$CONFIGREPO_DIR" -maxdepth 1 -type f -printf "%f\\n")
 
-	# readarray -d '' FNAMES_ARRAY < <(find "$SYSFILE_DIR" -maxdepth 1 -type f -printf "%f\\0")
+	# readarray -d '' FNAMES_ARRAY < <(find "$CONFIGREPO_DIR" -maxdepth 1 -type f -printf "%f\\0")
 
   for fname in "${FNAMES_ARRAY[@]}"; do
 
 		#create symfile directory if it doesn't exist			
-		if [[ ! -d "$SYMFILE_DIR" ]]; then
-			mkdir -p "$SYMFILE_DIR"
-			echo -e "\nCreated $SYMFILE_DIR\n"
+		if [[ ! -d "$SYMLINK_DIR" ]]; then
+			mkdir -p "$SYMLINK_DIR"
+			echo -e "\nCreated $SYMLINK_DIR\n"
 		fi
 
-		SYSFILE_PATH="$SYSFILE_DIR/$fname"
-		SYMFILE_PATH="$SYMFILE_DIR/$fname"
+		CONFIGFILE_PATH="$CONFIGREPO_DIR/$fname"
+		SYMLINK_PATH="$SYMLINK_DIR/$fname"
 
 		# Handle existing symlinks in the SYMFILE directory
 		# the -e option checks if file exists
 		# the -L option checks if file exists and is a symlink
 		# Using [[ ... ]] is preferred in Bash over [ ... ] 
 		# as it is more robust
-		if [[ -e "$SYMFILE_PATH" || -L "$SYMFILE_PATH" ]]; then
-			mv "$SYMFILE_PATH" "${SYMFILE_PATH}.bak"
-			echo -e "\nBacked up existing item to ${SYMFILE_PATH}.bak"
+		if [[ -e "$SYMLINK_PATH" || -L "$SYMLINK_PATH" ]]; then
+			mv "$SYMLINK_PATH" "${SYMLINK_PATH}.bak"
+			echo -e "\nBacked up existing item to ${SYMLINK_PATH}.bak"
 		fi
 
 		#Create the symlink
-		ln -s "$SYSFILE_PATH" "$SYMFILE_PATH"
-		echo -e "\nCreated new symlink: $SYMFILE_PATH"
+		ln -s "$CONFIGFILE_PATH" "$SYMLINK_PATH"
+		echo -e "\nCreated new symlink: $SYMLINK_PATH"
 
 	done
 }
@@ -247,27 +247,27 @@ if confirm_go; then
 fi
 
 # Install nerdfont packages
-FONTS_DIRSRC="https://dufs.docgwiz.com/fonts/nerdfonts/"
-FONTS_DIRDEST="$HOME/.local/share/fonts/"
+FONTSRC_DIR="https://dufs.docgwiz.com/fonts/nerdfonts/"
+FONTDEST_DIR="$HOME/.local/share/fonts/"
 
 echo -e "\n\nInstalling nerd font files ..."
 if confirm_go; then 
 	
-	echo -e "\nNerdFonts will be copied from $FONTS_DIRSRC to $FONTS_DIRDEST"
+	echo -e "\nNerdFonts will be copied from $FONTSRC_DIR to $FONTDEST_DIR"
 
 	echo -e "\nAccessing nerd fonts on https://dufs.docgwiz.com"
 	
 	wget --no-verbose --recursive \
 				--no-parent --no-host-directories --cut-dirs=2 \
 				--accept="*.ttf,*.otf" \
-				--directory-prefix=$FONTS_DIRDEST \
+				--directory-prefix=$FONTDEST_DIR \
 				--user=docgwiz --ask-password \
-				$FONTS_DIRSRC  
+				$FONTSRC_DIR  
  
 	if [ $? -eq 0 ]; then
     echo -e "\nWget succeeded"
-		echo -e "\nContents of $FONTS_DIRDEST\n"
-		ls -la $FONTS_DIRDEST
+		echo -e "\nContents of $FONTDEST_DIR\n"
+		ls -la $FONTDEST_DIR
 	else
     echo -e "\nWget failed"
 	fi
@@ -483,41 +483,52 @@ if confirm_go; then
 fi
 
 
-# ---------------------
-# INSTALL SHELL SCRIPTS
+# ----------------------------------
+# CREATE SYM LINKS FOR SHELL SCRIPTS
 
-echo -e "\n\nInstalling scripts ..."
+echo -e "\n\nCreate sym links for shell scripts ..."
 if confirm_go; then 
-	SCRIPTSYS_DIR="$REPO_DIR/.local/bin"
-	SCRIPTSYM_DIR="$HOME/.local/bin"
-	install_sysfiles "$SCRIPTSYS_DIR" "$SCRIPTSYM_DIR"
+	SCRIPTFILE_DIR="$REPO_DIR/.local/bin"
+	SYMLINK_DIR="$HOME/.local/bin"
+	create_symlinks "$SCRIPTFILE_DIR" "$SYMLINK_DIR"
 fi
 
 
-# ----------------
-# INSTALL DOTFILES
+# -----------------------------
+# CREATE SYM LINKS FOR DOTFILES
 
-echo -e "\n\nInstalling dot files ..."
+echo -e "\n\nCreate sym links for dot files ..."
 if confirm_go; then 
-	DOTSYS_DIR="$REPO_DIR"
-	DOTSYM_DIR="$HOME"
-	install_sysfiles "$DOTSYS_DIR" "$DOTSYM_DIR"
+	DOTFILE_DIR="$REPO_DIR"
+	SYMLINK_DIR="$HOME"
+	create_symlinks "$DOTFILE_DIR" "$SYMLINK_DIR"
 fi
 
-# --------------------
-# INSTALL CONFIG FILES
+
+# -----------------------------------------
+# CREATE SYM LINKS FOR PACKAGE CONFIG FILES
 
 SWAY_PACKS=("sway" "starship" "foot" "waybar" "vim" "vifm" "wofi" "mako" "fastfetch")
 
-echo -e "\n\nInstalling config files for Sway packages ..."
+echo -e "\n\nCreate sym links for config files ..."
 if confirm_go; then 
 	CONFIG_DIR=".config"
 	for PACK_DIR in "${SWAY_PACKS[@]}"; do
-		CONFIGSYS_DIR="$REPO_DIR/$CONFIG_DIR/$PACK_DIR"
-		CONFIGSYM_DIR="$HOME/$CONFIG_DIR/$PACK_DIR"
-		install_sysfiles "$CONFIGSYS_DIR" "$CONFIGSYM_DIR"
+		CONFIGFILE_DIR="$REPO_DIR/$CONFIG_DIR/$PACK_DIR"
+		SYMLINK_DIR="$HOME/$CONFIG_DIR/$PACK_DIR"
+		create_symlinks "$CONFIGFILE_DIR" "$SYMLINK_DIR"
 	done
 fi
+
+
+# -----------------------------
+#	INSTALL PACKAGE SUPPORT FILES
+
+# .config/vifm/colors : .vifm files for colorscheme
+
+# .config/vim/autoload : plug.vim
+# ~/vim-plugged : location of plugins
+
 
 
 # ----
