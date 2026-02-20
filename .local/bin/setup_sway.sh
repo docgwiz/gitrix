@@ -257,7 +257,7 @@ if confirm_go; then
 
 	echo -e "\nAccessing nerd fonts on https://dufs.docgwiz.com"
 	
-	wget --no-verbose --recursive \
+	wget --no-verbose --recursive --timestamping \
 				--no-parent --no-host-directories --cut-dirs=2 \
 				--accept="*.ttf,*.otf" \
 				--directory-prefix=$FONTDEST_DIR \
