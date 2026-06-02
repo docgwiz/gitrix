@@ -78,6 +78,10 @@ set $notemngrPATH "~/AppImages/Obsidian.AppImage"
 # Set sync utility
 set $syncutil syncthing
 
+# Set ai app
+set $aiapp chat-gpt
+set $aiappPATH "~/AppImages/chat-gpt.AppImage"
+
 
 ### ------------------
 ### Set shades of blue
@@ -357,6 +361,9 @@ bindsym $LogoKey+p exec $pwdmngr
 
 # Launch Obsidian AppImage with variable that specifies image location (see above)
 bindsym $LogoKey+o exec $notemngrPATH
+
+#Launch chat-gpt.AppImage with variable that specifies image location (see above)
+bindsym $LogoKey+g exec $aiappPATH
 
 # Launch Obsidian AppImage via script file in ~/.local/bin)
 bindsym $LogoKey+Shift+o exec obsidian.sh
