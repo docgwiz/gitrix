@@ -22,8 +22,8 @@
   ],
   
 	"modules-center": [
-		"clock"		
-  ],
+		"clock"
+	],
   
 	"modules-right": [
 		"backlight",
@@ -64,8 +64,9 @@
     "spacing": 10
   },
   
-	"clock": {
-    "format": "{:%a %d-%b-%y | %H:%M}",
+  "clock": {
+    "timezone": "America/Whitehorse",
+		"format": "{:%a %d-%b-%y | %H:%M}",
 		"format-alt": "{:%A, %B %d, %Y at %I:%M %p}",
 		"tooltip": false 
   },
