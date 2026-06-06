@@ -36,11 +36,13 @@ include /etc/sway/config.d/50-systemd-user.conf
 
 ### ---------------
 ### Assign Mod keys
+
 # Assign Mod4 (logo/cmd key) to a string variable
 set $LogoKey Mod4
 
 # Assign Mod1 (alt/option key) to a string variable
 set $AltKey Mod1
+
 
 
 ### --------------------------------------
@@ -369,7 +371,7 @@ bindsym $LogoKey+g exec $aiappPATH
 bindsym $LogoKey+Shift+o exec obsidian.sh
 
 # Show shortcuts
-bindsym $LogoKey+n exec notify-send -t 0 "LAYOUT & FOCUS SHORTCUTS \n\nALT+Y\t\t split horizontal \nALT+X\t\t split vertical \nALT+Slash\t layout toggle split \nALT+S\t\t layout stacking \nALT+T\t\t layout tabbed \nALT+Return\t fullscreen toggle \nALT+Space\t floating toggle \nALT+Shift+Space\t focus mode toggle"
+bindsym $LogoKey+n exec notify-send -t 0 "LAYOUT & FOCUS SHORTCUTS \n\nALT+Y\t\t split side by side \nALT+X\t\t split up and down \nALT+Slash\t layout toggle split \nALT+S\t\t layout stacking \nALT+T\t\t layout tabbed \nALT+Return\t fullscreen toggle \nALT+Space\t floating toggle \nALT+Shift+Space\t focus mode toggle"
 
 ### ------------
 ### Switch focus
