@@ -130,7 +130,13 @@ set $CharcoalBlue #36454f
 ### CONFIGURE OUTPUTS
 ### -----------------
 # run swaymsg -t get_outputs for output deets
+# run swaymsg output <name> scale <factor> to set scale from command line
+  
 # consider using kanshi to handle different outputs
+
+### output config for screen on Lenovo T490
+# output eDP-1 mode 1920x1080@59.99Hz
+# output eDP-1 scale 1.2
 
 ### output config for screen on MacBookPro-13-2
 # output eDP-1 mode 2560x1600@60Hz 
