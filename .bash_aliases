@@ -2,11 +2,6 @@
 # Format: alias <shortcut>='<command to run>'
 # Reload this file with source ~/.bash-aliases
 
-# ------------------
-# SYSTEM MAINTENANCE
-alias qqupd='sudo apt update'
-alias qqupg='sudo apt upgrade'
-
 
 # ---------------
 # FILE MANAGEMENT
@@ -18,8 +13,12 @@ alias qqlst='LC_COLLATE=C ls -laht --time-style=long-iso'
 # -t: time sort
 # -R: recursive (list contents of sub directories)
 alias qqrm='gwiz_rm.sh'
-alias qqcurlu='echo "curl -u user:password -T {source file} {url}" && curl -u docgwiz:!ShingleBay2 -T '
-# alias qqcurld='curl -u docgwiz:'!ShingleBay2' -o '
+
+
+# -------------------
+# HARDWARE MANAGEMENT
+alias qqinxi='inxi -Fxz'
+
 
 # -------------
 # APPS/PACKAGES
