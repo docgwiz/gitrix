@@ -156,6 +156,27 @@ if confirm_go; then
 fi
 
 
+# -----------------------------------
+# INSTALL NETWORK MANAGEMENT UTILIIES
+
+echo -e "\n\nInstalling network management utilities ..."
+if confirm_go; then
+	sudo apt install network-manager
+  sudo apt install wavemon
+fi
+
+
+# -------------------------------------
+# INSTALL HARDWARE MANAGEMENT UTILITIES
+
+echo -e "\n\nInstalling hardware management utilities ..."
+if confirm_go; then
+	sudo apt install inxi --no-install-recommends
+	sudo apt install hwinfo
+	sudo apt install lshw
+fi
+
+
 # -----------------
 # INSTALL FASTFETCH
 
