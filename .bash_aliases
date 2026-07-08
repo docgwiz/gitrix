@@ -17,7 +17,10 @@ alias qqrm='gwiz_rm.sh'
 
 # -------------------
 # HARDWARE MANAGEMENT
-alias qqinxi='inxi -Fxz'
+alias qqhw='gwiz_hw.sh'
+alias qqhw1='inxi -Fxz'
+alias qqhw2='sudo hwinfo --short'
+alias qqhw3='sudo lshw -short'
 
 
 # -------------
