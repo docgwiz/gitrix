@@ -60,7 +60,7 @@ set $right l
 set $term foot
 
 # Set file manager
-# set $filemngr thunar
+set $filemngr thunar
 
 # Set application launchers
 set $menu wmenu-run
@@ -69,6 +69,9 @@ set $alt-menu wofi --show drun
 # Set browser
 set $browser brave-browser
 set $alt-browser firefox-esr
+
+# Set office suite
+set $officesuite libreoffice
 
 # Set password manager
 set $pwdmngr 1password
@@ -363,6 +366,9 @@ bindsym $LogoKey+Shift+space exec $alt-menu
 # Start browser
 bindsym $LogoKey+b exec $browser
 bindsym $LogoKey+Shift+b exec $alt-browser
+
+#Start office suite
+bindsym $LogoKey+d exec $officesuite
 
 # Start password manager
 bindsym $LogoKey+p exec $pwdmngr
