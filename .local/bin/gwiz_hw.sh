@@ -1,47 +1,112 @@
 #!/bin/bash
 
-echo -e "\n\nSYTEM INFO (sudo hwinfo)"
-echo -e "\nWhat would you like to do?\n"
-echo -e " 0 sudo hwinfo --all"
-echo -e " 1 sudo hwinfo --bios"
-echo -e " 2 sudo hwinfo --bluetooth"
-echo -e " 3 sudo hwinfo --camera"
-echo -e " 4 sudo hwinfo --cdrom"
-echo -e " 5 sudo hwinfo --cpu"
-echo -e " 6 sudo hwinfo --disk"
-echo -e " 7 sudo hwinfo --gfxcard"
-echo -e " 8 sudo hwinfo --keyboard"
-echo -e " 9 sudo hwinfo --memory"
-echo -e " A sudo hwinfo --monitor"
-echo -e " B sudo hwinfo --mouse"
-echo -e " C sudo hwinfo --network"
-echo -e " D sudo hwinfo --pci"
-echo -e " E sudo hwinfo --sound"
-echo -e " F sudo hwinfo --usb"
-echo -e " W sudo hwinfo --wlan"
-echo -e " Z sudo hwinfo --short"
-echo -e "\n"
+dHeight=10
+dWidth=40
+dChoiceHeight=5
+dBackTitle="Shell script dialog box"
+dTitle="Run hardware inspection"
+dMenu="Choose one of the following options"
+choices=(1 "hwinfo" 2 "lshw" 3 "inxi")
 
-read hwinfo_choice
+run_hwinfo () {
+	
+	OPTIONS=(
+	"bios" ""
+	"cpu" ""
+	"keyboard" ""
+	"disk" ""
+	"memory" ""
+	"network" ""
+	"wlan" ""
+	"display" ""
+	"monitor" ""
+	"gfxcard" ""
+	"sound" ""
+	"mouse" ""
+	"camera" ""
+	"bluetooth" ""
+	"usb" ""
+	"pci" ""
+	"cdrom" ""
+	"all" ""
+	"short" ""
+	)
+	
+	SELECTION=$(dialog --stdout \
+		--menu "Choose one:" 27 40 22 \
+		"${OPTIONS[@]}" 2>&1)
 
-case $hwinfo_choice in
-  "0") sudo hwinfo --all;;
-	"1") sudo hwinfo --bios;;
-	"2") sudo hwinfo --bluetooth;;
-	"3") sudo hwinfo --camera;;
-	"4") sudo hwinfo --cdrom;;
-	"5") sudo hwinfo --cpu;;
-	"6") sudo hwinfo --disk;;
-	"7") sudo hwinfo --gfxcard;;
-	"8") sudo hwinfo --keyboard;;
-	"9") sudo hwinfo --memory;;
-	"A" | "a") sudo hwinfo --monitor;;
-	"B" | "b") sudo hwinfo --mouse;;
-	"C" | "c") sudo hwinfo --network;;
-	"D" | "d") sudo hwinfo --pci;;
-	"E" | "e") sudo hwinfo --sound;;
-	"F" | "f") sudo hwinfo --usb;;
-	"W" | "w") sudo hwinfo --wlan;;
-  "Z" | "z") sudo hwinfo --short;;
-	*) sudo hwinfo --short;;
+	clear
+	echo -e "\n\nsudo hwinfo --$SELECTION\n"
+	sudo hwinfo --$SELECTION
+	exit 
+}
+
+run_lshw () {
+	
+	OPTIONS=(
+	"processor" ""
+	"memory" ""
+	"disk" ""
+	"storage" ""
+	"network" ""
+	"display" ""
+	"system" ""
+	"short" ""
+	)
+	
+	SELECTION=$(dialog --stdout \
+		--menu "Choose one:" 15 40 8 \
+		"${OPTIONS[@]}" 2>&1)
+
+	clear
+	echo -e "\n\nsudo lshw -class $SELECTION\n"
+	sudo lshw -class $SELECTION
+	exit 
+}
+
+run_inxi() {
+
+	OPTIONS=(
+	"basic" ""
+	"system" ""
+	"machine" ""
+	"cpu" ""
+	"memory" ""
+	"disk" ""
+	"swap" ""
+	"battery" ""	
+	"graphics" ""
+	"audio" ""
+	"network" ""
+	"ip" ""
+	"usb" ""
+	"bluetooth" ""
+	"sensors" ""
+	"weather" ""
+	)
+	
+	SELECTION=$(dialog --stdout \
+		--menu "Choose one:" 23 40 16 \
+		"${OPTIONS[@]}" 2>&1)
+
+	clear
+	echo -e "\n\ninxi --$SELECTION\n"
+	inxi --$SELECTION
+	exit 
+}
+
+shell_choice=$(dialog --clear \
+	--backtitle "$dBackTitle" \
+	--title "$dTitle" \
+	--menu "$dMenu" $dHeight $dWidth $dChoiceHeight \
+	"${choices[@]}" \
+	2>&1 >/dev/tty)
+
+clear
+
+case $shell_choice in 
+	1) run_hwinfo;;
+	2) run_lshw;;
+	3) run_inxi;;
 esac
