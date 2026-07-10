@@ -447,6 +447,9 @@ fi
 echo -e "\n\nInstalling more utilities ..."
 if confirm_go; then
 
+	sudo apt install dialog
+	# tui dialog creator for bash
+
 	sudo apt install grim slurp
 	# tools for screenshots
 
@@ -495,6 +498,7 @@ if confirm_go; then
 fi
 
 
+# ----------------
 # ----------------
 # INSTALL STARSHIP
 
