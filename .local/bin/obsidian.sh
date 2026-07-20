@@ -2,4 +2,4 @@
 
 # ~/.local/obsidian.sh
 
-~/AppImages/Obsidian.AppImage
+$HOME/AppImages/Obsidian.AppImage
