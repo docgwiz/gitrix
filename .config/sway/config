@@ -354,7 +354,6 @@ bindsym $LogoKey+v exec clipman pick --tool wofi
 
 # Start  terminal
 bindsym $LogoKey+Return exec $term
-bindsym $LogoKey+t exec $term
 
 # Start file manager
 bindsym $LogoKey+f exec $filemngr
@@ -384,6 +383,10 @@ bindsym $LogoKey+Shift+o exec obsidian.sh
 
 # Show shortcuts
 bindsym $LogoKey+n exec notify-send -t 0 "LAYOUT & FOCUS SHORTCUTS \n\nALT+Y\t\t split side by side \nALT+X\t\t split up and down \nALT+Slash\t layout toggle split \nALT+S\t\t layout stacking \nALT+T\t\t layout tabbed \nALT+Return\t fullscreen toggle \nALT+Space\t floating toggle \nALT+Shift+Space\t focus mode toggle"
+
+# Show shortcuts
+bindsym $LogoKey+t exec notify-send -t 0 "TEXT EDIT SHORTCUTS \n\nShift+Home\t select to SOL\nShift+End\t select to EOL \nCtrl+L\t\t select entire line\nCtrl+Shift+K\t cut whole line\nCtrl+Shift+C\t copy (terminal)\nCtrl+Shift+V\t paste (terminal)"
+
 
 ### ------------
 ### Switch focus
