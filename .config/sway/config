@@ -139,7 +139,7 @@ set $CharcoalBlue #36454f
 
 ### output config for screen on Lenovo T490
 # output eDP-1 mode 1920x1080@59.99Hz
-# output eDP-1 scale 1.2
+# output eDP-1 scale 1
 
 ### output config for screen on MacBookPro-13-2
 # output eDP-1 mode 2560x1600@60Hz 
@@ -310,7 +310,7 @@ client.urgent           #2F343A #CC241D $fg_1   #CC241D   #CC241D
 
 exec swayidle -w \
 	timeout 300 'swaylock --daemonize --color "$darkgray"' \
-	timeout 1200 'swaymsg "output * dpms off"' \
+  timeout 1200 'swaymsg "output * dpms off"' \
 	resume 'swaymsg "output * dpms on"' \
   before-sleep 'swaylock --daemonize --color "$CharcoalBlue"' 
 
@@ -382,11 +382,11 @@ bindsym $LogoKey+g exec $aiappPATH
 bindsym $LogoKey+Shift+o exec obsidian.sh
 
 # Show shortcuts
-bindsym $LogoKey+1 exec notify-send -t 0 "LAYOUT & FOCUS SHORTCUTS \n\nALT+Y\t\t split side by side \nALT+X\t\t split up and down \nALT+Slash\t layout toggle split \nALT+S\t\t layout stacking \nALT+T\t\t layout tabbed \nALT+Return\t fullscreen toggle \nALT+Space\t floating toggle \nALT+Shift+Space\t focus mode toggle\n\nTEXT EDIT SHORTCUTS \n\nShift+Home\t select to SOL\nShift+End\t select to EOL \nCtrl+L\t\t select entire line\nCtrl+Shift+K\t cut whole line\nCtrl+Shift+C\t copy (terminal)\nCtrl+Shift+V\t paste (terminal)"
+bindsym $LogoKey+1 exec notify-send --app-name="Sway WM (notify-send)" --expire-time=0 "LAYOUT & FOCUS SHORTCUTS (Logo+1)" "\nALT+Y\t\t split side by side \nALT+X\t\t split up and down \nALT+Slash\t layout toggle split \nALT+S\t\t layout stacking \nALT+T\t\t layout tabbed \nALT+Return\t fullscreen toggle \nALT+Space\t floating toggle \nALT+Shift+Space\t focus mode toggle"
 
-bindsym $LogoKey+2 exec notify-send -t 0 "TEXT EDIT SHORTCUTS \n\nShift+Home\t select to SOL\nShift+End\t select to EOL \nCtrl+L\t\t select entire line\nCtrl+Shift+K\t cut whole line\nCtrl+Shift+C\t copy (terminal)\nCtrl+Shift+V\t paste (terminal)"
+bindsym $LogoKey+2 exec notify-send --app-name="Sway WM (notify-send)" --expire-time=0 "TEXT EDIT SHORTCUTS (Logo+2)" "\nShift+Home\t select to SOL\nShift+End\t select to EOL \nCtrl+L\t\t select entire line\nCtrl+Shift+K\t cut whole line\nCtrl+Shift+C\t copy (terminal)\nCtrl+Shift+V\t paste (terminal)"
 
-bindsym $LogoKey+3 exec notify-send -t 0 "BROWSER TAB SHORTCUTS \n\nCtrl+Tab\t\t next tab\nCtrl+PgDn\t\t next tab\nShift+Ctrl+Tab\t\t previous tab\nShift+Ctrl+PgUp\t\t previous tab\nCtrl+1,2...8\t\t tab 1,2...8" 
+bindsym $LogoKey+3 exec notify-send --app-name="Sway WM (notify-send)" --expire-time=0 "BROWSER TAB SHORTCUTS (Logo+3)" "\nCtrl+Tab\t\t next tab\nCtrl+PgDn\t\t next tab\nShift+Ctrl+Tab\t\t previous tab\nCtrl+PgUp\t\t previous tab\nCtrl+1,2...8\t\t tab 1,2...8" 
 
 ### ------------
 ### Switch focus
