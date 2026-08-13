@@ -71,7 +71,7 @@ set $browser brave-browser
 set $alt-browser firefox-esr
 
 # Set mail app
-set $mailapp proton-mail
+set $protonapps proton-mail
 
 # Set office suite
 set $officesuite libreoffice
@@ -369,14 +369,14 @@ bindsym $LogoKey+Shift+space exec $alt-menu
 bindsym $LogoKey+b exec $browser
 bindsym $LogoKey+Shift+b exec $alt-browser
 
-# Start mail app
-bindsym $LogoKey+m exec $mailapp
+# Start Proton apps
+bindsym $LogoKey+p exec $protonapps
 
 # Start office suite
 bindsym $LogoKey+d exec $officesuite
 
 # Start password manager
-bindsym $LogoKey+p exec $pwdmngr
+bindsym $LogoKey+1 exec $pwdmngr
 
 # Launch Obsidian AppImage with variable that specifies image location (see above)
 bindsym $LogoKey+o exec $notemngrPATH
@@ -388,7 +388,7 @@ bindsym $LogoKey+g exec $aiappPATH
 bindsym $LogoKey+Shift+o exec obsidian.sh
 
 # Show shortcuts
-bindsym $LogoKey+1 exec notify-send --app-name="Sway WM (notify-send)" --expire-time=0 "LAYOUT & FOCUS SHORTCUTS (Logo+1)" "\nALT+Y\t\t split side by side \nALT+X\t\t split up and down \nALT+Slash\t layout toggle split \nALT+S\t\t layout stacking \nALT+T\t\t layout tabbed \nALT+Return\t fullscreen toggle \nALT+Space\t floating toggle \nALT+Shift+Space\t focus mode toggle"
+bindsym $LogoKey+c exec notify-send --app-name="Sway WM (notify-send)" --expire-time=0 "LAYOUT & FOCUS SHORTCUTS (Logo+1)" "\nALT+Y\t\t split side by side \nALT+X\t\t split up and down \nALT+Slash\t layout toggle split \nALT+S\t\t layout stacking \nALT+T\t\t layout tabbed \nALT+Return\t fullscreen toggle \nALT+Space\t floating toggle \nALT+Shift+Space\t focus mode toggle"
 
 bindsym $LogoKey+2 exec notify-send --app-name="Sway WM (notify-send)" --expire-time=0 "TEXT EDIT SHORTCUTS (Logo+2)" "\nShift+Home\t select to SOL\nShift+End\t select to EOL \nCtrl+L\t\t select entire line\nCtrl+Shift+K\t cut whole line\nCtrl+Shift+C\t copy (terminal)\nCtrl+Shift+V\t paste (terminal)"
 
