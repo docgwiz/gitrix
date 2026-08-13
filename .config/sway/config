@@ -70,6 +70,9 @@ set $alt-menu wofi --show drun
 set $browser brave-browser
 set $alt-browser firefox-esr
 
+# Set mail app
+set $mailapp proton-mail
+
 # Set office suite
 set $officesuite libreoffice
 
@@ -366,7 +369,10 @@ bindsym $LogoKey+Shift+space exec $alt-menu
 bindsym $LogoKey+b exec $browser
 bindsym $LogoKey+Shift+b exec $alt-browser
 
-#Start office suite
+# Start mail app
+bindsym $LogoKey+m exec $mailapp
+
+# Start office suite
 bindsym $LogoKey+d exec $officesuite
 
 # Start password manager
