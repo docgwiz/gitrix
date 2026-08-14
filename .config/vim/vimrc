@@ -194,7 +194,9 @@ set softtabstop=2
 " If using a dark background within the editing area 
 " and syntax highlighting turn on this option as well
 set background=dark
-
+"
+" Enable standard commands (eg yy) to copy to clipboard
+set clipboard=unnamedplus
 
 " -----------
 " OTHER STUFF

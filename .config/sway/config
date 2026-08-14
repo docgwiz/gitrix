@@ -388,11 +388,37 @@ bindsym $LogoKey+g exec $aiappPATH
 bindsym $LogoKey+Shift+o exec obsidian.sh
 
 # Show shortcuts
-bindsym $LogoKey+c exec notify-send --app-name="Sway WM (notify-send)" --expire-time=0 "LAYOUT & FOCUS SHORTCUTS (Logo+1)" "\nALT+Y\t\t split side by side \nALT+X\t\t split up and down \nALT+Slash\t layout toggle split \nALT+S\t\t layout stacking \nALT+T\t\t layout tabbed \nALT+Return\t fullscreen toggle \nALT+Space\t floating toggle \nALT+Shift+Space\t focus mode toggle"
 
-bindsym $LogoKey+2 exec notify-send --app-name="Sway WM (notify-send)" --expire-time=0 "TEXT EDIT SHORTCUTS (Logo+2)" "\nShift+Home\t select to SOL\nShift+End\t select to EOL \nCtrl+L\t\t select entire line\nCtrl+Shift+K\t cut whole line\nCtrl+Shift+C\t copy (terminal)\nCtrl+Shift+V\t paste (terminal)"
+set $LayoutShortcuts "LAYOUT & FOCUS\n--------------------------------------\n\
+Alt+Y\t\t split side by side\n\
+Alt+X\t\t split up and down\n\
+Alt+Slash\t layout toggle split\n\
+Alt+S\t\t layout stacking\n\
+Alt+T\t\t layout tabbed\n\
+Alt+Return\t fullscreen toggle\n\
+Alt+Space\t floating toggle\n\
+Alt+Shift+Space\t focus mode toggle"
 
-bindsym $LogoKey+3 exec notify-send --app-name="Sway WM (notify-send)" --expire-time=0 "BROWSER TAB SHORTCUTS (Logo+3)" "\nCtrl+Tab\t\t next tab\nCtrl+PgDn\t\t next tab\nShift+Ctrl+Tab\t\t previous tab\nCtrl+PgUp\t\t previous tab\nCtrl+1,2...8\t\t tab 1,2...8" 
+set $TextEditShortcuts "TEXT EDIT\n------------------------------------\n\
+Shift+Home\t select to SOL\n\
+Shift+End\t select to EOL \n\
+Ctrl+L\t\t select entire line\n\
+Ctrl+Shift+K\t cut whole line\n\
+Ctrl+Shift+C\t copy (terminal)\n\
+Ctrl+Shift+V\t paste (terminal)"
+
+set $BrowserTabShortcuts "BROWSER TAB\n-----------------------------------\n\
+Ctrl+Tab\t next tab\n\
+Ctrl+PgDn\t next tab\n\
+Shift+Ctrl+Tab\t previous tab\n\
+Ctrl+PgUp\t previous tab\n\
+Ctrl+1,2...8\t tab 1,2...8" 
+
+
+bindsym $LogoKey+2 exec notify-send --app-name="Sway WM (notify-send)" --expire-time=0 "KEYBOARD SHORTCUTS" $LayoutShortcuts
+bindsym $LogoKey+3 exec notify-send --app-name="Sway WM (notify-send)" --expire-time=0 "KEYBOARD SHORTCUTS" $TextEditShortcuts
+bindsym $LogoKey+4 exec notify-send --app-name="Sway WM (notify-send)" --expire-time=0 "KEYBOARD SHORTCUTS" $BrowserTabShortcuts
+
 
 ### ------------
 ### Switch focus
