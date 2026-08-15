@@ -83,9 +83,6 @@ set $pwdmngr 1password
 set $notemngr obsidian
 set $notemngrPATH "~/AppImages/Obsidian.AppImage"
 
-# Set sync utility
-set $syncutil syncthing
-
 # Set ai app
 set $aiapp chat-gpt
 set $aiappPATH "~/AppImages/chat-gpt.AppImage"
@@ -352,6 +349,7 @@ bindsym $AltKey+Shift+c exec "pkill waybar && waybar"
 
 bindsym $LogoKey+v exec clipman pick --tool wofi
 
+
 ### -------------------
 ### Launch / start apps
 
@@ -381,13 +379,11 @@ bindsym $LogoKey+1 exec $pwdmngr
 # Launch Obsidian AppImage with variable that specifies image location (see above)
 bindsym $LogoKey+o exec $notemngrPATH
 
-#Launch chat-gpt.AppImage with variable that specifies image location (see above)
-bindsym $LogoKey+g exec $aiappPATH
-
 # Launch Obsidian AppImage via script file in ~/.local/bin)
 bindsym $LogoKey+Shift+o exec obsidian.sh
 
-# Show shortcuts
+
+# Show keyboard shortcuts
 
 set $LayoutShortcuts "LAYOUT & FOCUS\n--------------------------------------\n\
 Alt+Y\t\t split side by side\n\
@@ -415,9 +411,9 @@ Ctrl+PgUp\t previous tab\n\
 Ctrl+1,2...8\t tab 1,2...8" 
 
 
-bindsym $LogoKey+2 exec notify-send --app-name="Sway WM (notify-send)" --expire-time=0 "KEYBOARD SHORTCUTS" $LayoutShortcuts
-bindsym $LogoKey+3 exec notify-send --app-name="Sway WM (notify-send)" --expire-time=0 "KEYBOARD SHORTCUTS" $TextEditShortcuts
-bindsym $LogoKey+4 exec notify-send --app-name="Sway WM (notify-send)" --expire-time=0 "KEYBOARD SHORTCUTS" $BrowserTabShortcuts
+bindsym $LogoKey+2 exec notify-send --app-name="Sway WM (notify-send)" --expire-time=10000 "KEYBOARD SHORTCUTS" $LayoutShortcuts
+bindsym $LogoKey+3 exec notify-send --app-name="Sway WM (notify-send)" --expire-time=10000 "KEYBOARD SHORTCUTS" $TextEditShortcuts
+bindsym $LogoKey+4 exec notify-send --app-name="Sway WM (notify-send)" --expire-time=10000 "KEYBOARD SHORTCUTS" $BrowserTabShortcuts
 
 
 ### ------------

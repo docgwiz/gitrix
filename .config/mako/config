@@ -29,7 +29,7 @@ height=500
 padding=10
 
 # Max number of notifications visible
-max-visible=4
+max-visible=5
 
 # Max number of expired notifications to keep in history
 max-history=20

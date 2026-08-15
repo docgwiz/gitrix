@@ -137,11 +137,11 @@ create_symlinks() {
 # ---------------
 # UPDATE PACKAGES
 
-echo -e "\n\nUpdating packages ..."
+echo -e "\n\nScript will update packages ..."
 if confirm_go; then
 	sudo apt update
 else
-	echo -e "Script file terminated.\n"
+	echo -e "Update cancelled. Script file terminated.\n"
 	exit 0
 fi
 
@@ -149,7 +149,7 @@ fi
 # -----------------------------
 # INSTALL FILE MANAGEMENT UTILS
 
-echo -e "\n\nInstalling file management utilities ..."
+echo -e "\n\nScript will install file management utilities ..."
 if confirm_go; then 
 	sudo apt install curl wget rsync
 	sudo apt install zip unzip
@@ -159,7 +159,7 @@ fi
 # -----------------------------------
 # INSTALL NETWORK MANAGEMENT UTILIIES
 
-echo -e "\n\nInstalling network management utilities ..."
+echo -e "\n\nScript will install network management utilities ..."
 if confirm_go; then
 	sudo apt install network-manager
   sudo apt install wavemon
@@ -169,7 +169,7 @@ fi
 # -------------------------------------
 # INSTALL HARDWARE MANAGEMENT UTILITIES
 
-echo -e "\n\nInstalling hardware management utilities ..."
+echo -e "\n\nScript will install hardware management utilities ..."
 if confirm_go; then
 	sudo apt install inxi --no-install-recommends
 	sudo apt install hwinfo
@@ -180,7 +180,7 @@ fi
 # -----------------
 # INSTALL FASTFETCH
 
-echo -e "\n\nInstalling FastFetch ..."
+echo -e "\n\nScript will install fastfetch ..."
 if confirm_go; then 
 	sudo apt install fastfetch
 fi
@@ -189,7 +189,7 @@ fi
 # ---------------------
 # INSTALL BRAVE BROWSER
 
-echo -e "\n\nInstalling Brave Browser ..."
+echo -e "\n\nScript will install brave browser ..."
 if confirm_go; then 
 	sudo apt install curl
 	sudo curl -fsSLo /usr/share/keyrings/brave-browser-archive-keyring.gpg https://brave-browser-apt-release.s3.brave.com/brave-browser-archive-keyring.gpg
@@ -202,7 +202,7 @@ fi
 # -------------------
 # INSTALL FIREFOX-ESR
 
-echo -e "\n\nInstalling Firefox-ESR ..."
+echo -e "\n\nScript will install firefox-esr ..."
 if confirm_go; then 
 	sudo apt install firefox-esr
 fi
@@ -211,7 +211,7 @@ fi
 # -----------
 # INSTALL VIM
 
-echo -e "\n\nInstalling Vim ..."
+echo -e "\n\nScript will install vim ..."
 if confirm_go; then 
 	sudo apt install vim
 fi
@@ -222,7 +222,7 @@ fi
 
 VIM_NOSYNC="$HOME/.local/tmp/vim/"
 
-echo -e "\nCreating $VIM_NOSYNC for Vim's swap, backup, and undo files ...\n"
+echo -e "\n\nScript will create $VIM_NOSYNC for Vim's swap, backup, and undo files ...\n"
 if confirm_go; then 
 	# -e FILE	Returns true if the file/path exists.
 	# -f FILE	Returns true if the file exists and is a regular file.
@@ -237,7 +237,7 @@ fi
 
 
 # Make Vim the default editor
-echo -e "\nMaking Vim the default editor ..."
+echo -e "\n\nScript will offer default editor selection ..."
 if confirm_go; then 
 	sudo update-alternatives --config editor
 fi
@@ -246,7 +246,7 @@ fi
 # -----------------
 # INSTALL VIFM
 
-echo -e "\n\nInstalling Vifm TUI file manager ..."
+echo -e "\n\nScript will install vifm TUI file manager ..."
 if confirm_go; then 
 	sudo apt install vifm
 fi
@@ -256,22 +256,19 @@ fi
 # INSTALL FONT PACKAGES
 
 # Install apt repo packages
-echo -e "\n\nInstalling apt repository font packages ..."
+echo -e "\n\nScript will install apt repository font packages ..."
 if confirm_go; then 
-
 	# Install recommended fonts
 	sudo apt install fonts-recommended
-
 	# Install awesome font
 	sudo apt install fonts-font-awesome
-
 fi
 
 # Install nerdfont packages
 FONTSRC_DIR="https://dufs.docgwiz.com/fonts/nerdfonts/"
 FONTDEST_DIR="$HOME/.local/share/fonts/"
 
-echo -e "\n\nInstalling nerd font files ..."
+echo -e "\n\nScript will install nerd font files ..."
 if confirm_go; then 
 	
 	echo -e "\nNerdFonts will be copied from $FONTSRC_DIR to $FONTDEST_DIR"
@@ -292,12 +289,11 @@ if confirm_go; then
 	else
     echo -e "\nWget failed"
 	fi
- 
 fi
 
 
 # Rebuild the font cache:
-echo -e "\n\nRebuilding the font cache ..."
+echo -e "\n\nScript will rebuild the font cache ..."
 if confirm_go; then
 	fc-cache -f
 	# -f: Forces regeneration, even if cache seems up-to-date
@@ -310,7 +306,7 @@ fi
 # ------------
 # INSTALL SWAY
 
-echo -e "\n\nInstalling Sway Window Manager ..."
+echo -e "\n\nScript will install Sway WM ..."
 if confirm_go; then 
 	sudo apt install sway
 	# This will automatically install dependencies, including
@@ -325,7 +321,7 @@ fi
 # -------------------------------------
 # INSTALL RECOMMENDED PACKAGES FOR SWAY
 
-echo -e "\n\nInstalling recommended packages for Sway WM ..."
+echo -e "\n\nScript will install recommended packages for Sway WM ..."
 if confirm_go; then 
 	# Install recommended packages:
 	sudo apt install swaylock swayidle sway-backgrounds
@@ -355,7 +351,7 @@ fi
 
 # ----------------
 # INSTALL XWAYLAND
-echo -e "\n\nInstalling Xwayland for packages that need X11 ..."
+echo -e "\n\nScript will install Xwayland for packages that need X11 ..."
 if confirm_go; then 
 	sudo apt install xwayland
 fi
@@ -365,7 +361,7 @@ fi
 # CREATE AN ENVIRONMENT FILE
 # create /etc/environment with root privileges
 
-echo -e "\n\nCreating an environment file ..."
+echo -e "\n\nScript will create an environment file ..."
 if confirm_go; then 
 	ENV_FILE="/etc/environment"
 
@@ -400,7 +396,7 @@ fi
 # --------------
 # INSTALL WAYBAR
 
-echo -e "\n\nInstalling Waybar ..."
+echo -e "\n\nScript will install Waybar ..."
 if confirm_go; then 
 	sudo apt install waybar
 fi
@@ -409,42 +405,41 @@ fi
 # ------------------------------
 # INSTALL SWAY SUPPORT UTILITIES
 
-echo -e "\n\nInstalling brightnessctl ..."
+echo -e "\n\nScript will install brightnessctl ..."
 if confirm_go; then 
 	sudo apt install brightnessctl
 fi
 
-echo -e "\n\nTweaking brightnessctl!\nAdding $USER to video and input groups ..."
+echo -e "\n\nTweaking brightnessctl!\nScript will add $USER to video and input groups ..."
 if confirm_go; then 
 	sudo usermod -a -G video "$USER"
 	sudo usermod -a -G input "$USER"
 	groups "$USER"	
 fi
 
-echo -e "\n\nInstalling pulseaudio and suggested packages ..."
+echo -e "\n\nScript will install pulseaudio and suggested packages ..."
 if confirm_go; then 
 	sudo apt install pulseaudio
 	sudo apt install pavucontrol
 fi
 
-
-echo -e "\n\nInstalling polkit and MATE policy authentication package ..."
+echo -e "\n\nScript will install polkit and MATE policy authentication package ..."
 if confirm_go; then
 	sudo apt install polkitd			
 	sudo apt install mate-polkit
 fi
 
-echo -e "\n\nInstalling wl-clipboard ..."
+echo -e "\n\nScript will install wl-clipboard ..."
 if confirm_go; then 
 	sudo apt install wl-clipboard
 fi
 
-echo -e "\n\nInstalling clipman ..."
+echo -e "\n\nScript will install clipman ..."
 if confirm_go; then
 	sudo apt install clipman
 fi
 
-echo -e "\n\nInstalling more utilities ..."
+echo -e "\n\nScript will install more utilities ..."
 if confirm_go; then
 
 	sudo apt install dialog
@@ -482,7 +477,7 @@ fi
 # INSTALL MAKO
 
 # Mako needs the libnotify package:
-echo -e "\n\nInstalling Mako ..."
+echo -e "\n\nScript will install mako ..."
 if confirm_go; then 
 	sudo apt install libnotify-bin
 	sudo apt install mako-notifier
@@ -492,7 +487,7 @@ fi
 # ------------
 # INSTALL WOFI
 
-echo -e "\n\nInstalling Wofi ..."
+echo -e "\n\nScript will install wofi ..."
 if confirm_go; then 
 	sudo apt install wofi
 fi
@@ -502,7 +497,7 @@ fi
 # ----------------
 # INSTALL STARSHIP
 
-echo -e "\n\nInstalling Starship ..."
+echo -e "\n\nScript will install starship ..."
 if confirm_go; then 
 	sudo apt install starship
 fi
@@ -511,7 +506,7 @@ fi
 # ----------------------------------
 # CREATE SYM LINKS FOR SHELL SCRIPTS
 
-echo -e "\n\nCreate sym links for shell scripts ..."
+echo -e "\n\nScript will create sym links for shell scripts ..."
 if confirm_go; then 
 	SCRIPTFILE_DIR="$REPO_DIR/.local/bin"
 	SYMLINK_DIR="$HOME/.local/bin"
@@ -522,7 +517,7 @@ fi
 # -----------------------------
 # CREATE SYM LINKS FOR DOTFILES
 
-echo -e "\n\nCreate sym links for dot files ..."
+echo -e "\n\nScript will create sym links for dot files ..."
 if confirm_go; then 
 	DOTFILE_DIR="$REPO_DIR"
 	SYMLINK_DIR="$HOME"
@@ -535,7 +530,7 @@ fi
 
 SWAY_PACKS=("sway" "starship" "foot" "waybar" "vim" "vifm" "wofi" "mako" "fastfetch")
 
-echo -e "\n\nCreate sym links for config files ..."
+echo -e "\n\nScript will create sym links for config files ..."
 if confirm_go; then 
 	CONFIG_DIR=".config"
 	for PACK_DIR in "${SWAY_PACKS[@]}"; do
@@ -559,5 +554,5 @@ fi
 # ----
 # EXIT
 
-echo -e "\n\nSWAY SETUP UP SCRIPT COMPLETED\n\n"
+echo -e "\n\nFINISHED! Sway setup script completed\n\n"
 exit 0
