@@ -390,6 +390,16 @@ bindsym $LogoKey+Shift+o exec obsidian.sh
 
 # Show keyboard shortcuts
 
+set $AssortedShortcuts "SCREEN \n--------------------------------------\n\
+h\t\t left arrow\n\
+j\t\t down arrow\n\
+k\t\t up arrow\n\
+l\t\t right arrow\n\
+PrtSc\t\t print screen\n\
+Cmd+Shift+r\t resize mode\n\
+Alt+minus\t show scratchpad\n\
+Alt+Shift+minus\t send window to scratchpad"
+
 set $LayoutShortcuts "LAYOUT & FOCUS\n--------------------------------------\n\
 Alt+Y\t\t split side by side\n\
 Alt+X\t\t split up and down\n\
@@ -401,7 +411,6 @@ Alt+Space\t floating toggle\n\
 Alt+Shift+Space\t focus mode toggle\n\
 Alt+Shift+p\t focus parent\n\
 Alt+Shift+n\t container to workspace n"
-
 
 set $TextEditShortcuts "TEXT EDIT\n------------------------------------\n\
 Shift+Home\t select to SOL\n\
@@ -419,6 +428,7 @@ Ctrl+PgUp\t previous tab\n\
 Ctrl+1,2...8\t tab 1,2...8" 
 
 
+bindsym $LogoKey+1 exec notify-send --app-name="Sway WM (notify-send)" --expire-time=10000 "KEYBOARD SHORTCUTS" $AssortedShortcuts
 bindsym $LogoKey+2 exec notify-send --app-name="Sway WM (notify-send)" --expire-time=10000 "KEYBOARD SHORTCUTS" $LayoutShortcuts
 bindsym $LogoKey+3 exec notify-send --app-name="Sway WM (notify-send)" --expire-time=10000 "KEYBOARD SHORTCUTS" $TextEditShortcuts
 bindsym $LogoKey+4 exec notify-send --app-name="Sway WM (notify-send)" --expire-time=10000 "KEYBOARD SHORTCUTS" $BrowserTabShortcuts
