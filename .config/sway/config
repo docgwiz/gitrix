@@ -390,11 +390,11 @@ bindsym $LogoKey+Shift+o exec obsidian.sh
 
 # Show keyboard shortcuts
 
-set $AssortedShortcuts "SCREEN \n--------------------------------------\n\
-h\t\t left arrow\n\
-j\t\t down arrow\n\
-k\t\t up arrow\n\
-l\t\t right arrow\n\
+set $AssortedShortcuts "WINDOW MANAGEMENT \n--------------------------------\n\
+Cmd+q\t\t exit Sway WM\n\
+Cmd+w\t\t exit window/app\n\
+Alt+c\t\t reload Sway WM config\n\
+Alt+Shift+c\t reload Waybar\n\
 PrtSc\t\t print screen\n\
 Cmd+Shift+r\t resize mode\n\
 Alt+minus\t show scratchpad\n\
@@ -427,11 +427,29 @@ Shift+Ctrl+Tab\t previous tab\n\
 Ctrl+PgUp\t previous tab\n\
 Ctrl+1,2...8\t tab 1,2...8" 
 
+set $VimShortcuts "VIM \n-----------------------------\n\
+h\t left arrow\n\
+j\t down arrow\n\
+k\t up arrow\n\
+l\t right arrow"
+
+set $AppShortcuts "App \n-----------------------------\n\
+Cmd+Enter\t Foot terminal\n\
+Cmd+Space\t WMenu launcher\n\
+Cmd+a\t\t ChatGPT\n\
+Cmd+b\t\t Brave Browser\n\
+Cmd+d\t\t Libre Office\n\
+Cmd+f\t\t Thunar file browser\n\
+Cmd+m\t\t Proton apps\n\
+Cmd+o\t\t Obsidian\n\
+Cmd+p\t\t 1password"
 
 bindsym $LogoKey+1 exec notify-send --app-name="Sway WM (notify-send)" --expire-time=10000 "KEYBOARD SHORTCUTS" $AssortedShortcuts
 bindsym $LogoKey+2 exec notify-send --app-name="Sway WM (notify-send)" --expire-time=10000 "KEYBOARD SHORTCUTS" $LayoutShortcuts
 bindsym $LogoKey+3 exec notify-send --app-name="Sway WM (notify-send)" --expire-time=10000 "KEYBOARD SHORTCUTS" $TextEditShortcuts
 bindsym $LogoKey+4 exec notify-send --app-name="Sway WM (notify-send)" --expire-time=10000 "KEYBOARD SHORTCUTS" $BrowserTabShortcuts
+bindsym $LogoKey+8 exec notify-send --app-name="Sway WM (notify-send)" --expire-time=10000 "KEYBOARD SHORTCUTS" $VimShortcuts
+bindsym $LogoKey+9 exec notify-send --app-name="Sway WM (notify-send)" --expire-time=10000 "KEYBOARD SHORTCUTS" $AppShortcuts
 
 
 ### ------------

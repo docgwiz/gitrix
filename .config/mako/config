@@ -25,7 +25,7 @@ border-radius=10
 
 # Optional: adjust width, height, and padding as needed
 width=400
-height=500
+height=600
 padding=10
 
 # Max number of notifications visible
