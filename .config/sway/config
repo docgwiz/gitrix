@@ -71,7 +71,10 @@ set $browser brave-browser
 set $alt-browser firefox-esr
 
 # Set mail app
-set $protonapps proton-mail
+set $mailapp proton-mail
+
+# Set AI app
+set $aiapp chatgpt
 
 # Set office suite
 set $officesuite libreoffice
@@ -82,10 +85,6 @@ set $pwdmngr 1password
 # Set note manager
 set $notemngr obsidian
 set $notemngrPATH "~/AppImages/Obsidian.AppImage"
-
-# Set ai app
-set $aiapp chat-gpt
-set $aiappPATH "~/AppImages/chat-gpt.AppImage"
 
 
 ### ------------------
@@ -351,36 +350,42 @@ bindsym $LogoKey+v exec clipman pick --tool wofi
 
 
 ### -------------------
-### Launch / start apps
+### App shortcuts
 
-# Start  terminal
+# terminal shortcut
 bindsym $LogoKey+Return exec $term
 
-# Start file manager
+# file manager shortcut
 bindsym $LogoKey+f exec $filemngr
 
-# Start launcher
+# launcher shortcut
 bindsym $LogoKey+space exec $menu
 bindsym $LogoKey+Shift+space exec $alt-menu
 
-# Start browser
+# browser shortcut
 bindsym $LogoKey+b exec $browser
 bindsym $LogoKey+Shift+b exec $alt-browser
 
-# Start Proton apps
-bindsym $LogoKey+p exec $protonapps
+# Mail app shortcut (mail and calendar)
+bindsym $LogoKey+m exec $mailapp
 
-# Start office suite
+# AI app shortcut 
+bindsym $LogoKey+a exec $aiapp
+
+# office suite shortcut
 bindsym $LogoKey+d exec $officesuite
 
-# Start password manager
-bindsym $LogoKey+1 exec $pwdmngr
+# password manager shortcut
+bindsym $LogoKey+p exec $pwdmngr
 
+# Obsidian shortcut
 # Launch Obsidian AppImage with variable that specifies image location (see above)
 bindsym $LogoKey+o exec $notemngrPATH
 
-# Launch Obsidian AppImage via script file in ~/.local/bin)
+# Obsidian alternate shortcut
+# Launch AppImage via script file in ~/.local/bin)
 bindsym $LogoKey+Shift+o exec obsidian.sh
+
 
 
 # Show keyboard shortcuts
@@ -393,7 +398,10 @@ Alt+S\t\t layout stacking\n\
 Alt+T\t\t layout tabbed\n\
 Alt+Return\t fullscreen toggle\n\
 Alt+Space\t floating toggle\n\
-Alt+Shift+Space\t focus mode toggle"
+Alt+Shift+Space\t focus mode toggle\n\
+Alt+Shift+p\t focus parent\n\
+Alt+Shift+n\t container to workspace n"
+
 
 set $TextEditShortcuts "TEXT EDIT\n------------------------------------\n\
 Shift+Home\t select to SOL\n\
