@@ -355,28 +355,25 @@ bindsym $LogoKey+v exec clipman pick --tool wofi
 # terminal shortcut
 bindsym $LogoKey+Return exec $term
 
-# file manager shortcut
-bindsym $LogoKey+f exec $filemngr
-
 # launcher shortcut
 bindsym $LogoKey+space exec $menu
 bindsym $LogoKey+Shift+space exec $alt-menu
+
+# AI app shortcut 
+bindsym $LogoKey+a exec $aiapp
 
 # browser shortcut
 bindsym $LogoKey+b exec $browser
 bindsym $LogoKey+Shift+b exec $alt-browser
 
-# Mail app shortcut (mail and calendar)
-bindsym $LogoKey+m exec $mailapp
-
-# AI app shortcut 
-bindsym $LogoKey+a exec $aiapp
-
 # office suite shortcut
 bindsym $LogoKey+d exec $officesuite
 
-# password manager shortcut
-bindsym $LogoKey+p exec $pwdmngr
+# file manager shortcut
+bindsym $LogoKey+f exec $filemngr
+
+# Mail app shortcut (mail and calendar)
+bindsym $LogoKey+m exec $mailapp
 
 # Obsidian shortcut
 # Launch Obsidian AppImage with variable that specifies image location (see above)
@@ -385,6 +382,9 @@ bindsym $LogoKey+o exec $notemngrPATH
 # Obsidian alternate shortcut
 # Launch AppImage via script file in ~/.local/bin)
 bindsym $LogoKey+Shift+o exec obsidian.sh
+
+# password manager shortcut
+bindsym $LogoKey+p exec $pwdmngr
 
 
 
@@ -427,11 +427,25 @@ Shift+Ctrl+Tab\t previous tab\n\
 Ctrl+PgUp\t previous tab\n\
 Ctrl+1,2...8\t tab 1,2...8" 
 
-set $VimShortcuts "VIM \n-----------------------------\n\
-h\t left arrow\n\
-j\t down arrow\n\
-k\t up arrow\n\
-l\t right arrow"
+set $VimCShortcuts "VIM cursor \n-----------------------------\n\
+h\t move cursor left\n\
+j\t move cursor down\n\
+k\t move cursor up\n\
+l\t move cursor right\n\
+0\t move to SOL\n\
+$\t move to EOL\n\
+b\t move to start of word\n\
+e\t move to end of word\n\
+w\t move to next word"
+
+set $VimEShortcuts "VIM edit \n-----------------------------\n\
+:w\t write file\n\
+:q\t quit file\n\
+:q!\t quit discard edits\n\
+/S1\t search forward for S1\n\
+?S2\t search backward for S1\n\
+:%s/S1/S2/g replace S1 with S2 (global)\n\
+"
 
 set $AppShortcuts "App \n-----------------------------\n\
 Cmd+Enter\t Foot terminal\n\
@@ -448,7 +462,8 @@ bindsym $LogoKey+1 exec notify-send --app-name="Sway WM (notify-send)" --expire-
 bindsym $LogoKey+2 exec notify-send --app-name="Sway WM (notify-send)" --expire-time=10000 "KEYBOARD SHORTCUTS" $LayoutShortcuts
 bindsym $LogoKey+3 exec notify-send --app-name="Sway WM (notify-send)" --expire-time=10000 "KEYBOARD SHORTCUTS" $TextEditShortcuts
 bindsym $LogoKey+4 exec notify-send --app-name="Sway WM (notify-send)" --expire-time=10000 "KEYBOARD SHORTCUTS" $BrowserTabShortcuts
-bindsym $LogoKey+8 exec notify-send --app-name="Sway WM (notify-send)" --expire-time=10000 "KEYBOARD SHORTCUTS" $VimShortcuts
+bindsym $LogoKey+5 exec notify-send --app-name="Sway WM (notify-send)" --expire-time=10000 "KEYBOARD SHORTCUTS" $VimCShortcuts
+bindsym $LogoKey+6 exec notify-send --app-name="Sway WM (notify-send)" --expire-time=10000 "KEYBOARD SHORTCUTS" $VimEShortcuts
 bindsym $LogoKey+9 exec notify-send --app-name="Sway WM (notify-send)" --expire-time=10000 "KEYBOARD SHORTCUTS" $AppShortcuts
 
 
