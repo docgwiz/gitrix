@@ -444,10 +444,13 @@ set $VimEShortcuts "VIM edit \n-----------------------------\n\
 :w\t write file\n\
 :q\t quit file\n\
 :q!\t quit discard edits\n\
+:y\t yank (copy)\n\
+:dd\t delete (cut)\n\
+:p\t paste\n\
+:u\t undo\n\
 /S1\t search forward for S1\n\
 ?S2\t search backward for S1\n\
-:%s/S1/S2/g replace S1 with S2 (global)\n\
-"
+:%s/S1/S2/g replace S1 with S2 (global)\n\"
 
 set $AppShortcuts "App \n-----------------------------\n\
 Cmd+Enter\t Foot\n\
