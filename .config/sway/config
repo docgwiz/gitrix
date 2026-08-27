@@ -56,22 +56,23 @@ set $right l
 ### --------------------
 ### Assign app shortcuts
 
+# Set application launchers
+set $menu wmenu-run
+set $alt-menu wofi --show drun
+
 # Set terminal emulator
 set $term foot
 
 # Set file manager
 set $filemngr thunar
 
-# Set application launchers
-set $menu wmenu-run
-set $alt-menu wofi --show drun
-
 # Set browser
 set $browser brave-browser
 set $alt-browser firefox-esr
 
-# Set mail app
+# Set mail apps
 set $mailapp proton-mail
+set $alt-mailapp thunderbird
 
 # Set AI app
 set $aiapp chatgpt
@@ -374,6 +375,7 @@ bindsym $LogoKey+f exec $filemngr
 
 # Mail app shortcut (mail and calendar)
 bindsym $LogoKey+m exec $mailapp
+bindsym $LogoKey+Shift exec $alt-mailapp
 
 # Obsidian shortcut
 # Launch Obsidian AppImage with variable that specifies image location (see above)
@@ -448,13 +450,13 @@ set $VimEShortcuts "VIM edit \n-----------------------------\n\
 "
 
 set $AppShortcuts "App \n-----------------------------\n\
-Cmd+Enter\t Foot terminal\n\
-Cmd+Space\t WMenu launcher\n\
+Cmd+Enter\t Foot\n\
+Cmd+(Shift)+Spc\t WMenu (Wofi)\n\
 Cmd+a\t\t ChatGPT\n\
-Cmd+b\t\t Brave Browser\n\
+Cmd+(Shift)+b\t Brave (Firefox)\n\
 Cmd+d\t\t Libre Office\n\
-Cmd+f\t\t Thunar file browser\n\
-Cmd+m\t\t Proton apps\n\
+Cmd+f\t\t Thunar\n\
+Cmd+(Shift)+m\t Proton (Thunderbird)\n\
 Cmd+o\t\t Obsidian\n\
 Cmd+p\t\t 1password"
 
