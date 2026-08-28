@@ -375,7 +375,7 @@ bindsym $LogoKey+f exec $filemngr
 
 # Mail app shortcut (mail and calendar)
 bindsym $LogoKey+m exec $mailapp
-bindsym $LogoKey+Shift exec $alt-mailapp
+bindsym $LogoKey+Shift+m exec $alt-mailapp
 
 # Obsidian shortcut
 # Launch Obsidian AppImage with variable that specifies image location (see above)
