@@ -91,7 +91,6 @@ else
 fi
 
 
-
 # -----------------------------
 # INSTALL 1PASSWWORD
 
@@ -105,6 +104,10 @@ fi
 # -----------------------------
 # INSTALL THUNAR
 
+echo -e "\n\nScript will install Thunar file manager ..."
+if confirm_go; then
+	sudo apt install thunar thunar-volman thunar-archive-plugin   
+fi
 
 
 # -----------------------------
@@ -115,6 +118,17 @@ fi
 # -----------------------------
 # INSTALL CHATGPT
 
+echo -e "\n\nScript will install ChatGPT ..."
+echo -e "\nTo begin ... download ChatGPT's .deb file\n\n"
+read -p "Has the .deb file been downloaded? (y/N)" response
+case $response in
+	[Yy])
+		echo -e "\nInstalling ChatGPT package ...\n\n"
+		cd ~/Downloads
+		sudo apt install ./chatgpt_amd64.deb;;
+	*)
+		echo -e "\nSkipping ChatGPT install ...";;
+esac
 
 
 # -----------------------------
