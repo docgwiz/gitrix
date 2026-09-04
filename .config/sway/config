@@ -64,7 +64,8 @@ set $alt-menu wofi --show drun
 set $term foot
 
 # Set file manager
-set $filemngr thunar
+set $filemngr "$term -e vifm"
+set $alt-filemngr thunar
 
 # Set browser
 set $browser brave-browser
@@ -372,6 +373,7 @@ bindsym $LogoKey+d exec $officesuite
 
 # file manager shortcut
 bindsym $LogoKey+f exec $filemngr
+bindsym $LogoKey+Shift+f exec $alt-filemngr
 
 # Mail app shortcut (mail and calendar)
 bindsym $LogoKey+m exec $mailapp
