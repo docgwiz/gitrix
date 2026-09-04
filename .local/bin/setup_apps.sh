@@ -96,8 +96,8 @@ fi
 
 echo -e "\n\nScript will install 1Password app ..."
 if confirm_go; then 
-	sudo apt install curl wget rsync
-	sudo apt install zip unzip
+#	sudo apt install curl wget rsync
+#	sudo apt install zip unzip
 fi
 
 
@@ -119,16 +119,11 @@ fi
 # INSTALL CHATGPT
 
 echo -e "\n\nScript will install ChatGPT ..."
-echo -e "\nTo begin ... download ChatGPT's .deb file\n\n"
-read -p "Has the .deb file been downloaded? (y/N)" response
-case $response in
-	[Yy])
-		echo -e "\nInstalling ChatGPT package ...\n\n"
+echo -e "\nATTENTION! Download ChatGPT's .deb file before continuing!\n\n"
+if confirm_go; then
 		cd ~/Downloads
 		sudo apt install ./chatgpt_amd64.deb;;
-	*)
-		echo -e "\nSkipping ChatGPT install ...";;
-esac
+fi
 
 
 # -----------------------------
