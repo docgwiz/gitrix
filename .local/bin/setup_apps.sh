@@ -79,6 +79,9 @@ trap 'handle_error $LINENO' ERR
 # SCRIPT
 # ======
 
+
+cd $HOME
+
 # ---------------
 # UPDATE PACKAGES
 
@@ -95,9 +98,11 @@ fi
 # INSTALL 1PASSWWORD
 
 echo -e "\n\nScript will install 1Password app ..."
+echo -e "\nATTENTION! Download the 1Password .deb file before continuing!\n\n"
 if confirm_go; then 
-#	sudo apt install curl wget rsync
-#	sudo apt install zip unzip
+	cd $HOME/Downloads
+	sudo apt install 1password-latest.deb
+	cd $HOME
 fi
 
 
@@ -119,10 +124,11 @@ fi
 # INSTALL CHATGPT
 
 echo -e "\n\nScript will install ChatGPT ..."
-echo -e "\nATTENTION! Download ChatGPT's .deb file before continuing!\n\n"
+echo -e "\nATTENTION! Download the ChatGPT .deb file before continuing!\n\n"
 if confirm_go; then
-		cd ~/Downloads
-		sudo apt install ./chatgpt_amd64.deb;;
+	cd $HOME/Downloads
+	sudo apt install ./chatgpt_amd64.deb;;
+	cd $HOME	
 fi
 
 
