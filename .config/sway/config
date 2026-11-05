@@ -651,6 +651,7 @@ exec wl-paste -t text --watch clipman store
 exec /usr/libexec/polkit-mate-authentication-agent-1
 exec waybar
 exec mako
+exec nm-applet
 
 # set display brightness
 exec brightnessctl set 30%

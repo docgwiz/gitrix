@@ -26,18 +26,19 @@
 	],
   
 	"modules-right": [
-		"backlight",
+		"custom/battery_warning",
+		"battery",
+    "backlight",
 		"pulseaudio",
-    "network",
     "cpu",
     "memory",
     "temperature",
 //	"sway/language",
-		"battery",
+		"network",
 		"tray",
 		"custom/power"
   ],
-
+ 
 	// Modules configuration
 	"sway/workspaces": {
 		"disable-scroll": true,
@@ -109,7 +110,15 @@
   //  "format-good": "" // An empty format will hide the module
 		"bat": "BAT0"
   },
-  
+
+  "custom/battery_warning": {
+    "exec": "capacity=$(cat /sys/class/power_supply/BAT*/capacity 2>/dev/null | sort -n | head -1); [ -n \"$capacity\" ] && [ \"$capacity\" -lt 5 ] && echo \"⚠ PLUG IN!\"",
+    "interval": 10,
+    "return-type": "text",
+    "format": "{}",
+    "tooltip": false
+  },
+ 
 	"network": {
     // "interface": "wlp2*", 
 		// (Optional) To force the use of this interface

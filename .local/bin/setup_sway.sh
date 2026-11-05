@@ -151,8 +151,10 @@ fi
 
 echo -e "\n\nScript will install file management utilities ..."
 if confirm_go; then 
-	sudo apt install curl wget rsync
-	sudo apt install zip unzip
+	sudo apt install curl -y
+	sudo apt install wget -y
+	sudo apt install rsync -y
+	sudo apt install zip unzip -y
 fi
 
 
@@ -161,8 +163,8 @@ fi
 
 echo -e "\n\nScript will install network management utilities ..."
 if confirm_go; then
-	sudo apt install network-manager
-  sudo apt install wavemon
+	sudo apt install network-manager network-manager-applet -y
+  sudo apt install wavemon -y
 fi
 
 
@@ -172,8 +174,8 @@ fi
 echo -e "\n\nScript will install hardware management utilities ..."
 if confirm_go; then
 	sudo apt install inxi --no-install-recommends
-	sudo apt install hwinfo
-	sudo apt install lshw
+	sudo apt install hwinfo -y
+	sudo apt install lshw -y
 fi
 
 
@@ -182,20 +184,19 @@ fi
 
 echo -e "\n\nScript will install fastfetch ..."
 if confirm_go; then 
-	sudo apt install fastfetch
+	sudo apt install fastfetch -y
 fi
 
-
+ 
 # ---------------------
 # INSTALL BRAVE BROWSER
 
 echo -e "\n\nScript will install brave browser ..."
 if confirm_go; then 
-	sudo apt install curl
 	sudo curl -fsSLo /usr/share/keyrings/brave-browser-archive-keyring.gpg https://brave-browser-apt-release.s3.brave.com/brave-browser-archive-keyring.gpg
 	sudo curl -fsSLo /etc/apt/sources.list.d/brave-browser-release.sources https://brave-browser-apt-release.s3.brave.com/brave-browser.sources
 	sudo apt update
-	sudo apt install brave-browser
+	sudo apt install brave-browser -y
 fi
 
 
@@ -204,7 +205,7 @@ fi
 
 echo -e "\n\nScript will install firefox-esr ..."
 if confirm_go; then 
-	sudo apt install firefox-esr
+	sudo apt install firefox-esr -y
 fi
 
 
@@ -213,7 +214,7 @@ fi
 
 echo -e "\n\nScript will install vim ..."
 if confirm_go; then 
-	sudo apt install vim
+	sudo apt install vim -y
 fi
 
 
@@ -248,7 +249,7 @@ fi
 
 echo -e "\n\nScript will install vifm TUI file manager ..."
 if confirm_go; then 
-	sudo apt install vifm
+	sudo apt install vifm -y
 fi
 
 
@@ -259,37 +260,34 @@ fi
 echo -e "\n\nScript will install apt repository font packages ..."
 if confirm_go; then 
 	# Install recommended fonts
-	sudo apt install fonts-recommended
+	sudo apt install fonts-recommended -y
 	# Install awesome font
-	sudo apt install fonts-font-awesome
+	sudo apt install fonts-font-awesome -y
 fi
 
 # Install nerdfont packages
-FONTSRC_DIR="https://dufs.docgwiz.com/fonts/nerdfonts/"
-FONTDEST_DIR="$HOME/.local/share/fonts/"
+# FONTSRC_DIR="https://dufs.docgwiz.com/fonts/nerdfonts/"
+# FONTDEST_DIR="$HOME/.local/share/fonts/"
 
-echo -e "\n\nScript will install nerd font files ..."
-if confirm_go; then 
-	
-	echo -e "\nNerdFonts will be copied from $FONTSRC_DIR to $FONTDEST_DIR"
-
-	echo -e "\nAccessing nerd fonts on https://dufs.docgwiz.com"
-	
-	wget --no-verbose --recursive --timestamping \
-				--no-parent --no-host-directories --cut-dirs=2 \
-				--accept="*.ttf,*.otf" \
-				--directory-prefix=$FONTDEST_DIR \
-				--user=docgwiz --ask-password \
-				$FONTSRC_DIR  
+# echo -e "\n\nScript will install nerd font files ..."
+# if confirm_go; then 	
+#	  echo -e "\nNerdFonts will be copied from $FONTSRC_DIR to $FONTDEST_DIR"
+#	  echo -e "\nAccessing nerd fonts on https://dufs.docgwiz.com"	
+#	  wget --no-verbose --recursive --timestamping \
+#				--no-parent --no-host-directories --cut-dirs=2 \
+#				--accept="*.ttf,*.otf" \
+#				--directory-prefix=$FONTDEST_DIR \
+#				--user=docgwiz --ask-password \
+#				$FONTSRC_DIR  
  
-	if [ $? -eq 0 ]; then
-    echo -e "\nWget succeeded"
-		echo -e "\nContents of $FONTDEST_DIR\n"
-		ls -la $FONTDEST_DIR
-	else
-    echo -e "\nWget failed"
-	fi
-fi
+#	  if [ $? -eq 0 ]; then
+#     echo -e "\nWget succeeded"
+#		  echo -e "\nContents of $FONTDEST_DIR\n"
+#		  ls -la $FONTDEST_DIR
+#	  else
+#     echo -e "\nWget failed"
+#	  fi
+# fi
 
 
 # Rebuild the font cache:
@@ -308,7 +306,7 @@ fi
 
 echo -e "\n\nScript will install Sway WM ..."
 if confirm_go; then 
-	sudo apt install sway
+	sudo apt install sway -y
 	# This will automatically install dependencies, including
 	# - swagbg (aka swaybackgrounds)
 	# - wmenu
@@ -324,28 +322,22 @@ fi
 echo -e "\n\nScript will install recommended packages for Sway WM ..."
 if confirm_go; then 
 	# Install recommended packages:
-	sudo apt install swaylock swayidle sway-backgrounds
-
-	sudo apt install foot-themes
-
-	sudo apt install debhelper 
+	sudo apt install swaylock swayidle sway-backgrounds -y
+	sudo apt install foot-themes -y
+	sudo apt install debhelper -y
 	# debian helper installs build-essential, make, et al
 
-	sudo apt install xdg-desktop-portal 
+	sudo apt install xdg-desktop-portal -y
 	# xdg-desktop-portal installs fuse3, x11-common, et al) 
 	# AND RECOMMENDS gvfs 
 
-	sudo apt install xdg-desktop-portal-wlr 
+	sudo apt install xdg-desktop-portal-wlr -y
 # xdg...wlr installs pipewire, pipewire-pulse, wireplumber, slurp et al
 
-	sudo apt install xdg-desktop-portal-gtk
-
-	sudo apt install xdg-utils 
-
-	sudo apt install lm-sensors sgml-base-doc 
-	
-	sudo apt install liblcms2-utils libwacom-bin
-
+	sudo apt install xdg-desktop-portal-gtk -y
+	sudo apt install xdg-utils -y
+	sudo apt install lm-sensors sgml-base-doc -y
+	sudo apt install liblcms2-utils libwacom-bin -y
 fi
 
 
@@ -353,7 +345,7 @@ fi
 # INSTALL XWAYLAND
 echo -e "\n\nScript will install Xwayland for packages that need X11 ..."
 if confirm_go; then 
-	sudo apt install xwayland
+	sudo apt install xwayland -y
 fi
 
 
@@ -398,7 +390,7 @@ fi
 
 echo -e "\n\nScript will install Waybar ..."
 if confirm_go; then 
-	sudo apt install waybar
+	sudo apt install waybar -y
 fi
 
 
@@ -407,7 +399,7 @@ fi
 
 echo -e "\n\nScript will install brightnessctl ..."
 if confirm_go; then 
-	sudo apt install brightnessctl
+	sudo apt install brightnessctl -y
 fi
 
 echo -e "\n\nTweaking brightnessctl!\nScript will add $USER to video and input groups ..."
@@ -419,56 +411,53 @@ fi
 
 echo -e "\n\nScript will install pulseaudio and suggested packages ..."
 if confirm_go; then 
-	sudo apt install pulseaudio
-	sudo apt install pavucontrol
+	sudo apt install pulseaudio -y
+	sudo apt install pavucontrol -y
 fi
 
 echo -e "\n\nScript will install polkit and MATE policy authentication package ..."
 if confirm_go; then
-	sudo apt install polkitd			
-	sudo apt install mate-polkit
+	sudo apt install polkitd -y			
+	sudo apt install mate-polkit -y
 fi
 
 echo -e "\n\nScript will install wl-clipboard ..."
 if confirm_go; then 
-	sudo apt install wl-clipboard
+	sudo apt install wl-clipboard -y
 fi
 
 echo -e "\n\nScript will install clipman ..."
 if confirm_go; then
-	sudo apt install clipman
+	sudo apt install clipman -y
 fi
 
 echo -e "\n\nScript will install more utilities ..."
 if confirm_go; then
 
-	sudo apt install dialog
+	sudo apt install dialog -y
 	# tui dialog creator for bash
 
-	sudo apt install grim slurp
+	sudo apt install grim slurp -y
 	# tools for screenshots
 
-	sudo apt install hstr
+	sudo apt install hstr -y
 	# see and search bash history
 	
-	sudo apt install fd-find
+	sudo apt install fd-find -y
 	# find files and directories in a filesystem
 	
-	sudo apt install gawk 
+	sudo apt install gawk -y
 	# filtering, formatting, and transforming data
 
-	sudo apt install htop
+	sudo apt install htop -y
  	# text-based system monitor
 	
 	echo -e "\n\n"
-	sudo apt install gimp
+	sudo apt install gimp -y
 	echo -e "\n\n"
-	sudo apt install imagemagick
+	sudo apt install imagemagick -y
 	# creating, editing, converting, and displaying images
 	# gimp supports imagemagick
-	
-	# sudo apt install font-manager
-	# preview and manage installed and available fonts
 	
 fi
 
@@ -479,8 +468,8 @@ fi
 # Mako needs the libnotify package:
 echo -e "\n\nScript will install mako ..."
 if confirm_go; then 
-	sudo apt install libnotify-bin
-	sudo apt install mako-notifier
+	sudo apt install libnotify-bin -y
+	sudo apt install mako-notifier -y
 fi
 
 
@@ -489,7 +478,7 @@ fi
 
 echo -e "\n\nScript will install wofi ..."
 if confirm_go; then 
-	sudo apt install wofi
+	sudo apt install wofi -y
 fi
 
 
@@ -499,7 +488,7 @@ fi
 
 echo -e "\n\nScript will install starship ..."
 if confirm_go; then 
-	sudo apt install starship
+	sudo apt install starship -y
 fi
 
 
@@ -554,5 +543,5 @@ fi
 # ----
 # EXIT
 
-echo -e "\n\nFINISHED! Sway setup script completed\n\n"
+echo -e "\n\n\nFINISHED!\nSway setup script completed\n\n"
 exit 0
