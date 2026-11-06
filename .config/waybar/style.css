@@ -85,12 +85,12 @@
 /*  otf-font-awesome is required to be installed for icons */
 /*  font-family: FontAwesome, Roboto, Helvetica, Arial, sans-serif; */		
 /*	font-family: DejaVu Sans Mono; */
-		font-family: "AtkynsonMono Nerd Font", "0xProto Nerd Font", "InconsolataGo Nerd Font", "DejaVuSansM Nerd Font", "FiraMono Nerd Font", "JetBrainsMono Nerd Font", FontAwesome;	
+		font-family: "AtkynsonMono Nerd Font", "0xProto Nerd Font", "InconsolataGo Nerd Font", "DejaVuSansM Nerd Font", "FiraMono Nerd Font", "JetBrainsMono Nerd Font", "FontAwesome";	
     font-size: 15px;
 }
 
 window#waybar {
-	background-color: @medbg; 
+	background-color: @darkbg; 
   border-bottom: 1px solid @medtxt; 
   color: @brighttxt;
 	font-weight: bold;
@@ -151,35 +151,32 @@ button {
 
 #workspaces button.focused {
 	color: @medtxt;
-  background-color: @darkbg;
+  background-color: @medbg;
 	border-radius: 15px;
 }
 
 #workspaces button.urgent {
-  background-color: red;
+	color: @medtxt;  
+	background-color: red;
 }
 
 #mode {
-	color: white;
-  background-color: deeppink;
+	color: @medtxt;
+  background-color: @brightbg;
   box-shadow: inset 0 -3px yellow;
 }
 
 #clock, 
-#language,
 #battery,
-#cpu,
-#memory,
-#disk,
-#temperature,
 #backlight,
-#network,
 #pulseaudio,
 #wireplumber,
-#custom-media,
+#cpu,
+#memory,
+#temperature,
+#network,
 #tray,
 #mode,
-#idle_inhibitor,
 #scratchpad,
 #power-profiles-daemon,
 #mpd {
@@ -190,11 +187,13 @@ button {
 }
 
 #clock:hover,
+#battery:hover,
 #backlight:hover,
 #pulseaudio:hover,
-#network:hover,
+#wireplumber:hover,
 #cpu:hover,
 #memory:hover,
+#network:hover,
 #temperature:hover {
 	color: @medtxt;
 	background-color: @brightbg;
@@ -218,17 +217,33 @@ button {
 }
 
 
+/* Define blink animation */
 @keyframes blink {
   to {
-    background-color: ivory;
-    color: red;
+    background-color: @brightbg;
+    color: @medtxt;
   }
 }
 
-/* Using steps() instead of linear as a timing function to limit cpu usage */
-#battery.critical:not(.charging) {
-  background-color: red;
-  color: ivory;
+/* Use steps() instead of linear as a timing function to limit cpu usage */
+#custom-battery_warning {
+  animation-name: blink;
+  animation-duration: 1.0s;
+  animation-timing-function: steps(12);
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+}
+
+/* #battery.critical:not(.charging) {
+  animation-name: blink;
+  animation-duration: 1.0s;
+  animation-timing-function: steps(12);
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+}
+*/
+
+#temperature.critical {
   animation-name: blink;
   animation-duration: 1.0s;
   animation-timing-function: steps(12);
@@ -259,52 +274,16 @@ label:focus {
   background-color: #000000;
 }
 
-#disk {
-  background-color: #964B00;
-}
-
 #network.disconnected {
-  background-color: #f53c3c;
+  background-color: @brightbg;
 }
 
 #pulseaudio.muted {
-  background-color: #ff0000;
+  background-color: @brightbg;
 }
 
 #wireplumber.muted {
-  background-color: #ff0000;
-}
-
-#custom-media {
-  background-color: #66cc99;
-  color: #2a5c45;
-  min-width: 100px;
-}
-
-#custom-media.custom-spotify {
-  background-color: #66cc99;
-}
-
-#custom-media.custom-vlc {
-  background-color: #ffa000;
-}
-
-#temperature.critical {
-  background-color: #ff0000;
-	color: white;
-}
-
-#tray {
-  background-color: #2980b9;
-}
-
-#tray > .passive {
-  -gtk-icon-effect: dim;
-}
-
-#tray > .needs-attention {
-  -gtk-icon-effect: highlight;
-  background-color: #eb4d4b;
+  background-color: @brightbg;
 }
 
 #idle_inhibitor {
@@ -319,18 +298,6 @@ label:focus {
 #mpd {
   background-color: #66cc99;
   color: #2a5c45;
-}
-
-#mpd.disconnected {
-  background-color: #f53c3c;
-}
-
-#mpd.stopped {
-  background-color: #90b1b1;
-}
-
-#mpd.paused {
-  background-color: #51a37a;
 }
 
 #language {

@@ -33,7 +33,6 @@
     "cpu",
     "memory",
     "temperature",
-//	"sway/language",
 		"network",
 		"tray",
 		"custom/power"
@@ -60,18 +59,50 @@
 		"max-length": 50
   },
     
-	"tray": {
-    "icon-size": 21,
-    "spacing": 10
-  },
-  
   "clock": {
-    "timezone": "America/Whitehorse",
+    "timezone": "America/Vancouver",
 		"format": "{:%a %d-%b-%y | %H:%M}",
 		"format-alt": "{:%A, %B %d, %Y at %I:%M %p}",
 		"tooltip": false 
   },
   
+	"battery": {
+    "states": {
+			"good": 95,
+			"warning": 20,
+      "critical": 10
+    },
+		"interval": 10,
+    "format": "\udb80\udc91\u2009{capacity}%",
+    // \u2009 is a thin space
+    "format-full": "\udb80\udc79{capacity}%",
+    "format-charging": "\udb80\udc85 {capacity}%",
+    "format-plugged": "\udb80\udc84{capacity}%",
+    "format-alt": "{time}",
+  //  "format-good": "" // An empty format will hide the module
+		"bat": "BAT0"
+  },
+
+  "custom/battery_warning": {
+    "exec": "capacity=$(cat /sys/class/power_supply/BAT*/capacity 2>/dev/null | sort -n | head -1); [ -n \"$capacity\" ] && [ \"$capacity\" -lt 10 ] && echo \" LOW BATTERY \"",
+    "interval": 10,
+    "return-type": "text",
+    "format": "{}",
+    "tooltip": false
+  },
+ 
+	"backlight": {
+    "format": "\udb80\udf79 {percent}%",
+		"tooltip": false
+  },
+  
+	"pulseaudio": {
+    "format": "\udb81\udf1f {volume}%",
+    "format-muted": "\udb81\udf1f off",
+ //   "format-source": "{format_source}",
+		"on-click": "pauvcontrol"
+	},
+   
 	"cpu": {
     "format": "\uf4bc {usage}%",
 		"format-alt": "\uf4bc {load}"
@@ -89,36 +120,6 @@
 		"tooltip": false
   },
   
-	"backlight": {
-//    "device": "acpi_video1",
-    "format": "\udb80\udf79 {percent}%",
-		"tooltip": false
-  },
-  
-	"battery": {
-    "states": {
-			"good": 95,
-			"warning": 20,
-      "critical": 10
-    },
-		"interval": 10,
-    "format": "\udb80\udc91{capacity}%",
-    "format-full": "\udb80\udc79{capacity}%",
-    "format-charging": "\udb80\udc85 {capacity}%",
-    "format-plugged": "\udb80\udc84{capacity}%",
-    "format-alt": "{time}",
-  //  "format-good": "" // An empty format will hide the module
-		"bat": "BAT0"
-  },
-
-  "custom/battery_warning": {
-    "exec": "capacity=$(cat /sys/class/power_supply/BAT*/capacity 2>/dev/null | sort -n | head -1); [ -n \"$capacity\" ] && [ \"$capacity\" -lt 5 ] && echo \"⚠ PLUG IN!\"",
-    "interval": 10,
-    "return-type": "text",
-    "format": "{}",
-    "tooltip": false
-  },
- 
 	"network": {
     // "interface": "wlp2*", 
 		// (Optional) To force the use of this interface
@@ -130,13 +131,11 @@
     "format-alt": "{ifname}"
   },
   
-	"pulseaudio": {
-    "format": "\udb81\udf1f {volume}%",
-    "format-muted": "\udb81\udf1f off",
- //   "format-source": "{format_source}",
-		"on-click": "pauvcontrol"
-	},
-   
+	"tray": {
+    "icon-size": 19,
+    "spacing": 10
+  },
+  
 	"custom/power": {
     "format" : " + ",
 		"tooltip": false,
@@ -146,8 +145,12 @@
 			"exitSway": "swaymsg exit",			
 			"shutdown": "systemctl poweroff",
 			"reboot": "systemctl reboot",
-			"suspend": "systemctl suspend"
-			// "hibernate": "systemctl hibernate"
+			"suspend": "systemctl suspend",
+			"hibernate": "systemctl hibernate"
+			// Suspend (S3) saves the system state to RAM and powers down most components while keeping memory active, 
+			// allowing for instant resume (1–3 seconds) but requiring continuous power to prevent data loss.  
+			// Hibernate (S4) writes the entire memory contents to the swap partition or file on disk and completely powers off, 
+			// ensuring zero power consumption and data safety during power loss, but requiring 15–30 seconds to resume. 
 		}
   }
 }
