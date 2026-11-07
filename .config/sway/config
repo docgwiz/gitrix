@@ -1,7 +1,6 @@
 # ~/.config/sway/config
 
-# This config file began as a copy of the 
-# template config file in /etc/sway
+# This config file began as a copy of the template config file in /etc/sway
 # Read `man 5 sway` for a complete reference.
 
 
@@ -89,6 +88,10 @@ set $notemngr obsidian
 set $notemngrPATH "~/AppImages/Obsidian.AppImage"
 
 
+### ----------------------------
+### CONFIGURE COLORS
+### ----------------------------
+
 ### ------------------
 ### Set shades of blue
 # https://www.pinterest.com/pin/75-shades-of-blue-blue-hex-codes-color-names-included--75153887526405408/
@@ -120,14 +123,52 @@ set $CharcoalBlue #36454f
 #566d7e marble blue
 
 
+### -----------------------------
+### Set my custom colors
+
+# bubblegum pink
+set $xpink #ef476f
+
+# molten orange
+set $xorange #fc7a1e
+
+# stormy teal
+set $xgreen #086375
+
+# dark teal
+set $xblue #073b4c
+
+# golden pollen
+set $xyellow #fcca46
+
+# alabaster greg
+set $xwhite #e7e7e7
+
+
+# class                 border		bground		text    indicator	child_border
+
+# window that has focus
+client.focused          $xyellow	$xyellow	$xwhite    $xyellow		$xyellow
+
+# window that does not have focus
+client.unfocused				$xgreen		$xgreen		$xwhite    $xgreen		$xgreen
+
+# most-recently focused window within container which is not focused
+client.focused_inactive $xorange	$xorange	$xwhite    $xorange		$xorange
+
+# window with an urgency hit--only works for xwayland windows
+client.urgent           #2F343A		#CC241D		#FBF1C7   #CC241D			#CC241D
+
+
+
 ### --------------------
 ### CONFIGURE BACKGROUND
 ### --------------------
 # output * bg /usr/share/backgrounds/sway/Sway_Wallpaper_Blue_1920x1080.png fill
 #
 # The above output command is commented out in Debian, 
-# which drops the config file 40-sway-background.conf, which 
-# uses the Sway wallpaper files in the sway-backgrounds package
+# which drops the config file 40-sway-background.conf,
+# which uses the Sway wallpaper files in the sway-backgrounds package
 
 
 ### -----------------
@@ -178,107 +219,6 @@ gaps outer 4
 default_border pixel 3
 
 
-### -----------------------
-### CONFIGURE WINDOW COLORS
-### -----------------------
-
-# border: color of main border around focused window.
-# background: background color of window's title bar. 
-# text: color of the title text.
-# indicator: color of the split indicator. 
-# child_border: border color for child windows (dialogs, popups).
-set $f_brdr #fcca46
-		# golden pollen
-set $f_bg #086375 
-		# stormy-teal
-set $f_txt #e7e7e7
-		# alabaster grey
-set $f_ind #e7e7e7
-		# alabaster grey
-set $f_cbrdr #fcca46
-		# golden pollen
-
-# client.focused $f_brdr $f_bg $f_txt $f_ind $f_cbrdr
-
-
-### -------------------------------------- 
-### set primary gruvbox colorscheme colors
-# see https://github.com/morhetz/gruvbox-contrib/blob/master/color.table
-# see https://thomashunter.name/i3-configurator/
-
-set $bg #282828
-set $bg_2 #504945
-set $fg #ebdbb2
-set $fg_1 #FBF1C7
-set $fg_2 #D5C4A1
-set $red #cc241d
-set $green #98971a
-set $yellow #d79921
-set $blue #458588
-set $blue_faded #076678
-set $purple #b16286
-set $aqua #689d68
-set $gray #a89984
-set $darkgray #1d2021
-# my additions
-set $medgray #363636
-
-
-# bubblegum pink
-set $xpink #ef476f
-
-# molten orange
-set $xorange #fc7a1e
-
-# stormy teal
-set $xgreen #086375
-
-# dark teal
-set $xblue #073b4c
-
-# golden pollen
-set $xyellow #fcca46
-
-# alabaster greg
-set $xfg #e7e7e7
-
-
-# class                 border		bground		text    indicator	child_border
-
-# window that has focus
-client.focused          $xyellow	$xyellow	$xfg    $xyellow  $xyellow
-
-# window that does not have focus
-client.unfocused				$xgreen		$xgreen		$xfg    $xgreen		$xgreen
-
-# most-recently focused window within container which is not focused
-client.focused_inactive $xorange	$xorange	$xfg    $xorange	$xorange
-
-# window with an urgency hit--only works for xwayland windows
-client.urgent           #2F343A #CC241D $fg_1   #CC241D   #CC241D
-
-
-# client.unfocused        $bg_2   #282828 #888888 #292D2E   #222222
-# client.focused_inactive $bg_2   #5F676A $fg     #484E50   #5F676A
-
-
-### ----------------
-### CONFIGURE INPUTS
-### ----------------
-# Example configuration:
-#
-#   input "2:14:SynPS/2_Synaptics_TouchPad" {
-#       dwt enabled
-#       tap enabled
-#       natural_scroll enabled
-#       middle_emulation enabled
-#   }
-#
-# You can get the names of your inputs by running
-# "swaymsg -t get_inputs"
-# Read `man 5 sway-input` for more information about this section.
-
-
 ### ---------------------
 ### CONFIGURE IDLE & LOCK
 ### ---------------------
@@ -310,10 +250,27 @@ client.urgent           #2F343A #CC241D $fg_1   #CC241D   #CC241D
 #  which tells swayidle to wait for swaylock to finish before proceeding
 
 exec swayidle -w \
-	timeout 300 'swaylock --daemonize --color "$darkgray"' \
+	timeout 300 'swaylock --daemonize --color "$BlueGray"' \
   timeout 1200 'swaymsg "output * dpms off"' \
 	resume 'swaymsg "output * dpms on"' \
   before-sleep 'swaylock --daemonize --color "$CharcoalBlue"' 
+
+
+### ----------------
+### CONFIGURE INPUTS
+### ----------------
+# Example configuration:
+#
+#   input "2:14:SynPS/2_Synaptics_TouchPad" {
+#       dwt enabled
+#       tap enabled
+#       natural_scroll enabled
+#       middle_emulation enabled
+#   }
+#
+# You can get the names of your inputs by running
+# "swaymsg -t get_inputs"
+# Read `man 5 sway-input` for more information about this section.
 
 
 ### ------------------
@@ -329,7 +286,7 @@ exec swayidle -w \
 
 # EXIT sway (logs you out of your Wayland session)
 bindsym $LogoKey+q exit
-# bindsym $mod+m exec swaynag -t warning -m 'Exit sway? (This will end your Wayland session.) ' -B 'Yes, exit sway' 'swaymsg exit'
+# bindsym $LogoKey+q exec swaynag -t warning -m 'Exit sway? (This will end your Wayland session.) ' -B 'Yes, exit sway' 'swaymsg exit'
 
 # KILL focused window (exit app)
 bindsym $LogoKey+w kill
@@ -460,7 +417,7 @@ Cmd+(Shift)+Spc\t WMenu (Wofi)\n\
 Cmd+a\t\t ChatGPT\n\
 Cmd+(Shift)+b\t Brave (Firefox)\n\
 Cmd+d\t\t Libre Office\n\
-Cmd+f\t\t Thunar\n\
+Cmd+(Shift)+f\t ViFM (Thunar)\n\
 Cmd+(Shift)+m\t Proton (Thunderbird)\n\
 Cmd+o\t\t Obsidian\n\
 Cmd+p\t\t 1password"
