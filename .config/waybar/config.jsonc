@@ -84,7 +84,7 @@
   },
 
   "custom/battery_warning": {
-    "exec": "capacity=$(cat /sys/class/power_supply/BAT*/capacity 2>/dev/null | sort -n | head -1); [ -n \"$capacity\" ] && [ \"$capacity\" -lt 10 ] && echo \" LOW BATTERY \"",
+    "exec": "capacity=$(cat /sys/class/power_supply/BAT*/capacity 2>/dev/null | sort -n | head -1); if [ -n \"$capacity\" ] && [ \"$capacity\" -lt 100 ] && [ $(cat /sys/class/power_supply/BAT*/status) = 'Discharging' ]; then echo \" LOW BATTERY \"; fi",
     "interval": 10,
     "return-type": "text",
     "format": "{}",

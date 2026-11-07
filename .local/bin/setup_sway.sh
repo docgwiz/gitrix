@@ -256,7 +256,7 @@ fi
 # ---------------------
 # INSTALL FONT PACKAGES
 
-# Install apt repo packages
+# Install apt repo font packages
 echo -e "\n\nScript will install apt repository font packages ..."
 if confirm_go; then 
 	# Install recommended fonts
@@ -264,6 +264,39 @@ if confirm_go; then
 	# Install awesome font
 	sudo apt install fonts-font-awesome -y
 fi
+
+# Install nerd fonts
+
+FONT_DIR="${HOME}/.local/share/fonts"
+NFONT_REPO="https://github.com/ryanoasis/nerd-fonts/releases/latest/download"
+
+mkdir --parents "$FONT_DIR"
+
+declare -a NFONT_NAME_ARRAY=(
+"0xProto"
+"AtkinsonHyperlegibleMono"
+"DejaVuSansMono"
+"FiraMono"
+"InconsolataGo"
+"JetBrainsMono"
+"Meslo"
+)
+# -a flag declares a variable as an indexed array
+
+
+for NFONT_NAME in "${NFONT_NAME_ARRAY[@]}"; do
+	NFONT_FNAME="${NFONT_NAME}.zip" 
+	NFONT_DIR="${FONT_DIR}/${NFONT_NAME}"
+	NFONT_PATH="${NFONT_DIR}/${NFONT_FNAME}"
+	NFONT_URL="${NFONT_REPO}/${NFONT_FNAME}"
+	
+	mkdir --parents "$NFONT_DIR"
+	wget --directory-prefix "$NFONT_DIR" "$NFONT_URL"
+	unzip "$NFONT_PATH" -d "$NFONT_DIR"
+	rm -fv "$NFONT_PATH"
+done   
+
+
 
 # Install nerdfont packages
 # FONTSRC_DIR="https://dufs.docgwiz.com/fonts/nerdfonts/"
@@ -291,12 +324,12 @@ fi
 
 
 # Rebuild the font cache:
-echo -e "\n\nScript will rebuild the font cache ..."
+echo -e "\n\nScript needs to rebuild the font cache ..."
 if confirm_go; then
-	fc-cache -f
-	# -f: Forces regeneration, even if cache seems up-to-date
-	# -v: Shows verbose output (status information)		
-	# -s: Scans only system-wide directories, skips user-specific dirs
+	fc-cache --force --system-only --verbose
+	# --force: Forces regeneration, even if cache seems up-to-date
+	# --system-only: Scans only system-wide directories, skips user-specific dirs
+	# --verbose: Shows verbose output (status information)		
 	echo -e "Rebuild complete.\n"
 fi
 
@@ -482,7 +515,6 @@ if confirm_go; then
 fi
 
 
-# ----------------
 # ----------------
 # INSTALL STARSHIP
 
