@@ -266,36 +266,38 @@ if confirm_go; then
 fi
 
 # Install nerd fonts
+echo -e "\n\nScript will install nerd fonts ..."
+if confirm_go; then 
 
-FONT_DIR="${HOME}/.local/share/fonts"
-NFONT_REPO="https://github.com/ryanoasis/nerd-fonts/releases/latest/download"
+	FONT_DIR="${HOME}/.local/share/fonts"
+	NFONT_REPO="https://github.com/ryanoasis/nerd-fonts/releases/latest/download"
 
-mkdir --parents "$FONT_DIR"
+	mkdir --parents "$FONT_DIR"
 
-declare -a NFONT_NAME_ARRAY=(
-"0xProto"
-"AtkinsonHyperlegibleMono"
-"DejaVuSansMono"
-"FiraMono"
-"InconsolataGo"
-"JetBrainsMono"
-"Meslo"
-)
-# -a flag declares a variable as an indexed array
+	declare -a NFONT_NAME_ARRAY=(
+	"0xProto"
+	"AtkinsonHyperlegibleMono"
+	"DejaVuSansMono"
+	"FiraMono"
+	"InconsolataGo"
+	"JetBrainsMono"
+	"Meslo"
+	)
+	# -a flag declares a variable as an indexed array
 
 
-for NFONT_NAME in "${NFONT_NAME_ARRAY[@]}"; do
-	NFONT_FNAME="${NFONT_NAME}.zip" 
-	NFONT_DIR="${FONT_DIR}/${NFONT_NAME}"
-	NFONT_PATH="${NFONT_DIR}/${NFONT_FNAME}"
-	NFONT_URL="${NFONT_REPO}/${NFONT_FNAME}"
+	for NFONT_NAME in "${NFONT_NAME_ARRAY[@]}"; do
+		NFONT_FNAME="${NFONT_NAME}.zip" 
+		NFONT_DIR="${FONT_DIR}/${NFONT_NAME}"
+		NFONT_PATH="${NFONT_DIR}/${NFONT_FNAME}"
+		NFONT_URL="${NFONT_REPO}/${NFONT_FNAME}"
 	
-	mkdir --parents "$NFONT_DIR"
-	wget --directory-prefix "$NFONT_DIR" "$NFONT_URL"
-	unzip "$NFONT_PATH" -d "$NFONT_DIR"
-	rm -fv "$NFONT_PATH"
-done   
-
+		mkdir --parents "$NFONT_DIR"
+		wget --directory-prefix "$NFONT_DIR" "$NFONT_URL"
+		unzip "$NFONT_PATH" -d "$NFONT_DIR"
+		rm -fv "$NFONT_PATH"
+	done   
+fi
 
 
 # Install nerdfont packages
@@ -326,7 +328,7 @@ done
 # Rebuild the font cache:
 echo -e "\n\nScript needs to rebuild the font cache ..."
 if confirm_go; then
-	fc-cache --force --system-only --verbose
+	fc-cache --force
 	# --force: Forces regeneration, even if cache seems up-to-date
 	# --system-only: Scans only system-wide directories, skips user-specific dirs
 	# --verbose: Shows verbose output (status information)		
