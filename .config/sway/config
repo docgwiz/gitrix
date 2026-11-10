@@ -7,17 +7,44 @@
 ### --------------------
 ### SYSTEM-WIDE INCLUDES
 ### --------------------
-# System-wide includes are provided by distro (e.g., Debian) packages 
-# Distros use /etc/sway/config.d/ or /usr/share/sway/config.d/
-# Tip: use *.conf to include all files ending in .conf
-# e.g., include /etc/sway/config/*.conf
 
-# puts Sway wallpaper on output background (replaced below)
-include /etc/sway/config.d/40-sway-background.conf
+# Include Sway's sytem-wide .conf files:
+include /etc/sway/config.d/* 
 
-# imports variables into the user's system environment
-# based on instructions in the Sway wiki
-include /etc/sway/config.d/50-systemd-user.conf
+# Two files that will likely be included:
+
+# /etc/sway/config.d/40-sway-background.conf
+# This file sets the display background.
+# This file is created automatically by the sway-backgrounds package 
+# when it is installed on Debian 13 (Trixie).  
+# This package is a recommended dependency of sway, 
+# meaning it is installed by default during a standard installation. 
+
+# /etc/sway/config.d/50-systemd-user.conf
+# This file imports variables into systemd.
+# See below for explanation of each variable.
+# This file is created by the sway package itself.  
+# Unlike 40-sway-background.conf which comes from the separate sway-backgrounds package, 
+# this one is a dpkg conffile shipped directly by sway. 
+
+# WAYLAND_DISPLAY variable	
+# Specifies which Wayland display socket to connect to	
+# Needed by xdg-desktop-portal-wlr, Flatpak, PipeWire screencast, 
+# and any Wayland client started outside Sway 
+
+# DISPLAY variable
+# Specifies the X11 display (set by XWayland)	
+# Needed by X11 apps under XWayland, 
+# and xdg-desktop-portal backends that check for X
+
+# SWAYSOCK variable
+# Specifies the path to the Sway IPC socket
+# Needed by swaymsg, swaynag, swaylock, any tool that talks to Sway's IPC
+
+# XDG_CURRENT_DESKTOP variable
+# Specifies wWhich desktop/compositor is running (value=sway)	
+# Needed by xdg-desktop-portal, which uses it to pick the right backend 
+# (e.g. wlr vs gtk vs kde); without it, xdg-desktop-portal-wlr won't start
 
 
 ### ----------------------
@@ -27,6 +54,8 @@ include /etc/sway/config.d/50-systemd-user.conf
 # user-specific directory like ~/.config/sway/config.d/
 # Tip: use *.conf to include all files ending in .conf
 # e.g., include ~/.config/sway/config.d/*.conf
+
+# No user-specfic includes at this time.
 
 
 ### -------------------
@@ -164,11 +193,16 @@ client.urgent           #2F343A		#CC241D		#FBF1C7   #CC241D			#CC241D
 ### --------------------
 ### CONFIGURE BACKGROUND
 ### --------------------
+
+# Set background
+# output * bg $DenimBlue solid_color
 # output * bg /usr/share/backgrounds/sway/Sway_Wallpaper_Blue_1920x1080.png fill
-#
-# The above output command is commented out in Debian, 
-# which drops the config file 40-sway-background.conf,
-# which uses the Sway wallpaper files in the sway-backgrounds package
+# output * bg $HOME/.config/sway/kk-mud-bay-01.jpg fill
+
+# If you installed the sway-backgrounds package, it will create 
+# a system configuration file: /etc/sway/config.d/40-sway-background.conf 
+# You can uninstall the sway-backgrounds package (sudo apt remove sway-backgrounds) 
+# if configuring the bacground here. 
 
 
 ### -----------------
@@ -202,10 +236,6 @@ client.urgent           #2F343A		#CC241D		#FBF1C7   #CC241D			#CC241D
 # output HDMI-A-1 scale 1
 # output HDMI-A-2 mode 1920x1080@60.000HZ
 # output HDMI-A-2 scale 1
-
-# Set background
-# output * bg #79baec solid_color
-output * bg $DenimBlue solid_color
 
 
 ### -----------------

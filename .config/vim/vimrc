@@ -155,13 +155,15 @@ let g:vimwiki_list = [
 
 " ------------------------------
 " USE VIM-PLUG TO MANAGE PLUGINS
-call plug#begin('~/vim-plugged')
-"
+" call plug#begin('~/vim-plugged')
+" " call statement is commented out until plugins are installed
 " Declare your plugins here, for example:
-Plug 'vimwiki/vimwiki'
-Plug 'ekalinin/Dockerfile.vim'
+" Plugin declarations below are commented out for now; can be restored when plugins are
+" installed
+" Plug 'vimwiki/vimwiki'
+" Plug 'ekalinin/Dockerfile.vim'
 " List ends here. Plugins become visible to Vim after this call.
-call plug#end()
+" call plug#end()
 
 
 " -----------------

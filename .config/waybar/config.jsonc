@@ -99,7 +99,6 @@
 	"pulseaudio": {
     "format": "\udb81\udf1f {volume}%",
     "format-muted": "\udb81\udf1f off",
- //   "format-source": "{format_source}",
 		"on-click": "pauvcontrol"
 	},
    
