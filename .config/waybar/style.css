@@ -41,14 +41,14 @@
 /* ---------------------- */
 /* dark background colors */
 
-/* --dusk-blue: */
-@define-color darkbg #485696;
-
 /* --bright-teal-blue */
 @define-color darkbg #0077b6;
 
 /* --charcoal-blue: */
 @define-color darkbg #233d4d;
+
+/* --dusk-blue: */
+@define-color darkbg #485696;
 
 /* --dark-teal */
 @define-color darkbg #073b4c;

@@ -280,10 +280,11 @@ default_border pixel 3
 #  which tells swayidle to wait for swaylock to finish before proceeding
 
 exec swayidle -w \
-	timeout 300 'swaylock --daemonize --color "$BlueGray"' \
-  timeout 1200 'swaymsg "output * dpms off"' \
+  timeout 300 'swaylock --daemonize --image /usr/share/backgrounds/sway/Sway_Wallpaper_Blue_1920x1080.png' \
+  timeout 600 'swaymsg "output * dpms off"' \
 	resume 'swaymsg "output * dpms on"' \
-  before-sleep 'swaylock --daemonize --color "$CharcoalBlue"' 
+  before-sleep 'swaylock --daemonize --color 073B4C'
+# 073B4C is dark teal, which is a dark background color found in waybar's style.css
 
 
 ### ----------------
@@ -309,6 +310,13 @@ exec swayidle -w \
 # This config scheme uses: 
 # the logo/cmd key for app and navigation shortcuts
 # the alt/option key for reloading configs, ...
+
+### --------------------------
+### Lock screen
+
+# bindsym $LogoKey+Shift+l exec swaylock --color 6495ED 
+# Hex value for CharcoalBlue (swaylock doesn't accept color names)
+bindsym $LogoKey+Shift+l exec swaylock --image /usr/share/backgrounds/sway/Sway_Wallpaper_Blue_1920x1080.png
 
 
 ### ---------------------
